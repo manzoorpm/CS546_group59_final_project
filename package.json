@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/manzoorpm/CS546_group59_final_project/issues"
   },
-  "homepage": "https://github.com/manzoorpm/CS546_group59_final_project#readme"
+  "homepage": "https://github.com/manzoorpm/CS546_group59_final_project#readme",
+  "dependencies": {
+    "mongodb": "^4.12.1"
+  }
 }
