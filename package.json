@@ -4,14 +4,20 @@
   "description": "Final Project",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manzoorpm/CS546_group59_final_project.git"
   },
-  "author": "Dhavan Kanakia 20011563",
+  "contributors": [
+    {
+      "name": "Dhavan Kanakia 20011563"
+    },
+    {
+      "name": "Mao Li 10473334"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/manzoorpm/CS546_group59_final_project/issues"
