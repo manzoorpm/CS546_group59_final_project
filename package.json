@@ -4,6 +4,8 @@
   "description": "Final Project",
   "main": "app.js",
   "scripts": {
+    "seed": "node ./tasks/seed.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
   "repository": {
@@ -24,6 +26,10 @@
   },
   "homepage": "https://github.com/manzoorpm/CS546_group59_final_project#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
+    "express-handlebars": "^6.0.6",
+    "express-session": "^1.17.3",
     "mongodb": "^4.12.1"
   }
 }

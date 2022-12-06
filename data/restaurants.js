@@ -1,21 +1,295 @@
 // restaurants data functions
+const helper = require('../helpers');
+const {ObjectId} = require('mongodb');
 const mongoCollections = require("../config/mongoCollections");
 const restaurants = mongoCollections.restaurants;
 
-async function createRestaurant(){}
+// RestaurantId will get initialized in the function
+// availibility will get created using opening/closing time and restauranttablecapacities
+// overallRating will get initialized with value 0
+// reservations array and reviews array will be initialized empty
+async function createRestaurant(name,contactInfo,category,address,city,state,zip,latitude,longitude,openingTime,closingTime,restaurantTableCapacities){
+    if(arguments.length!==12){
+        throw [400,`Improper Number of Inputs`];
+    }
+    name = helper.checkIsProperString(name,"Restaurant Name");
 
-async function getAllRestaurants(){}
+    contactInfo = helper.checkIsProperString(contactInfo,"Phone Number");
+    contactInfo = helper.validatePhoneNumber(contactInfo,"Phone Number");
 
-async function getRestaurantById(){}
+    category = helper.checkIsProperString(category,"Category");
+    if(!(category=== 'Pizza' || category=== 'Bakery' || category=== 'Steakhouse' || category=== 'Indian' || category=== 'Asian' || category=== 'English' || category=== 'Thai')){
+        throw [400,`Category is not from valid values list`]
+    };
 
-async function removeRestaurant(){}
+    address = helper.checkIsProperString(address,"Address");
 
-async function updateRestaurant(){}
+    city = helper.checkIsProperString(city,"City");
+
+    state = helper.checkIsProperString(state,"State");
+    if(!(state!== 'New Jersey' || state!== 'New York')){
+        throw [400,`Currently servicing only in New York and New Jersey`]
+    };
+
+    zip = helper.checkIsProperString(zip,"Zip");
+    zip = helper.validateNumber(zip,"Zip");
+    zip = parseInt(zip);
+
+    latitude = helper.checkIsProperString(latitude,"Latitude");
+    latitude = helper.validateLatitudeLongitude(latitude,"Latitude");
+
+    longitude = helper.checkIsProperString(longitude,"Longitude");
+    longitude = helper.validateLatitudeLongitude(longitude,"Longitude");
+
+    openingTime = helper.checkIsProperString(openingTime,"Opening Time");
+
+    closingTime = helper.checkIsProperString(closingTime,"Closing Time");
+
+    // Time Validation, Timelogic, restaurantTableCapacities Validation, availibility Calculation using timelogic and restaurant table capacities UNFINISHED
+
+    // restaurantTableCapacities = helper.checkIsProperString(restaurantTableCapacities,"Table Capacities");
+    // restaurantTableCapacities = JSON.parse(restaurantTableCapacities);
+
+    let availibility = {};
+    let overallRating = 0;
+    let reviews = [];
+    let reservations = [];
+
+    const newRestaurant = {
+        name: name,
+        contactInfo: contactInfo,
+        category: category,
+        address: address,
+        city: city,
+        state: state,
+        zip: zip,
+        latitude: latitude,
+        longitude: longitude,
+        openingTime: openingTime,
+        closingTime: closingTime,
+        restaurantTableCapacities:restaurantTableCapacities,
+        availibility: availibility,
+        overallRating: overallRating,
+        reviews: reviews,
+        reservations: reservations
+    }
+
+    const restaurantCollection = await restaurants();
+    const insertInfo = await restaurantCollection.insertOne(newRestaurant);
+    if (!insertInfo.insertedId || !insertInfo.acknowledged){
+        throw [500,'Internal Server Error'];
+    }
+    const newId = insertInfo.insertedId.toString();
+
+    const restaurant = await restaurantCollection.findOne({_id: ObjectId(newId)});
+    restaurant._id = newId;
+    return restaurant;  
+}
+
+async function getAllRestaurants(){
+    const restaurantCollection = await restaurants();
+    let restaurantList = await restaurantCollection.find({},{projection:{_id:1,name:1}}).toArray(); 
+    if(!restaurantList){
+        throw [500,`Internal Server Error`]
+    }
+    for(let i=0;i<restaurantList.length;i++){
+        restaurantList[i]._id = restaurantList[i]._id.toString()
+    }
+
+    return restaurantList;
+}
+
+async function getRestaurantById(restaurantId){
+    if(arguments.length>1){
+        throw [400,`More Parameters Passed`]
+    }
+    restaurantId = helper.checkIsProperString(restaurantId,"ID");
+    restaurantId = helper.checkIsProperId(restaurantId);
+    const restaurantCollection = await restaurants();
+    let restaurant = await restaurantCollection.findOne({_id: ObjectId(restaurantId)});
+    if(!restaurant || restaurant === null){
+        throw [404,`No user corresponds to the ID`]
+    }
+    restaurant._id = restaurant._id.toString()
+    return restaurant;
+}
+
+async function getRestaurantByName(restaurantName){
+    if(arguments.length>1){
+        throw [400,`More Parameters Passed`]
+    }
+    restaurantName = helper.checkIsProperString(restaurantName,"ID");
+
+    let restaurantMatched = [];
+    const restaurantCollection = await restaurants();
+    let restaurantList = await restaurantCollection.find({}).toArray();
+    for(let i = 0;i<restaurantList.length;i++){
+        if((restaurantList[i].name).toLowerCase().includes(restaurantName.toLowerCase())){
+            restaurantMatched.push(restaurantList[i]);
+            if(restaurantMatched.length===20){
+                break;
+            }
+        }
+    }
+
+    for(let i=0;i<restaurantList.length;i++){
+        restaurantList[i]._id = restaurantList[i]._id.toString()
+    }
+
+    if(restaurantMatched.length==0){
+        throw [404,"Error: Could not find any people with that term"]
+    }
+    return restaurantMatched;
+}
+
+async function getRestaurantsByCategory(category){
+    if(arguments.length>1){
+        throw [400,`More Parameters Passed`]
+    }
+    category = helper.checkIsProperString(category,"Category");
+    if(!(category!== 'Pizza' || category!== 'Bakery' || category!== 'Steakhouse' || category!== 'Indian' || category!== 'Asian' || category!== 'English' || category!== 'Thai')){
+        throw [400,`Category is not from valid values list`]
+    };
+    let restaurantList = [];
+    const restaurantCollection = await restaurants();
+    let restaurantMatched = await restaurantCollection.find({category: category}).toArray();;
+    for(let i=0;i<restaurantMatched.length;i++){
+        restaurantMatched[i]._id = restaurantMatched[i]._id.toString();
+        if(i<20){
+            restaurantList.push(restaurantMatched[i])
+        }
+    }
+
+    if(restaurantMatched.length==0){
+        throw [404,"Error: Could not find any people with that term"]
+    }
+    return restaurantList;
+}
+
+async function getRestaurantsByCity(city){
+    if(arguments.length>1){
+        throw [400,`More Parameters Passed`]
+    }
+    city = helper.checkIsProperString(city,"City");
+    
+    
+    let restaurantList = [];
+    const restaurantCollection = await restaurants();
+    let restaurantMatched = await restaurantCollection.find({city: city}).toArray();;
+    for(let i=0;i<restaurantMatched.length;i++){
+        restaurantMatched[i]._id = restaurantMatched[i]._id.toString();
+        if(i<20){
+            restaurantList.push(restaurantMatched[i])
+        }
+    }
+    if(restaurantMatched.length==0){
+        throw [404,"Error: Could not find any people with that term"]
+    }
+    return restaurantList;
+}
+
+async function removeRestaurant(restaurantId){
+    if(arguments.length>1){
+        throw [400,`More Parameters Passed`]
+    }
+    restaurantId = helper.checkIsProperString(restaurantId,"ID");
+    restaurantId = helper.checkIsProperId(restaurantId);
+    const restaurantCollection = await restaurants();
+    const restaurant = await getRestaurantById(restaurantId);
+    let restaurantName = restaurant.name;
+    const deletionInfo = await restaurantCollection.deleteOne({_id: ObjectId(restaurantId)});
+
+    if (deletionInfo.deletedCount === 0) {
+        throw [500,`Could not delete restaurant with id: ${restaurantId}`];
+    }
+    let statement = {
+    "restaurantId":restaurantId,
+    "deleted": true
+    }
+    return statement;
+}
+
+async function updateRestaurant(restaurantId,name,contactInfo,category,address,city,state,zip,latitude,longitude,openingTime,closingTime,restaurantTableCapacities){
+    if(arguments.length!==13){
+        throw [400,`Improper Number of Inputs`];
+    }
+    name = helper.checkIsProperString(name,"Restaurant Name");
+
+    contactInfo = helper.checkIsProperString(contactInfo,"Phone Number");
+    contactInfo = helper.validatePhoneNumber(contactInfo,"Phone Number");
+
+    category = helper.checkIsProperString(category,"Category");
+    if(!(category!== 'Pizza' || category!== 'Bakery' || category!== 'Steakhouse' || category!== 'Indian' || category!== 'Asian' || category!== 'English' || category!== 'Thai')){
+        throw [400,`Category is not from valid values list`]
+    };
+
+    address = helper.checkIsProperString(address,"Age");
+
+    city = helper.checkIsProperString(city,"City");
+
+    state = helper.checkIsProperString(state,"State");
+    if(!(state!== 'New Jersey' || state!== 'New York')){
+        throw [400,`Currently servicing only in New York and New Jersey`]
+    };
+
+    zip = helper.checkIsProperString(zip,"Zip");
+    zip = helper.validateNumber(zip,"Zip");
+    zip = parseInt(zip);
+
+    latitude = helper.checkIsProperString(latitude,"Latitude");
+    latitude = helper.validateLatitudeLongitude(latitude,"Latitude");
+
+    longitude = helper.checkIsProperString(longitude,"Longitude");
+    longitude = helper.validateLatitudeLongitude(longitude,"Longitude");
+
+    openingTime = helper.checkIsProperString(openingTime,"Opening Time");
+
+    closingTime = helper.checkIsProperString(closingTime,"Closing Time");
+
+    restaurantTableCapacities = helper.checkIsProperString(restaurantTableCapacities,"Table Capacities");
+    restaurantTableCapacities = JSON.parse(restaurantTableCapacities);
+
+    availibility = {}
+
+    const restaurant = await getRestaurantById(restaurantId);
+    const updatedRestaurant = {
+        name: name,
+        contactInfo: contactInfo,
+        category: category,
+        address: address,
+        city: city,
+        state: state,
+        zip: zip,
+        latitude: latitude,
+        longitude: longitude,
+        openingTime: openingTime,
+        closingTime: closingTime,
+        restaurantTableCapacities:restaurantTableCapacities,
+        availibility: availibility,
+        overallRating: restaurant.overallRating,
+        reviews: restaurant.reviews,
+        reservations: restaurant.reservations
+    }
+
+    const restaurantCollection = await restaurants();
+    const updatedInfo = await restaurantCollection.updateOne(
+        {_id: ObjectId(restaurantId)},
+        {$set: updatedRestaurant}
+      );
+      if (updatedInfo.modifiedCount === 0) {
+        throw 'All new details exactly match the old details';
+      }
+      return await this.getRestaurantById(restaurantId);
+   
+}
 
 module.exports = {
     createRestaurant,
     getAllRestaurants,
     getRestaurantById,
+    getRestaurantByName,
+    getRestaurantsByCategory,
+    getRestaurantsByCity,
     removeRestaurant,
     updateRestaurant
 }
