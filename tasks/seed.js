@@ -96,7 +96,7 @@ async function main() {
 
     // console.log(await reviewData.getReviewById((rev3._id).toString()));
 
-    console.log(await reviewData.removeReview((rev2._id).toString()));
+    // console.log(await reviewData.removeReview((rev2._id).toString()));
 
     // console.log(await reviewData.getAllUserReviews((user1._id).toString()));
     // console.log(await reviewData.getAllRestaurantReviews((res1._id).toString()));

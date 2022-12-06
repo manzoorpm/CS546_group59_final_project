@@ -1,3 +1,5 @@
+// Helper functions
+
 const {ObjectId} = require('mongodb');
 
 function checkIsProperString(string,variableName){
@@ -135,4 +137,3 @@ function timeLogic(openingTime,closingTime){
     let timeDiff = closingTime2-openingTime2;
     console.log(timeDiff)
 }
-//You can add and export any helper functions you want here. If you aren't using any, then you can just leave this file as is.
