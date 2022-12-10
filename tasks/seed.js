@@ -13,6 +13,7 @@ async function main() {
   let res1,res2,res3,res4,res5;
   let reserv1,reserv2,reserv3,reserv4,reserv5;
   let rev1,rev2,rev3,rev4,rev5;
+  let admin1;
 
   try{
     user1 = await userData.createUser("dk@gmail.com","9826371262","Dhavan","Kanakia","23","Male","Mumbai","Maharashtra","David#34");
@@ -20,6 +21,8 @@ async function main() {
     user3 = await userData.createUser("ml@gmail.com","5587431204","Mao","Li","23","Male","NYC","New York","Mao$87");
     user4 = await userData.createUser("zy@gmail.com","9765434509","Zerong","Yu","24","Male","Jersey City","New Jersey","zerOng&1");
     user5 = await userData.createUser("ph@gmail.com","5587431678","Patrick","Hill","35","Male","New York City","New York","Phill@1972");
+
+    admin1 = await userData.createAdmin("dgk@gmail.com","9826371263","Dhavan","Kanakia","23","Male","Mumbai","Maharashtra","David#34");
 
     // console.log(await userData.getAllUsers());
 
