@@ -1,1 +1,59 @@
 /* main css style sheet */
+.res-container{
+    background-color: red;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+}
+
+body {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+  
+footer p {
+    margin: 0;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #ccc;
+  }
+  
+nav ul {
+    display: block;
+}
+  
+nav li {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    
+    
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+}
+  
+nav li:hover {
+    background-color: #999;
+}

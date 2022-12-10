@@ -88,7 +88,7 @@ async function createRestaurant(name,contactInfo,category,address,city,state,zip
 
 async function getAllRestaurants(){
     const restaurantCollection = await restaurants();
-    let restaurantList = await restaurantCollection.find({},{projection:{_id:1,name:1}}).toArray(); 
+    let restaurantList = await restaurantCollection.find({},{projection:{_id:1,name:1,overallRating:1,category:1,city:1,state:1,openingTime:1}}).toArray(); 
     if(!restaurantList){
         throw [500,`Internal Server Error`]
     }

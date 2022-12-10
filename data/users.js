@@ -37,7 +37,7 @@ async function createUser(emailId,contactInfo,firstName,lastName,age,gender,city
 
     let reviews = [];
     let reservations = [];
-    tag = "user"
+    let tag = "user"
 
     const userCollection = await users();
 
@@ -82,6 +82,149 @@ async function createUser(emailId,contactInfo,firstName,lastName,age,gender,city
 
     };
 
+async function createAdmin(emailId,contactInfo,firstName,lastName,age,gender,city,state,password){
+    if(arguments.length!==9){
+        throw [400,`Improper Number of Inputs`];
+    }
+    emailId = helper.checkIsProperString(emailId,"Email ID");
+    emailId = helper.validateEmail(emailId,"Email ID");
+
+    contactInfo = helper.checkIsProperString(contactInfo,"Phone Number");
+    contactInfo = helper.validatePhoneNumber(contactInfo,"Phone Number");
+
+    firstName = helper.checkIsProperString(firstName,"First Name");
+    lastName = helper.checkIsProperString(lastName,"Last Name");
+
+    age = helper.checkIsProperString(age,"Age");
+    age = helper.validateNumber(age,"Age");
+    age = parseInt(age);
+
+    gender = helper.checkIsProperString(gender,"Gender");
+
+    city = helper.checkIsProperString(city,"City");
+
+    state = helper.checkIsProperString(state,"State");
+
+    password = helper.checkIsProperString(password,"Password");
+    password = helper.checkPassword(password,"Password");
+
+    let reviews = [];
+    let reservations = [];
+    let tag = "admin"
+
+    const userCollection = await users();
+
+    const ifUserEmail = await userCollection.findOne({emailId:emailId});
+    const ifUserPhoneNumber = await userCollection.findOne({contactInfo:contactInfo});
+
+    if(!ifUserEmail && !ifUserPhoneNumber){
+        const hashedPassword = await bcrypt.hash(password,saltRounds)
+        const newAdmin = {
+            firstName:firstName,
+            lastName:lastName,
+            emailId:emailId,
+            contactInfo:contactInfo,
+            age:age,
+            gender:gender,
+            city:city,
+            state:state,
+            hashedPassword:hashedPassword,
+            tag:tag,
+            reviews:reviews,
+            reservations:reservations
+        }
+        const insertInfo = await userCollection.insertOne(newAdmin);
+        // const renameId = await userCollection.aggregate({ $project: { _id:0, userId:1,firstName:1,lastName:1,emailId:1,contactInfo:1,age:1,gender:1,city:1,state:1,hashedPassword:1,reviews:1,reservations:1}})
+        // const renameInfo = await userCollection.updateMany({}, {$rename:{"_id":"userId"}}, false, true)
+        if (!insertInfo.insertedId || !insertInfo.acknowledged){
+            throw [500,'Internal Server Error'];
+        }
+        else{
+            return {insertedAdmin:true}
+            // const newId = insertInfo.insertedId.toString();
+
+            // const user = await userCollection.findOne({_id: ObjectId(newId)});
+            // user._id = newId
+            // return user; 
+        }
+    }
+    else{
+        throw [400,'Error: Email/Phone Number already registered']
+    }
+};
+
+async function createResC(emailId,contactInfo,firstName,lastName,age,gender,city,state,password){
+    if(arguments.length!==9){
+        throw [400,`Improper Number of Inputs`];
+    }
+    emailId = helper.checkIsProperString(emailId,"Email ID");
+    emailId = helper.validateEmail(emailId,"Email ID");
+
+    contactInfo = helper.checkIsProperString(contactInfo,"Phone Number");
+    contactInfo = helper.validatePhoneNumber(contactInfo,"Phone Number");
+
+    firstName = helper.checkIsProperString(firstName,"First Name");
+    lastName = helper.checkIsProperString(lastName,"Last Name");
+
+    age = helper.checkIsProperString(age,"Age");
+    age = helper.validateNumber(age,"Age");
+    age = parseInt(age);
+
+    gender = helper.checkIsProperString(gender,"Gender");
+
+    city = helper.checkIsProperString(city,"City");
+
+    state = helper.checkIsProperString(state,"State");
+
+    password = helper.checkIsProperString(password,"Password");
+    password = helper.checkPassword(password,"Password");
+
+    let reviews = [];
+    let reservations = [];
+    let tag = "resC"
+
+    const userCollection = await users();
+
+    const ifUserEmail = await userCollection.findOne({emailId:emailId});
+    const ifUserPhoneNumber = await userCollection.findOne({contactInfo:contactInfo});
+
+    if(!ifUserEmail && !ifUserPhoneNumber){
+        const hashedPassword = await bcrypt.hash(password,saltRounds)
+        const newResC = {
+            firstName:firstName,
+            lastName:lastName,
+            emailId:emailId,
+            contactInfo:contactInfo,
+            age:age,
+            gender:gender,
+            city:city,
+            state:state,
+            hashedPassword:hashedPassword,
+            tag:tag,
+            reviews:reviews,
+            reservations:reservations
+        }
+        const insertInfo = await userCollection.insertOne(newResC);
+        // const renameId = await userCollection.aggregate({ $project: { _id:0, userId:1,firstName:1,lastName:1,emailId:1,contactInfo:1,age:1,gender:1,city:1,state:1,hashedPassword:1,reviews:1,reservations:1}})
+        // const renameInfo = await userCollection.updateMany({}, {$rename:{"_id":"userId"}}, false, true)
+        if (!insertInfo.insertedId || !insertInfo.acknowledged){
+            throw [500,'Internal Server Error'];
+        }
+        else{
+            return {insertedAdmin:true}
+            // const newId = insertInfo.insertedId.toString();
+
+            // const user = await userCollection.findOne({_id: ObjectId(newId)});
+            // user._id = newId
+            // return user; 
+        }
+    }
+    else{
+        throw [400,'Error: Email/Phone Number already registered']
+    }
+
+};
+
 async function checkUser(username,password){
     username = username.toLowerCase()
 
@@ -105,6 +248,9 @@ async function checkUser(username,password){
                 return {authenticatedUser: true}
             }
             if(user.tag === "admin"){
+                return {authenticatedAdmin: true}
+            }
+            if(user.tag === "resC"){
                 return {authenticatedAdmin: true}
             }
             
@@ -147,6 +293,31 @@ async function getUserById(userId){
     user._id = user._id.toString()
     return user;
 }
+
+async function getUserByUsername(username){
+    if(arguments.length>1){
+        throw [400,`More Parameters Passed`]
+    }
+    username = helper.checkIsProperString(username,"Username");
+    const userCollection = await users();
+    const ifUserEmail = await userCollection.findOne({emailId:username});
+    const ifUserPhoneNumber = await userCollection.findOne({contactInfo:username});
+    let user
+    if(ifUserPhoneNumber || ifUserEmail){
+        if(ifUserEmail){
+            user = ifUserEmail;
+        }
+        if(ifUserPhoneNumber){
+            user = ifUserPhoneNumber;
+        }
+    }
+    if(!user || user === null){
+        throw [404,`No user corresponds to the ID`]
+    }
+    user._id = user._id.toString()
+    return user;
+}
+
 
 async function removeUser(userId){
     if(arguments.length>1){
@@ -222,8 +393,10 @@ async function updateUser(userId,emailId,contactInfo,firstName,lastName,age,gend
 module.exports = {
     createUser,
     checkUser,
+    createAdmin,
     getAllUsers,
     getUserById,
+    getUserByUsername,
     removeUser,
     updateUser
 }
