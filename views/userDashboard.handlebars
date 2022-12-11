@@ -1,0 +1,22 @@
+<main>
+    <ul>
+        {{#each restaurants}}
+        <li class ="res">
+            <a href="/user/restaurant/{{_id}}">
+                <p>{{name}}            Rating:<span>{{overallRating}}</span></p>
+                <p>{{category}}</p>
+                <p>{{city}}, {{state}}</p>
+                <p>Opens at {{openingTime}}</p>
+            </a>
+        </li>
+        {{/each}}
+    </ul>
+    
+</main>
+<nav>  
+    <ul>  
+        <li><a href="/">Dashboard</a></li>  
+        <li><a href="/user/profile/{{userId}}">Profile</a></li>
+        <li><a href="/logout">Log Out</a></li>    
+    </ul>  
+</nav>
