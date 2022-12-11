@@ -68,7 +68,7 @@ app.use("/dashboards/admin", async (req, res, next) => {
   }
 });
 app.use("/dashboards/restaurant", async (req, res, next) => {
-  if (req.session.admin) {
+  if (req.session.restaurant) {
     next();
   } else {
     return res.redirect("/exceptions/forbidden");
