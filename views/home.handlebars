@@ -1,0 +1,15 @@
+<main>
+  <ul>
+    {{#each restaurants}}
+      <li class="res">
+        <a href="/restaurant/{{_id}}">
+          <p>{{name}} Rating:<span>{{overallRating}}</span></p>
+          <p>{{category}}</p>
+          <p>{{city}}, {{state}}</p>
+          <p>Opens at {{openingTime}}</p>
+        </a>
+      </li>
+    {{/each}}
+  </ul>
+
+</main>

@@ -1,21 +1,47 @@
-{{!-- main handlebars --}}
-<!DOCTYPE html>
+{{! main handlebars }}
+
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>{{title}}</title>
-        <link rel="stylesheet" href="/public/css/main.css">
-    </head>
-    <body>
-        {{{body}}}
-        <div class="about_footer">
-            <footer id="myfooter">
-                <p>RESTAURANT RESERVATION SYSTEM</p>
-                <p>Restaurant reservations made easier for you.</p>
-                <p>Creators: Dhavan Kanakia, Manzoor Mehaboob, Mao Li</p>
-                <p>CS546 Final Project</p>
-                <p>Stevens Institute of Technology</p>
-            </footer>
-        </div>
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/public/css/main.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        {{#if loggedIn}}
+          <li><a href="/auth/logout">Log Out</a></li>
+
+          {{#if user}}
+            <li><a href="/account/user/{{userId}}">Account User</a></li>
+            <li>Welcome, {{name}}</li>
+          {{/if}}
+          {{#if admin}}
+            <li><a href="/account/admin/{{adminId}}">Account Admin</a></li>
+            <li><a href="/dashboards/admin/">Admin Dashboard</a></li>
+            <li>Welcome, {{name}}</li>
+          {{/if}}
+          {{#if restaurant}}
+            <li><a href="/account/restaurant/{{restaurantId}}">Account Restaurant</a></li
+            <li>Welcome, {{name}}</li>
+          {{/if}}
+        {{else}}
+          <li><a href="/auth/login">Log in</a></li>
+          <li><a href="/auth/register">Signup</a></li>
+
+        {{/if}}
+      </ul>
+    </nav>
+    {{{body}}}
+    <div class="about_footer">
+      <footer id="myfooter">
+        <p>RESTAURANT RESERVATION SYSTEM</p>
+        <p>Restaurant reservations made easier for you.</p>
+        <p>Creators: Dhavan Kanakia, Manzoor Mehaboob, Mao Li</p>
+        <p>CS546 Final Project</p>
+        <p>Stevens Institute of Technology</p>
+      </footer>
+    </div>
+  </body>
 </html>

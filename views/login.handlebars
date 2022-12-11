@@ -1,22 +1,34 @@
 <main>
-    <div class="container">
-        <h2>{{title}}</h2>
-        <form method="POST" action='/login' id="login-form">
-            <div class="form">
-                <label for='usernameInput'>Username:</label>
-                <input id="usernameInput" type="text" name='usernameInput' class="form-user" placeholder="usernameInput">
-            </div>
-            <div class="form">
-                <label for="passwordInput">Password:</label>
-                <input id="passwordInput" type="password" name="passwordInput" class="'form-user" placeholder="passwordInput">
-            </div>
-            <button type="submit" class="btn">Login</button>
-        </form>
-        <br>
-        {{#if hasErrors}}
-            <p class="Error">{{error}}</p>
-        {{/if}}
-        <br>
-        <a href="/register">Click here to register!</a>
-    </div>
+  <div class="container">
+    <h2>{{title}}</h2>
+    <form method="POST" action="/auth/login" id="login-form">
+      <div class="form">
+        <label for="usernameInput">Username:</label>
+        <input
+          id="usernameInput"
+          type="text"
+          name="usernameInput"
+          class="form-user"
+          placeholder="usernameInput"
+        />
+      </div>
+      <div class="form">
+        <label for="passwordInput">Password:</label>
+        <input
+          id="passwordInput"
+          type="password"
+          name="passwordInput"
+          class="'form-user"
+          placeholder="passwordInput"
+        />
+      </div>
+      <button type="submit" class="btn">Login</button>
+    </form>
+    <br />
+    {{#if hasErrors}}
+      <p class="Error">{{error}}</p>
+    {{/if}}
+    <br />
+    <a href="/auth/register">Click here to register!</a>
+  </div>
 </main>
