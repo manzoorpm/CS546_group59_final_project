@@ -104,6 +104,9 @@ async function main() {
     res1 = await restaurantData.createRestaurant(
       "Papa Johns",
       "5538741204",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "/public/images/imageOne.jpg",
+      "30 and under",
       "Pizza",
       "338 Palisade Avenue",
       "Jersey City",
@@ -115,9 +118,13 @@ async function main() {
       "2000",
       { 2: 4, 4: 6 }
     );
+    console.log(res1);
     res2 = await restaurantData.createRestaurant(
       "Club A Steakhouse",
       "5538741236",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "/public/images/imageOne.jpg",
+      "30 and under",
       "Steakhouse",
       "28th Street",
       "New York City",
@@ -132,6 +139,9 @@ async function main() {
     res3 = await restaurantData.createRestaurant(
       "Renatos",
       "8538741356",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "/public/images/imageOne.jpg",
+      "30 and under",
       "Pizza",
       "338 Central Avenue",
       "Jersey City",
@@ -146,6 +156,9 @@ async function main() {
     res4 = await restaurantData.createRestaurant(
       "Club B Steakhouse",
       "5538748233",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "/public/images/imageOne.jpg",
+      "30 and under",
       "Steakhouse",
       "34th Street",
       "New York City",
@@ -160,6 +173,9 @@ async function main() {
     res5 = await restaurantData.createRestaurant(
       "Artichokes",
       "7538741208",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "/public/images/imageOne.jpg",
+      "30 and under",
       "Pizza",
       "100 Washington Street",
       "Hoboken",
