@@ -1,59 +1,33 @@
-/* main css style sheet */
-.res-container{
-    background-color: red;
-}
-
-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 20px;
-    text-align: center;
-    background-color: #333;
-    color: #fff;
-}
-
+html,
 body {
-    padding-top: 60px;
-    padding-bottom: 60px;
-}
-  
-footer p {
-    margin: 0;
+  height: 100%;
 }
 
-footer a {
-    color: #fff;
-    text-decoration: none;
+
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
 }
 
-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #ccc;
-  }
-  
-nav ul {
-    display: block;
-}
-  
-nav li {
-    display: inline-block;
-    width: 100px;
-    height: 30px;
-    
-    
+.form-signin .checkbox {
+  font-weight: 400;
 }
 
-nav a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 20px;
+.form-signin .form-floating:focus-within {
+  z-index: 2;
 }
-  
-nav li:hover {
-    background-color: #999;
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }

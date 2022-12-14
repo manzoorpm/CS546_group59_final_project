@@ -1,0 +1,96 @@
+<main class="container">
+  <img src="{{restaurantValues.mainImage}}" alt="Restaurant Main Image" />
+  <h1>{{restaurantValues.name}}</h1>
+
+  <div class="list-group w-auto">
+    <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
+
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Phone</h6>
+          <p class="mb-0 opacity-75">{{restaurantValues.contactInfo}}</p>
+        </div>
+      </div>
+    </div>
+
+      <div class="list-group w-auto">
+    <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
+
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Address</h6>
+          <p class="mb-0 opacity-75">{{restaurantValues.address}}, {{restaurantValues.city}}, {{restaurantValues.state}}</p>
+        </div>
+      </div>
+    </div>
+
+   <div class="list-group w-auto">
+    <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Price Range</h6>
+          <p class="mb-0 opacity-75">{{restaurantValues.priceRange}}</p>
+        </div>
+      </div>
+    </div>
+
+       <div class="list-group w-auto">
+    <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Reccomended by</h6>
+          <p class="mb-0 opacity-75">{{restaurantValues.overallRating}}%</p>
+        </div>
+      </div>
+    </div>
+
+     <div class="list-group w-auto">
+    <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">About Restaurant</h6>
+          <p class="mb-0 opacity-75">{{restaurantValues.description}}</p>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+   <div class="row align-items-md-stretch">
+      <div class="col-md-6">
+        <h4>Reserve a table now</h4>
+
+                            <form method="POST" action="/auth/register" id="registration-form">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <span class="form-label">Check In</span>
+                                        <input class="form-control" type="date" name="reservationDate" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <span class="form-label">Rooms</span>
+                                        <select class="form-control" name="seats">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                        </select>
+                                        <span class="select-arrow"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-btn">
+                                <button class="submit-btn">Check availability</button>
+                            </div>
+                        </form>
+
+
+      </div>
+      <div class="col-md-6">
+      {{!-- map goes here --}}
+      </div>
+    </div>
+</main>

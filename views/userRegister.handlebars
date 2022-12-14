@@ -1,58 +1,88 @@
 <main>
-    <div class="container">
-        <h1>Registration Form</h1>
-        <form method="POST" action='/register' id="registration-form">
-            <div class="form">
-                <label for='firstnameInput'>First Name:</label>
-                <input id="firstnameInput" type="text" name='firstnameInput' placeholder="First Name">
-            </div>
-            <div class="form">
-                <label for='lastnameInput'>Last Name:</label>
-                <input id="lastnameInput" type="text" name='lastnameInput' placeholder="Last Name"><br>
-            </div>
-            <div class="form">
-                <label for='emailId'>Email ID:</label>
-                <input id="emailId" type="email" name='emailId' placeholder="Email ID"><br>
-            </div>
-            <div class="form">
-                <label for='contactInfo'>Phone Number:</label>
-                <input id="contactInfo" type="number" name='contactInfo' placeholder="Phone Number"><br>
-            </div>
-            <div class="form">
-                <label for='age'>Age:</label>
-                <input id="age" type="number" name='age' placeholder="Age"><br>
-            </div>
-            <div class="form">
-                <p>Gender:</p>
-                <input id="male" type="radio" name='gender' value="Male">
-                <label for="male">Male</label><br>
-                <input id="female" type="radio" name='gender' value="Female">
-                <label for="female">Female</label><br>
-                <input id="doNotWishToIdentify" type="radio" name='gender' value="Do Not Wish To Identify">
-                <label for="doNotWishToIdentify">Do Not Wish To Identify</label><br>    
-            </div>
-            <div class="form">
-                <label for='city'>City:</label>
-                <input id="city" type="text" name='city' placeholder="City"><br>
-            </div>
-            <div class="form">
-                <label for='state'>State:</label>
-                <input id="state" type="text" name='state' placeholder="State"><br>
-            </div>
-            <div class="form">
-                <label for="passwordInput">Password:</label>
-                <input id="passwordInput" type="password" name="passwordInput" placeholder="passwordInput">
-            </div>
-            
-            <button type="submit" class="btn" value="1">Sign-up</button>
-        </form>
-        <br>
-        {{#if hasErrors}}
-            <p class="Error">{{error}}</p>
-        {{/if}}
-        <br>
-        <a href="/">Already have an account? Click here to log-in</a>
-    </div>
+  <div class="container">
+    <h1>Registration Form</h1>
+    <form method="POST" action="/auth/register" id="registration-form">
+      <div class="form">
+        <label for="firstnameInput">First Name:</label>
+        <input
+          id="firstnameInput"
+          type="text"
+          name="firstnameInput"
+          placeholder="First Name"
+        />
+      </div>
+      <div class="form">
+        <label for="lastnameInput">Last Name:</label>
+        <input
+          id="lastnameInput"
+          type="text"
+          name="lastnameInput"
+          placeholder="Last Name"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="emailId">Email ID:</label>
+        <input
+          id="emailId"
+          type="email"
+          name="emailId"
+          placeholder="Email ID"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="contactInfo">Phone Number:</label>
+        <input
+          id="contactInfo"
+          type="number"
+          name="contactInfo"
+          placeholder="Phone Number"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="age">Age:</label>
+        <input id="age" type="number" name="age" placeholder="Age" /><br />
+      </div>
+      <div class="form">
+        <p>Gender:</p>
+        <input id="male" type="radio" name="gender" value="Male" />
+        <label for="male">Male</label><br />
+        <input id="female" type="radio" name="gender" value="Female" />
+        <label for="female">Female</label><br />
+        <input
+          id="doNotWishToIdentify"
+          type="radio"
+          name="gender"
+          value="Do Not Wish To Identify"
+        />
+        <label for="doNotWishToIdentify">Do Not Wish To Identify</label><br />
+      </div>
+      <div class="form">
+        <label for="city">City:</label>
+        <input id="city" type="text" name="city" placeholder="City" /><br />
+      </div>
+      <div class="form">
+        <label for="state">State:</label>
+        <input id="state" type="text" name="state" placeholder="State" /><br />
+      </div>
+      <div class="form">
+        <label for="passwordInput">Password:</label>
+        <input
+          id="passwordInput"
+          type="password"
+          name="passwordInput"
+          placeholder="passwordInput"
+        />
+      </div>
+
+      <button type="submit" class="btn" value="1">Sign-up</button>
+    </form>
+    <br />
+    {{#if hasErrors}}
+      <p class="Error">{{error}}</p>
+    {{/if}}
+    <br />
+    <a href="/">Already have an account? Click here to log-in</a>
+  </div>
 </main>
 
-{{!-- <script src="../public/js/registrationForm.js"></script> --}}
+{{! <script src="../public/js/registrationForm.js"></script> }}
