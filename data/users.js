@@ -199,9 +199,6 @@ async function checkUser(username, password) {
       if (user.tag === "admin") {
         return { authenticatedAdmin: true };
       }
-      if (user.tag === "restaurant") {
-        return { authenticatedRestaurant: true };
-      }
     } else {
       throw [400, "Error:Either the username or password is invalid"];
     }

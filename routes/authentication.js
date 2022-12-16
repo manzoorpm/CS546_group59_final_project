@@ -88,10 +88,7 @@ router
     try {
       let { authenticatedUser } = await userData.checkUser(username, password);
       let { authenticatedAdmin } = await userData.checkUser(username, password);
-      let { authenticatedRestaurant } = await userData.checkUser(
-        username,
-        password
-      );
+
       if (authenticatedUser) {
         req.session.user = username.toLowerCase();
         let user = await userData.getUserByUsername(username);
@@ -99,6 +96,7 @@ router
         let firstName = user.firstName;
         req.session.userId = userId;
         req.session.name = firstName;
+        req.session.tag = "user";
         res.redirect("/");
       }
       if (authenticatedAdmin) {
@@ -106,17 +104,9 @@ router
         let user = await userData.getUserByUsername(username);
         let adminId = user._id;
         let firstName = user.firstName;
-        req.session.adminId = adminId;
+        req.session.userId = adminId;
         req.session.name = firstName;
-        res.redirect("/");
-      }
-      if (authenticatedRestaurant) {
-        req.session.restaurant = username.toLowerCase();
-        let user = await userData.getUserByUsername(username);
-        let restaurantId = user._id;
-        let firstName = user.firstName;
-        req.session.restaurantId = restaurantId;
-        req.session.name = firstName;
+        req.session.tag = "admin";
         res.redirect("/");
       }
     } catch (e) {

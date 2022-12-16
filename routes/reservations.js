@@ -15,6 +15,10 @@ router.route("/:reservationId").get(async (req, res) => {
   return res.render("userProfile", {
     title: "Profile Page",
     reservation: reservation,
+    user: req.session.user,
+    userId: req.session.userId,
+    userTag: req.session.tag,
+    name: req.session.name,
   });
 });
 

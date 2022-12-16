@@ -7,6 +7,7 @@ const reservationData = data.reservations;
 const reviewData = data.reviews;
 
 async function main() {
+
     const db = await dbConnection.dbConnection();
     await db.dropDatabase();
     let user1, user2, user3, user4, user5;
