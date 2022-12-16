@@ -76,7 +76,7 @@ async function createRestaurant(
   // restaurantTableCapacities = helper.checkIsProperString(restaurantTableCapacities,"Table Capacities");
   // restaurantTableCapacities = JSON.parse(restaurantTableCapacities);
 
-  let availibility = {};
+  let availibility = [];
   let overallRating = 0;
   let reviews = [];
   let reservations = [];
@@ -348,7 +348,7 @@ async function updateRestaurant(
   );
   restaurantTableCapacities = JSON.parse(restaurantTableCapacities);
 
-  availibility = {};
+  availibility = [];
 
   const restaurant = await getRestaurantById(restaurantId);
   const updatedRestaurant = {
@@ -381,6 +381,135 @@ async function updateRestaurant(
   return await this.getRestaurantById(restaurantId);
 }
 
+async function createRestaurant(
+  name,
+  contactInfo,
+  description,
+  mainImage,
+  priceRange,
+  category,
+  address,
+  city,
+  state,
+  zip,
+  latitude,
+  longitude,
+  openingTime,
+  closingTime,
+  restaurantTableCapacities
+) {
+  if (arguments.length !== 15) {
+    throw [400, `Improper Number of Inputs`];
+  }
+  name = helper.checkIsProperString(name, "Restaurant Name");
+
+  contactInfo = helper.checkIsProperString(contactInfo, "Phone Number");
+  contactInfo = helper.validatePhoneNumber(contactInfo, "Phone Number");
+
+  category = helper.checkIsProperString(category, "Category");
+  if (
+    !(
+      category === "Pizza" ||
+      category === "Bakery" ||
+      category === "Steakhouse" ||
+      category === "Indian" ||
+      category === "Asian" ||
+      category === "English" ||
+      category === "Thai"
+    )
+  ) {
+    throw [400, `Category is not from valid values list`];
+  }
+
+  address = helper.checkIsProperString(address, "Address");
+
+  city = helper.checkIsProperString(city, "City");
+
+  state = helper.checkIsProperString(state, "State");
+  if (!(state !== "New Jersey" || state !== "New York")) {
+    throw [400, `Currently servicing only in New York and New Jersey`];
+  }
+
+  zip = helper.checkIsProperString(zip, "Zip");
+  zip = helper.validateNumber(zip, "Zip");
+  zip = parseInt(zip);
+
+  latitude = helper.checkIsProperString(latitude, "Latitude");
+  latitude = helper.validateLatitudeLongitude(latitude, "Latitude");
+
+  longitude = helper.checkIsProperString(longitude, "Longitude");
+  longitude = helper.validateLatitudeLongitude(longitude, "Longitude");
+
+  openingTime = helper.checkIsProperString(openingTime, "Opening Time");
+
+  closingTime = helper.checkIsProperString(closingTime, "Closing Time");
+
+  // Time Validation, Timelogic, restaurantTableCapacities Validation, availibility Calculation using timelogic and restaurant table capacities UNFINISHED
+
+  // restaurantTableCapacities = helper.checkIsProperString(restaurantTableCapacities,"Table Capacities");
+  // restaurantTableCapacities = JSON.parse(restaurantTableCapacities);
+
+  let availibility = [];
+  let overallRating = 0;
+  let reviews = [];
+  let reservations = [];
+
+  const newRestaurant = {
+    name: name,
+    contactInfo: contactInfo,
+    description: description,
+    mainImage: mainImage,
+    priceRange: priceRange,
+    category: category,
+    address: address,
+    city: city,
+    state: state,
+    zip: zip,
+    latitude: latitude,
+    longitude: longitude,
+    openingTime: openingTime,
+    closingTime: closingTime,
+    restaurantTableCapacities: restaurantTableCapacities,
+    availibility: availibility,
+    overallRating: overallRating,
+    reviews: reviews,
+    reservations: reservations,
+  };
+
+  const restaurantCollection = await restaurants();
+  const insertInfo = await restaurantCollection.insertOne(newRestaurant);
+  if (!insertInfo.insertedId || !insertInfo.acknowledged) {
+    throw [500, "Internal Server Error"];
+  }
+  const newId = insertInfo.insertedId.toString();
+
+  const restaurant = await restaurantCollection.findOne({
+    _id: ObjectId(newId),
+  });
+  restaurant._id = newId;
+  return restaurant;
+}
+const getAvailability = async (time) => {
+  //validation
+  const restaurantCollection = await restaurants();
+  let availabiliyByTime = await movieCollection.findOne({
+    availibility: { $elemMatch: { time } },
+  });
+  if (!availabiliyByTime) throw "No Review in system!";
+  return availabiliyByTime;
+};
+
+const updateAvailability = async (restaurantId, object, time, date) => {
+  //validations
+  const restaurantCollection = await restaurants();
+  const updateInfo = await restaurantCollection.updateOne(
+    { _id: ObjectId(restaurantId) },
+    { $set: { availibility: { [date]: { [time]: object } } } }
+  );
+  if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
+    throw "Error: Update failed";
+};
+
 module.exports = {
   createRestaurant,
   getAllRestaurants,
@@ -390,4 +519,6 @@ module.exports = {
   getRestaurantsByCity,
   removeRestaurant,
   updateRestaurant,
+  updateAvailability,
+  getAvailability,
 };

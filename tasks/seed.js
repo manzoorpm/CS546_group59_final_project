@@ -16,7 +16,7 @@ async function main() {
   let admin1;
 
   try {
-    user1 = await userData.createUser(
+    await userData.createUser(
       "dk@gmail.com",
       "9826371262",
       "Dhavan",
@@ -27,7 +27,7 @@ async function main() {
       "Maharashtra",
       "David#34"
     );
-    user2 = await userData.createUser(
+    await userData.createUser(
       "mm@gmail.com",
       "9765431092",
       "Manzoor",
@@ -38,7 +38,7 @@ async function main() {
       "New Jersey",
       "Manz%90"
     );
-    user3 = await userData.createUser(
+    await userData.createUser(
       "ml@gmail.com",
       "5587431204",
       "Mao",
@@ -49,7 +49,7 @@ async function main() {
       "New York",
       "Mao$87"
     );
-    user4 = await userData.createUser(
+    await userData.createUser(
       "zy@gmail.com",
       "9765434509",
       "Zerong",
@@ -60,7 +60,7 @@ async function main() {
       "New Jersey",
       "zerOng&1"
     );
-    user5 = await userData.createUser(
+    await userData.createUser(
       "ph@gmail.com",
       "5587431678",
       "Patrick",
@@ -84,7 +84,14 @@ async function main() {
       "David#34"
     );
 
-    // console.log(await userData.getAllUsers());
+    const userList = await userData.getAllUsers();
+    user1 = userList[0];
+    user2 = userList[1];
+    user3 = userList[2];
+    user4 = userList[3];
+    user5 = userList[4];
+
+    admin1 = userList[5];
 
     // console.log(await userData.checkUser("Dk@gmail.com","David#34"));
     // console.log(await userData.checkUser("9765431092","Manz%90"));
@@ -114,11 +121,11 @@ async function main() {
       "07307",
       "38.213990",
       "-85.531390",
-      "0800",
-      "2000",
+      "08:00",
+      "20:00",
       { 2: 4, 4: 6 }
     );
-    console.log(res1);
+    // console.log(res1);
     res2 = await restaurantData.createRestaurant(
       "Club A Steakhouse",
       "5538741236",
@@ -132,8 +139,8 @@ async function main() {
       "17307",
       "40.427818",
       "-3.850970",
-      "1100",
-      "2200",
+      "11:00",
+      "22:00",
       { 2: 6, 4: 3 }
     );
     res3 = await restaurantData.createRestaurant(
@@ -149,8 +156,8 @@ async function main() {
       "07307",
       "37.213990",
       "-95.531390",
-      "1000",
-      "2100",
+      "10:00",
+      "21:00",
       { 2: 8, 4: 4, 6: 2 }
     );
     res4 = await restaurantData.createRestaurant(
@@ -166,8 +173,8 @@ async function main() {
       "17308",
       "43.427818",
       "-8.850970",
-      "1200",
-      "2300",
+      "12:00",
+      "23:00",
       { 2: 4, 4: 3, 8: 1 }
     );
     res5 = await restaurantData.createRestaurant(
@@ -183,8 +190,8 @@ async function main() {
       "17309",
       "58.213990",
       "-105.531390",
-      "0900",
-      "0000",
+      "09:00",
+      "00:00",
       { 4: 4, 6: 2 }
     );
     // console.log(await restaurantData.getAllRestaurants());
