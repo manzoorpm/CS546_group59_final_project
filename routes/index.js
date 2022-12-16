@@ -6,6 +6,7 @@ const dashboardRoutes = require("./dashboards");
 const exceptionRoutes = require("./exceptions");
 const reservationRoutes = require("./reservations");
 
+
 const constructorMethod = (app) => {
   app.use("/", restaurantRoutes);
   app.use("/auth", authenticationRoutes);
@@ -13,6 +14,7 @@ const constructorMethod = (app) => {
   app.use("/dashboards", dashboardRoutes);
   app.use("/exceptions", exceptionRoutes);
   app.use("/reservations", reservationRoutes);
+
 
   app.use("*", (req, res) => {
     res.status(404).render("notFound");

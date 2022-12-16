@@ -2,6 +2,7 @@
     <img src="{{restaurant.mainImage}}" alt="Restaurant Main Image" />
     <h1>{{restaurant.name}}</h1>
 
+
     <div class="list-group w-auto">
         <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
 
@@ -127,4 +128,61 @@
                                 {{!-- map goes here --}}
                             </div>
                         </div>
+
+    {{!-- post reviews go here --}}
+    <h4>Post a New Review:</h4>
+
+    {{#if message}}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Error!</strong>  {{message}}
+        </div>
+        <div id="here"></div>
+    {{/if}}
+
+
+    <form action="/restaurant/{{restaurantValues._id}}/post-review" method="POST" id="review-form">
+        <label for="reviewTitleInput">Review Title:</label><input id="reviewTitleInput"
+                                                                  name="reviewTitleInput">
+        <br>
+        <br>
+        <label for="reviewRatingInput">Rating: </label><input id="reviewRatingInput"
+                                                              name="reviewRatingInput">
+        <br>
+        <br>
+        <label for="reviewInput">Review: </label><textarea name="reviewInput" id="reviewInput" rows="3"
+                                                           cols="70"></textarea>
+        <br>
+        <button id="button" type="submit">Post</button>
+    </form>
+    <br>
+    {{!-- reviews go here --}}
+
+    {{#if review}}
+        <h4>Reviews</h4>
+        {{#each review}}
+            <div class="list-group w-auto">
+                <div class="row align-items-md-stretch">
+                    <div class="col-md-6">
+                        <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
+                            <div class="d-flex gap-2 w-100 justify-content-between">
+                                <div>
+                                    <h6 class="mb-0">{{this.reviewerName}} posted on {{this.reviewDate}}</h6>
+                                    <h6 class="mb-0">{{this.rating}}/5.0</h6>
+                                    <p class="mb-0 opacity-75">{{this.review}}</p>
+
+                                    <button class="deleteReview btn btn-icon btn-danger" type="button"
+                                            data-id="{{this._id}}">
+                                        Delete
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+
+    {{/if}}
+    <br>
 </main>
