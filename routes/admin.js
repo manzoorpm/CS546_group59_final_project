@@ -3,7 +3,7 @@ const router = express.Router();
 const data = require("../data");
 const helper = require("../helpers");
 
-router.route("/admin").get(async (req, res) => {
+router.route("/").get(async (req, res) => {
   return res.render("adminDashboard", {
     title: "Admin Dashboard",
     user: req.session.user,
@@ -14,7 +14,11 @@ router.route("/admin").get(async (req, res) => {
   });
 });
 router
-  .route("admin/restaurant/add")
+  .route("restaurant/add")
+  .get(async (req, res) => {})
+  .post(async (req, res) => {});
+router
+  .route("restaurant/delete/:restaurantId")
   .get(async (req, res) => {})
   .post(async (req, res) => {});
 

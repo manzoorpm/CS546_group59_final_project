@@ -210,9 +210,8 @@ router
       restaurantId: req.params.restaurantId,
       restaurantCapacity: restaurantCapacity,
       hasErrors: false,
-
     });
-
+  });
 
 router
   .route("/restaurant/:restaurantId/addreservation")
@@ -276,55 +275,52 @@ router
       hasErrors: false,
     });
   });
-    .route("/restaurant/:restaurantId/post-review")
-    .get(async (req, res) => {
-        return res.redirect(`/restaurant/${req.params.restaurantId}`);
-    })
-    .post(async (req, res) => {
-        try {
-
-            if (req.session.user) {
-                let reviewTitleInput = req.body.reviewTitleInput;
-                let reviewRatingInput = req.body.reviewRatingInput;
-                let reviewInput = req.body.reviewInput;
-                //validation
-                const goodInsertedReview = await reviewData.createReview(
-                    req.session.userId,
-                    req.params.restaurantId,
-                    reviewTitleInput,
-                    reviewInput,
-                    reviewRatingInput);
-                return res.redirect(`/restaurant/${req.params.restaurantId}`);
-            } else {
-                return res.render("login", {title: "Login Page", hasErrors: false});
-
-            }
-        } catch (e) {
-            req.session.message = e;
-            res.redirect('back');
-        }
-    });
-
 router
-    .route("/restaurant/delete-review/:id")
-    .get(async (req, res) => {
-        try {
-            let reviewId = req.params.id;
-            if (!req.session.user) {
-                return res.render("login", {title: "Login Page", hasErrors: false});
-            }
-            const review = await reviewData.getReviewById(reviewId);
-            if (review.userId.toString() !== req.session.userId) {
-                throw "You can only delete your own comment!";
-            } else {
-                await reviewData.removeReview(reviewId);
-                res.redirect('back');
-            }
-        } catch (e) {
-            req.session.message = e;
-            res.redirect('back');
-        }
+  .route("/restaurant/:restaurantId/post-review")
+  .get(async (req, res) => {
+    return res.redirect(`/restaurant/${req.params.restaurantId}`);
+  })
+  .post(async (req, res) => {
+    try {
+      if (req.session.user) {
+        let reviewTitleInput = req.body.reviewTitleInput;
+        let reviewRatingInput = req.body.reviewRatingInput;
+        let reviewInput = req.body.reviewInput;
+        //validation
+        const goodInsertedReview = await reviewData.createReview(
+          req.session.userId,
+          req.params.restaurantId,
+          reviewTitleInput,
+          reviewInput,
+          reviewRatingInput
+        );
+        return res.redirect(`/restaurant/${req.params.restaurantId}`);
+      } else {
+        return res.render("login", { title: "Login Page", hasErrors: false });
+      }
+    } catch (e) {
+      req.session.message = e;
+      res.redirect("back");
+    }
+  });
 
-    });
+router.route("/restaurant/delete-review/:id").get(async (req, res) => {
+  try {
+    let reviewId = req.params.id;
+    if (!req.session.user) {
+      return res.render("login", { title: "Login Page", hasErrors: false });
+    }
+    const review = await reviewData.getReviewById(reviewId);
+    if (review.userId.toString() !== req.session.userId) {
+      throw "You can only delete your own comment!";
+    } else {
+      await reviewData.removeReview(reviewId);
+      res.redirect("back");
+    }
+  } catch (e) {
+    req.session.message = e;
+    res.redirect("back");
+  }
+});
 
 module.exports = router;

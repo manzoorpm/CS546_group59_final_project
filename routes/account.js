@@ -3,7 +3,7 @@ const router = express.Router();
 const data = require("../data");
 const helper = require("../helpers");
 
-router.route("/account/:userId").get(async (req, res) => {
+router.route("/:userId").get(async (req, res) => {
   return res.render("userProfile", {
     title: "User Profile",
     user: req.session.user,
@@ -14,7 +14,7 @@ router.route("/account/:userId").get(async (req, res) => {
   });
 });
 router
-  .route("/account/edit/:userId")
+  .route("/edit/:userId")
   .get(async (req, res) => {
     return res.render("editAccount", {
       title: "Edit User Profile",
@@ -37,7 +37,7 @@ router
     });
   });
 router
-  .route("/account/remove/:userId")
+  .route("/remove/:userId")
   .get(async (req, res) => {
     return res.redirect("removeAccount", {
       title: "User Profile",
