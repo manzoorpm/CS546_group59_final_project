@@ -28,6 +28,7 @@ async function createRestaurant(
   if (arguments.length !== 15) {
     throw [400, `Improper Number of Inputs`];
   }
+  console.log("9");
   name = helper.checkIsProperString(name, "Restaurant Name");
 
   contactInfo = helper.checkIsProperString(contactInfo, "Phone Number");
@@ -114,7 +115,7 @@ async function createRestaurant(
     _id: ObjectId(newId),
   });
   restaurant._id = newId;
-  return restaurant;
+  return { insertedRes: true };
 }
 
 async function getAllRestaurants() {

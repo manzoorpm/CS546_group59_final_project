@@ -5,6 +5,18 @@ const app = express();
 const session = require("express-session");
 const static = express.static(__dirname + "/public");
 
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({ storage: storage });
+
 const configRoutes = require("./routes");
 const exphbs = require("express-handlebars");
 const path = require("path");
@@ -13,7 +25,7 @@ app.use("/public", static);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const data = require("./data");
-const reservationsData = data.reservations;
+const reservationData = data.reservations;
 
 app.engine(
   "handlebars",
@@ -52,40 +64,43 @@ app.use("/auth/register", async (req, res, next) => {
     next();
   }
 });
-app.use("/account/:userId", async (req, res, next) => {
-  if (req.session.userId == req.params.userId) {
-    next();
-  } else {
-    return res.redirect("/exceptions/forbidden");
-  }
+app.post("/admin/restaurant/add", upload.single("image"), (req, res, next) => {
+  next();
 });
+// app.use("/account/:userId", async (req, res, next) => {
+//   if (req.session.userId.toString() == req.params.userId.toString()) {
+//     next();
+//   } else {
+//     return res.redirect("/exceptions/forbidden");
+//   }
+// });
 
-app.use("/admin/", async (req, res, next) => {
-  if (req.session.userTag == "admin") {
-    next();
-  } else {
-    return res.redirect("/exceptions/forbidden");
-  }
-});
+// app.use("/admin", async (req, res, next) => {
+//   if (req.session.userTag == "admin") {
+//     next();
+//   } else {
+//     return res.redirect("/exceptions/forbidden");
+//   }
+// });
 
-app.use("/admin/restaurant/add", async (req, res, next) => {
-  if (req.session.userTag == "admin") {
-    next();
-  } else {
-    return res.redirect("/exceptions/forbidden");
-  }
-});
+// app.use("/admin/restaurant/add", async (req, res, next) => {
+//   if (req.session.userTag !== "admin") {
+//     next();
+//   } else {
+//     return res.redirect("/exceptions/forbidden");
+//   }
+// });
 
-app.use("/admin/restaurant/delete", async (req, res, next) => {
-  if (req.session.userTag == "admin") {
-    next();
-  } else {
-    return res.redirect("/exceptions/forbidden");
-  }
-});
+// app.use("/admin/restaurant/delete", async (req, res, next) => {
+//   if (req.session.userTag == "admin") {
+//     next();
+//   } else {
+//     return res.redirect("/exceptions/forbidden");
+//   }
+// });
 
 app.use("/account/edit/:userId", async (req, res, next) => {
-  if (req.session.userId == req.params.userId) {
+  if (req.session.userId.toString() == req.params.userId.toString()) {
     next();
   } else {
     return res.redirect("/exceptions/forbidden");
@@ -118,11 +133,13 @@ app.use("/reservation/:reservationId/", async (req, res, next) => {
 });
 app.use("/reservation/delete/:reservationId/", async (req, res, next) => {
   try {
-    let reservation = await reservationData.getReservationsById();
+    let reservation = await reservationData.getReservationById();
 
     if (reservation.userId.toString() == req.params.reservationId) {
       next();
-    } else return res.redirect("/exceptions/forbidden");
+    } else {
+      return res.redirect("/exceptions/forbidden");
+    }
   } catch (e) {
     return res.redirect("/exceptions/forbidden"); //not found
   }

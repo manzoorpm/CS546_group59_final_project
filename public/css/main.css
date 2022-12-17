@@ -3,8 +3,6 @@ body {
   height: 100%;
 }
 
-
-
 .form-signin {
   width: 100%;
   max-width: 330px;
@@ -27,6 +25,29 @@ body {
 }
 
 .form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.form-signup {
+  width: 100%;
+  max-width: 500px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-signup .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signup input {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signup input {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;

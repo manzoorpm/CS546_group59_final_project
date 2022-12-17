@@ -1,11 +1,11 @@
 (function () {
-  let registrationForm = document.getElementById("registration-form");
+  let editprofileForm = document.getElementById("editprofile-form");
 
   const errorContainer = document.getElementById("error-container");
   const errorTextElement =
     errorContainer.getElementsByClassName("text-goes-here")[0];
 
-  if (registrationForm) {
+  if (editprofileForm) {
     let firstname = document.getElementById("firstnameInput");
     let lastname = document.getElementById("lastnameInput");
     let emailId = document.getElementById("emailId");
@@ -13,9 +13,8 @@
     let age = document.getElementById("age");
     let city = document.getElementById("city");
     let state = document.getElementById("state");
-    let password = document.getElementById("password");
 
-    registrationForm.addEventListener("submit", (event) => {
+    editprofileForm.addEventListener("submit", (event) => {
       let errorFlag = 0;
       let errors = [];
 
@@ -26,7 +25,6 @@
       let ageValue = age.value;
       let cityValue = city.value;
       let stateValue = state.value;
-      let passwordValue = password.value;
 
       if (!firstnameValue) {
         errorFlag += 1;
@@ -113,17 +111,6 @@
         errors.push(e[1]);
       }
 
-      if (!passwordValue) {
-        errorFlag += 1;
-        errors.push("Password is not defined");
-      }
-      try {
-        checkPassword(passwordValue, "Password");
-      } catch (e) {
-        errorFlag += 1;
-        errors.push(e[1]);
-      }
-
       if (errorFlag !== 0) {
         event.preventDefault();
         errorTextElement.textContent = `${errors}`;
@@ -198,47 +185,4 @@ function validateNumber(string, variableName) {
     throw [400, `${variableName} is not a valid number`];
   }
   return string;
-}
-
-function checkPassword(string, variableName) {
-  let scFlag = 0;
-  let capsFlag = 0;
-  let numsFlag = 0;
-  const specialCharacters = `\`!@#$%^&*()_+={};':"\\|<>\/?~`;
-  const r1 = specialCharacters.split("").some((sCh) => {
-    if (string.includes(sCh)) {
-      scFlag = 1;
-      return true;
-    } else {
-      return false;
-    }
-  });
-  const alphabets = `ABCDEFGHIJKLMNOPQRSTUVWXYZ`;
-  const r2 = alphabets.split("").some((sCh) => {
-    if (string.includes(sCh)) {
-      capsFlag = 1;
-      return true;
-    } else {
-      return false;
-    }
-  });
-  const numbers = `0123456789`;
-  const r3 = numbers.split("").some((sCh) => {
-    if (string.includes(sCh)) {
-      numsFlag = 1;
-      return true;
-    } else {
-      return false;
-    }
-  });
-  if (
-    !((r1 && r2 && r3) || (scFlag === 1 && capsFlag === 1 && numsFlag === 1))
-  ) {
-    throw [
-      400,
-      `Error: Password should have atleast one special charcter, one capital letter, one number`,
-    ];
-  } else {
-    return string;
-  }
 }
