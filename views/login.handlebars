@@ -1,46 +1,53 @@
-<main class="form-signin">
-  <form method="POST" action="/auth/login" id="login-form">
-    <img
-      class="mb-4"
-      src="/docs/5.0/assets/brand/bootstrap-logo.svg"
-      alt=""
-      width="72"
-      height="57"
-    />
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
-    <div class="form-floating">
-      <input
-        type="text"
-        class="form-control"
-        name="usernameInput"
-        id="floatingInput"
-        placeholder="username"
+<main>
+  <div class="form-signin">
+    <form method="POST" action="/auth/login" id="login-form">
+      <img
+        class="mb-4"
+        src="/docs/5.0/assets/brand/bootstrap-logo.svg"
+        alt=""
+        width="72"
+        height="57"
       />
-      <label for="floatingInput">Email address</label>
-    </div>
-    <div class="form-floating">
-      <input
-        type="password"
-        name="passwordInput"
-        class="form-control"
-        id="floatingPassword"
-        placeholder="Password"
-      />
-      <label for="floatingPassword">Password</label>
-    </div>
+      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me" />
-        Remember me
-      </label>
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          name="usernameInput"
+          id="floatingInput"
+          placeholder="username"
+        />
+        <label for="floatingInput">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input
+          type="password"
+          name="passwordInput"
+          class="form-control"
+          id="floatingPassword"
+          placeholder="Password"
+        />
+        <label for="floatingPassword">Password</label>
+      </div>
+
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me" />
+          Remember me
+        </label>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+    </form>
+    <div class="form-group hidden" id="error-container">
+      <div class="text-goes-here">
+      </div>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
-  </form>
-  {{#if hasErrors}}
-    <p class="Error">{{error}}</p>
-  {{/if}}
-  <a href="/auth/register">Click here to register!</a>
+    {{#if hasErrors}}
+      <p class="alert alert-danger Error">{{error}}</p>
+    {{/if}}
+    <a href="/auth/register">Click here to register!</a>
+  </div>
 </main>
+<script src="../public/js/loginForm.js"></script>

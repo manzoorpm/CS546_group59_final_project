@@ -1,0 +1,85 @@
+<main>
+  <div class="container">
+    <h1>Edit restaurant</h1>
+    <form method="POST" action="/admin/restaurant/add" id="editrestaurant-form">
+
+      <label for="name">Name:</label><br />
+      <input type="text" id="name" name="name" value="My Restaurant" /><br />
+
+      <label for="contactInfo">Contact Info:</label><br />
+      <input
+        type="text"
+        id="contactInfo"
+        name="contactInfo"
+        value="123-456-7890"
+      /><br />
+
+      <label for="description">Description:</label><br />
+      <textarea id="description" name="description">This is my restaurant.</textarea><br
+      />
+
+      <label for="mainImage">Main Image:</label><br />
+      <input type="file" id="mainImage" name="mainImage" /><br />
+
+      <label for="priceRange">Price Range:</label><br />
+      <input type="text" id="priceRange" name="priceRange" value="$" /><br />
+
+      <label for="category">Category:</label><br />
+      <input type="text" id="category" name="category" value="Italian" /><br />
+
+      <label for="address">Address:</label><br />
+      <input type="text" id="address" name="address" value="123 Main St" /><br
+      />
+
+      <label for="city">City:</label><br />
+      <input type="text" id="city" name="city" value="New York" /><br />
+
+      <label for="state">State:</label><br />
+      <input type="text" id="state" name="state" value="NY" /><br />
+
+      <label for="zip">Zip:</label><br />
+      <input type="text" id="zip" name="zip" value="10001" /><br />
+
+      <label for="latitude">Latitude:</label><br />
+      <input type="text" id="latitude" name="latitude" value="40.7127753" /><br
+      />
+
+      <label for="longitude">Longitude:</label><br />
+      <input
+        type="text"
+        id="longitude"
+        name="longitude"
+        value="-74.0059728"
+      /><br />
+
+      <label for="openingTime">Opening Time:</label><br />
+      <input type="time" id="openingTime" name="openingTime" value="12:00" /><br
+      />
+
+      <label for="closingTime">Closing Time:</label><br />
+      <input type="time" id="closingTime" name="closingTime" value="23:00" /><br
+      />
+
+      <label for="restaurantTableCapacities">Restaurant Table Capacities:</label><br
+      />
+      <input
+        type="text"
+        id="restaurantTableCapacities"
+        name="restaurantTableCapacities"
+        value="4,6,8"
+      /><br />
+
+      <input type="submit" value="Submit" />
+
+    </form>
+
+    <br />
+    <div class="form-group hidden" id="error-container">
+      <div class="text-goes-here">
+      </div>
+    </div>
+    {{#if hasErrors}}
+      <p class="alert alert-danger Error">{{error}}</p>
+    {{/if}}
+  </div>
+</main>

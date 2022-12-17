@@ -30,7 +30,10 @@ async function createUser(
   contactInfo = helper.validatePhoneNumber(contactInfo, "Phone Number");
 
   firstName = helper.checkIsProperString(firstName, "First Name");
+  firstName = helper.validateName(firstName, "First Name");
+
   lastName = helper.checkIsProperString(lastName, "Last Name");
+  lastName = helper.validateName(lastName, "Last Name");
 
   age = helper.checkIsProperString(age, "Age");
   age = helper.validateNumber(age, "Age");
@@ -44,6 +47,9 @@ async function createUser(
 
   password = helper.checkIsProperString(password, "Password");
   password = helper.checkPassword(password, "Password");
+  if (password.length < 6) {
+    throw [400, `Password needs to be longer than 6 characters`];
+  }
 
   let reviews = [];
   let reservations = [];
@@ -284,7 +290,7 @@ async function removeUser(userId) {
     userId: userId,
     deleted: true,
   };
-  return statement;
+  return { deletedUser: true };
 }
 
 async function updateUser(
@@ -343,7 +349,7 @@ async function updateUser(
   if (updatedInfo.modifiedCount === 0) {
     throw "All new details exactly match the old details";
   }
-  return await this.getUserById(userId);
+  return { updatedUser: true };
 }
 
 module.exports = {
