@@ -77,7 +77,8 @@
                                     {{#each tableCombinationSlots}}
                                     <div class="form-group">
 
-                                        <input type="radio" id="{{this}}" name="chosenCombination" value="{{this}}" />
+                                        <input type="radio" id="{{this}}" name="chosenCombination" value="{{this}}"
+                                            required />
                                         <label for="chosenCombination">Choose table of {{this}}</label>
                                     </div>
                                     {{/each}}
@@ -97,7 +98,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <span class="form-label">Check In</span>
-                                                <input class="form-control" type="date" name="date" required>
+                                                <input class="form-control" type="date" name="date">
                                             </div>
                                         </div>
                                     </div>
