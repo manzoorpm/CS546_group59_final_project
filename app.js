@@ -67,13 +67,6 @@ app.use("/auth/register", async (req, res, next) => {
 app.post("/admin/restaurant/add", upload.single("image"), (req, res, next) => {
   next();
 });
-app.post(
-  "/admin/restaurant/edit/:restaurantId",
-  upload.single("image"),
-  (req, res, next) => {
-    next();
-  }
-);
 // app.use("/account/:userId", async (req, res, next) => {
 //   if (req.session.userId.toString() == req.params.userId.toString()) {
 //     next();

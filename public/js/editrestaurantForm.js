@@ -1,6 +1,253 @@
-// Helper functions
+(function () {
+  let editrestaurantForm = document.getElementById("editrestaurant-form");
 
-const { ObjectId } = require("mongodb");
+  const errorContainer = document.getElementById("error-container");
+  const errorTextElement =
+    errorContainer.getElementsByClassName("text-goes-here")[0];
+
+  if (editrestaurantForm) {
+    let name = document.getElementById("firstnameInput");
+    let emailId = document.getElementById("emailId");
+    let contactInfo = document.getElementById("contactInfo");
+    let description = document.getElementById("description");
+    let priceRange = document.getElementById("priceRange");
+    let category = document.getElementById("category");
+    let address = document.getElementById("address");
+    let city = document.getElementById("city");
+    let state = document.getElementById("state");
+    let zip = document.getElementById("zip");
+    let latitude = document.getElementById("latitude");
+    let longitude = document.getElementById("longitude");
+    let openingTime = document.getElementById("openingTime");
+    let closingTime = document.getElementById("closingTime");
+    let TableFor2 = document.getElementById("TableFor2");
+    let TableFor4 = document.getElementById("TableFor4");
+    let TableFor6 = document.getElementById("TableFor6");
+    let TableFor8 = document.getElementById("TableFor8");
+    let TableFor10 = document.getElementById("TableFor10");
+
+    editrestaurantForm.addEventListener("submit", (event) => {
+      let errorFlag = 0;
+      let errors = [];
+
+      let nameValue = name.value;
+      let emailIdValue = emailId.value;
+      let contactInfoValue = contactInfo.value;
+      let descriptionValue = description.value;
+      let priceRangeValue = priceRange.value;
+      let categoryValue = category.value;
+      let addressValue = address.value;
+      let cityValue = city.value;
+      let stateValue = state.value;
+      let zipValue = zip.value;
+      let latitudeValue = latitude.value;
+      let longitudeValue = longitude.value;
+      let openingTimeValue = openingTime.value;
+      let closingTimeValue = closingTime.value;
+      let TableFor2Value = TableFor2.value;
+      let TableFor4Value = TableFor4.value;
+      let TableFor6Value = TableFor6.value;
+      let TableFor8Value = TableFor8.value;
+      let TableFor10Value = TableFor10.value;
+      if (!nameValue) {
+        errorFlag += 1;
+        errors.push("First Name is not defined");
+      }
+      if (!emailIdValue) {
+        errorFlag += 1;
+        errors.push("First Name is not defined");
+      }
+      if (!contactInfoValue) {
+        errorFlag += 1;
+        errors.push("First Name is not defined");
+      }
+      if (!descriptionValue) {
+        errorFlag += 1;
+        errors.push("First Name is not defined");
+      }
+      if (!priceRangeValue) {
+        errorFlag += 1;
+        errors.push("First Name is not defined");
+      }
+      if (!categoryValue) {
+        errorFlag += 1;
+        errors.push("First Name is not defined");
+      }
+      if (!addressValue) {
+        errorFlag += 1;
+        errors.push("First Name is not defined");
+      }
+      if (!cityValue) {
+        errorFlag += 1;
+        errors.push("First Name is not defined");
+      }
+      if (!stateValue) {
+        errorFlag += 1;
+        errors.push("First Name is not defined");
+      }
+      if (!zipValue) {
+        errorFlag += 1;
+        errors.push("First Name is not defined");
+      }
+      if (!latitudeValue) {
+        errorFlag += 1;
+        errors.push("First Name is not defined");
+      }
+      if (!longitudeValue) {
+        errorFlag += 1;
+        errors.push("First Name is not defined");
+      }
+      if (!openingTimeValue) {
+        errorFlag += 1;
+        errors.push("First Name is not defined");
+      }
+      if (!closingTimeValue) {
+        errorFlag += 1;
+        errors.push("First Name is not defined");
+      }
+      if (!TableFor2Value) {
+        errorFlag += 1;
+        errors.push("TableFor2 is not defined");
+      }
+      if (!TableFor4Value) {
+        errorFlag += 1;
+        errors.push("TableFor4 is not defined");
+      }
+      if (!TableFor6Value) {
+        errorFlag += 1;
+        errors.push("TableFor6 is not defined");
+      }
+      if (!TableFor8Value) {
+        errorFlag += 1;
+        errors.push("TableFor8 is not defined");
+      }
+      if (!TableFor10Value) {
+        errorFlag += 1;
+        errors.push("TableFor10 is not defined");
+      }
+
+      try {
+        validateCity(nameValue, "editrestaurant Name");
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+      try {
+        validateEmail(emailIdValue, "Email ID");
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+      try {
+        validatePhoneNumber(contactInfoValue, "Phone Number");
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+      try {
+        validateNumber(priceRangeValue, "Price Range");
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+      try {
+        validateCategory(categoryValue, "Category");
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+      try {
+        validateCity(cityValue, "City");
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+      try {
+        if (!(stateValue !== "New Jersey" || stateValue !== "New York")) {
+          throw [400, `Currently servicing only in New York and New Jersey`];
+        }
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+      try {
+        zip = helper.validateNumber(zipValue, "Zip");
+        if (zip.length != 5) {
+          throw [400, `Zip Code Invalid Length`];
+        }
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+      try {
+        validateLatitudeLongitude(latitudeValue, "Latitude");
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+      try {
+        validateLatitudeLongitude(longitudeValue, "Longitude");
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+      try {
+        validateTime(openingTimeValue, "Opening Time");
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+      try {
+        validateTime(closingTimeValue, "Closing Time");
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+      try {
+        compareTime(closingTimeValue, openingTimeValue);
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+      try {
+        validateNumber(TableFor2Value, "TableFor2");
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+      try {
+        validateNumber(TableFor4Value, "TableFor4");
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+      try {
+        validateNumber(TableFor6Value, "TableFor6");
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+      try {
+        validateNumber(TableFor8Value, "TableFor8");
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+      try {
+        validateNumber(TableFor10Value, "TableFor10");
+      } catch (e) {
+        errorFlag += 1;
+        errors.push(e[1]);
+      }
+
+      if (errorFlag !== 0) {
+        event.preventDefault();
+        errorTextElement.textContent = `${errors[0]}`;
+        errorContainer.classList.remove("hidden");
+      }
+    });
+  }
+})();
 
 function checkIsProperString(string, variableName) {
   if (typeof string === "undefined") {
@@ -267,163 +514,6 @@ function validateLatitudeLongitude(string, variableName) {
   return string;
 }
 
-function isEmptyObject(obj) {
-  return Object.keys(obj).length === 0;
-}
-
-function dateFormat(input) {
-  var pattern = /(\d{4})\-(\d{2})\-(\d{2})/;
-  if (!input || !input.match(pattern)) {
-    return null;
-  }
-  return input.replace(pattern, "$2/$3/$1");
-}
-
-function getRestaurantCapacity(restaurant) {
-  let restaurantCapacity = 0;
-  let p = restaurant.restaurantTableCapacities;
-  for (var key in p) {
-    if (p.hasOwnProperty(key)) {
-      restaurantCapacity = restaurantCapacity + key * p[key];
-    }
-  }
-  return restaurantCapacity;
-}
-
-var getTableCombinations = function (candidates, target) {
-  candidates.sort((a, b) => a - b);
-  return backtrack(candidates, target);
-};
-
-var backtrack = function (candidates, target) {
-  let res = [];
-
-  for (const [ind, candidate] of candidates.entries()) {
-    if (candidates[ind - 1] == candidate) continue;
-    if (candidate < target) {
-      let subResult = backtrack(candidates.slice(ind + 1), target - candidate);
-      subResult.map((sub) => sub.unshift(candidate));
-      if (subResult.length > 0) res.push(...subResult);
-    } else {
-      if (candidate == target) res.push([candidate]);
-      break;
-    }
-  }
-
-  return res;
-};
-
-//Restaurant route helpers
-
-function getClosingTime(time) {
-  let openingTimeHour = parseInt(time.split(":")[0]);
-  let openingTimeMin = parseInt(time.split(":")[1]);
-
-  openingTimeHour = openingTimeHour - 2;
-  if (openingTimeHour.toString().length == 1) {
-    openingTimeHour = "0" + openingTimeHour;
-  }
-  if (openingTimeMin.toString().length == 1) {
-    openingTimeMin = "0" + openingTimeMin;
-  }
-  return openingTimeHour + ":" + openingTimeMin;
-}
-function getAllTime(time) {
-  let getAllTimeArray = [];
-  getAllTimeArray.push(time);
-  let openingTimeHour = parseInt(time.split(":")[0]);
-  let openingTimeMin = parseInt(time.split(":")[1]);
-
-  for (let i = 0; i < 3; i++) {
-    ///fix 24 +
-    if (openingTimeMin == 0) openingTimeMin = 30;
-    else {
-      openingTimeHour = openingTimeHour + 1;
-      openingTimeMin = 0;
-    }
-    if (openingTimeHour.toString().length == 1) {
-      currentTimeHour = "0" + openingTimeHour;
-    } else {
-      currentTimeHour = openingTimeHour;
-    }
-    if (openingTimeMin.toString().length == 1) {
-      currentTimeMin = "0" + openingTimeMin;
-    } else {
-      currentTimeMin = openingTimeMin;
-    }
-    currentTime = currentTimeHour + ":" + currentTimeMin;
-    getAllTimeArray.push(currentTime);
-  }
-  return getAllTimeArray;
-}
-
-function getTimeSlots(openingTime, closingTime) {
-  let availabilityArray = [];
-  let currentTime = "";
-  let currentTimeHour = "";
-  let currentTimeMin = "";
-  let openingTimeHour = parseInt(openingTime.split(":")[0]);
-  let openingTimeMin = parseInt(openingTime.split(":")[1]);
-  closingTime = getClosingTime(closingTime);
-  availabilityArray.push(openingTime);
-
-  while (currentTime != closingTime) {
-    if (openingTimeMin == 0) openingTimeMin = 30;
-    else {
-      openingTimeHour = openingTimeHour + 1;
-      openingTimeMin = 0;
-    }
-    if (openingTimeHour.toString().length == 1) {
-      currentTimeHour = "0" + openingTimeHour;
-    } else {
-      currentTimeHour = openingTimeHour;
-    }
-    if (openingTimeMin.toString().length == 1) {
-      currentTimeMin = "0" + openingTimeMin;
-    } else {
-      currentTimeMin = openingTimeMin;
-    }
-    currentTime = currentTimeHour + ":" + currentTimeMin;
-    availabilityArray.push(currentTime);
-  }
-  return availabilityArray;
-}
-
-function objectToArrayOfAvailability(object) {
-  let availabilityObject = object;
-  let availabilityArray = [];
-  for (var key in availabilityObject) {
-    if (availabilityObject.hasOwnProperty(key)) {
-      for (let i = 0; i < availabilityObject[key]; i++) {
-        availabilityArray.push(key);
-      }
-    }
-  }
-  return availabilityArray;
-}
-function getTableCombinationSlots(availabilityObject, guests) {
-  availabilityArray = objectToArrayOfAvailability(availabilityObject);
-
-  if (guests % 2 == 0) {
-    guests = parseInt(guests);
-  } else {
-    guests = parseInt(guests) + 1;
-  }
-
-  if (getTableCombinations(availabilityArray, guests).length == 0)
-    throw {
-      name: "noSeats",
-      message: "There are no available seats for chosen requirements!",
-    };
-
-  var tableCombinations = getTableCombinations(availabilityArray, guests);
-  var tableCombinationSlots = [];
-  for (let i = 0; i < tableCombinations.length; i++) {
-    tableCombinationSlots.push(tableCombinations[i].join(" and "));
-  }
-  return tableCombinationSlots;
-}
-
 function validateCategory(string, variableName) {
   let category = string.trim();
   if (
@@ -478,98 +568,4 @@ function compareTime(bigTime, smallTime) {
     }
   }
   return true;
- }
-function isValidDate(dateString) {
-  // First check for the pattern
-  if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)) return false;
-
-  // Parse the date parts to integers
-  var parts = dateString.split("/");
-  var day = parseInt(parts[1], 10);
-  var month = parseInt(parts[0], 10);
-  var year = parseInt(parts[2], 10);
-
-  // Check the ranges of month and year
-  if (year < 1000 || year > 3000 || month == 0 || month > 12) return false;
-
-  var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-  // Adjust for leap years
-  if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
-    monthLength[1] = 29;
-
-  // Check the range of the day
-  return day > 0 && day <= monthLength[month - 1];
 }
-
-function checkBookingDate(date) {
-  date = dateFormat(date);
-  const futureDate = new Date();
-  futureDate.setMonth(futureDate.getMonth() + 12);
-
-  if (!isValidDate(date)) {
-    throw "Input is not in valid date format (mm/dd/yyy)";
-  }
-  let varDate = new Date(date);
-  let today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  if (varDate < today) {
-    throw "Input date had passed, unable to book";
-  }
-  if (varDate > futureDate) {
-    throw "Sorry, Unable to book more than a year advance";
-  }
-  return date;
-}
-
-function isInDesiredForm(str) {
-  str = checkIsProperString(str);
-  var n = Math.floor(Number(str));
-  return n !== Infinity && String(n) === str && n >= 0;
-}
-
-function checkGuests(str) {
-  str = checkIsProperString(str, "Guests");
-  if (!isInDesiredForm(str)) {
-    throw "Number of guests should be a postive number";
-  }
-  if (parseInt(str) == 1) {
-    throw "Number of Guests should be atleast two, for single guests, bar seating is available, contact restaurant directly";
-  }
-  return str;
-}
-
-function checkInputTime(str) {
-  str = checkIsProperString(str, Guests);
-  return str;
-}
-
-module.exports = {
-  checkIsProperString,
-  checkIsProperArray,
-  validateEmail,
-  validatePhoneNumber,
-  validateName,
-  validateCity,
-  validateState,
-  validateNumber,
-  validateTime,
-  checkPassword,
-  checkIsProperId,
-  validateLatitudeLongitude,
-  isEmptyObject,
-  dateFormat,
-  getRestaurantCapacity,
-  getTableCombinations,
-  getAllTime,
-  getTimeSlots,
-  objectToArrayOfAvailability,
-  getTableCombinationSlots,
-  validateCategory,
-  checkForSpaces,
-  compareTime,
-  checkBookingDate,
-  checkGuests,
-  checkInputTime,
-};

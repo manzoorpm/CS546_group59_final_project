@@ -27,9 +27,10 @@ router
     //   return res.status(e[0]).render('userRegister',{title:"Registration Form", hasErrors:true, error:`${e[1]}`})
     // }
     let name = req.body.name;
+    let emailId = req.body.emailId;
     let contactInfo = req.body.contactInfo;
     let description = req.body.description;
-    let mainImage = req.file.destination + "/" + req.file.filename;
+    let mainImage = req.file.destination.slice(1) + "/" + req.file.filename;
     let priceRange = req.body.priceRange;
     let category = req.body.category;
     let address = req.body.address;
@@ -56,6 +57,9 @@ router
       //   FOR ERROR CHECKING
       name = helper.checkIsProperString(name, "Restaurant Name");
       name = helper.validateCity(name, "Restaurant Name");
+
+      emailId = helper.checkIsProperString(emailId, "Email ID");
+      emailId = helper.validateEmail(emailId, "Email ID");
 
       contactInfo = helper.checkIsProperString(contactInfo, "Phone Number");
       contactInfo = helper.validatePhoneNumber(contactInfo, "Phone Number");
@@ -110,6 +114,7 @@ router
     try {
       let insertedRes = await restaurantData.createRestaurant(
         name,
+        emailId,
         contactInfo,
         description,
         mainImage,
@@ -171,9 +176,9 @@ router
     //   return res.status(e[0]).render('userRegister',{title:"Registration Form", hasErrors:true, error:`${e[1]}`})
     // }
     let name = req.body.name;
+    let emailId = req.body.emailId;
     let contactInfo = req.body.contactInfo;
     let description = req.body.description;
-    let mainImage = req.file.destination.slice(1) + "/" + req.file.filename;
     let priceRange = req.body.priceRange;
     let category = req.body.category;
     let address = req.body.address;
@@ -201,12 +206,13 @@ router
       name = helper.checkIsProperString(name, "Restaurant Name");
       name = helper.validateCity(name, "Restaurant Name");
 
+      emailId = helper.checkIsProperString(emailId, "Email ID");
+      emailId = helper.validateEmail(emailId, "Email ID");
+
       contactInfo = helper.checkIsProperString(contactInfo, "Phone Number");
       contactInfo = helper.validatePhoneNumber(contactInfo, "Phone Number");
 
       description = helper.checkIsProperString(description, "Description");
-
-      mainImage = helper.checkIsProperString(mainImage, "Image Link");
 
       priceRange = helper.checkIsProperString(priceRange, "Price Range");
       priceRange = helper.validateNumber(priceRange, "Price Range");
@@ -225,10 +231,10 @@ router
       }
 
       zip = helper.checkIsProperString(zip, "Zip");
-      if (zip.length > 5 || zip.length < 4) {
+      zip = helper.validateNumber(zip, "Zip");
+      if (zip.length != 5) {
         throw [400, `Zip Code Invalid Length`];
       }
-      zip = helper.validateNumber(zip, "Zip");
 
       latitude = helper.checkIsProperString(latitude, "Latitude");
       latitude = helper.validateLatitudeLongitude(latitude, "Latitude");
@@ -237,8 +243,12 @@ router
       longitude = helper.validateLatitudeLongitude(longitude, "Longitude");
 
       openingTime = helper.checkIsProperString(openingTime, "Opening Time");
+      openingTime = helper.validateTime(openingTime, "Opening Time");
 
       closingTime = helper.checkIsProperString(closingTime, "Closing Time");
+      closingTime = helper.validateTime(closingTime, "Closing Time");
+
+      helper.compareTime(closingTime, openingTime);
     } catch (e) {
       return res.render("adminUpdateRemoveRestaurant", {
         title: "Edit Restaurant",
@@ -256,9 +266,9 @@ router
       let updatedRes = await restaurantData.updateRestaurant(
         req.params.restaurantId,
         name,
+        emailId,
         contactInfo,
         description,
-        mainImage,
         priceRange,
         category,
         address,
