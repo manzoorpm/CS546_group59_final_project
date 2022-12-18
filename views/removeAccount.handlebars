@@ -1,0 +1,20 @@
+<main>
+  <p>User Name:{{user.firstName}} {{user.lastName}}</p>
+  <p>Email ID:{{user.emailId}}</p>
+  <p>Phone Number:{{user.contactInfo}}</p>
+  <p>Age:{{user.age}}</p>
+  <p>Gender:{{user.gender}}</p>
+  <p>City:{{user.city}}</p>
+  <p>State:{{user.state}}</p>
+  <form
+    method="POST"
+    action="/account/remove/{{user._id}}"
+    id="deleteprofile-form"
+  >
+    <button type="submit" class="w-20 btn btn-sm btn-danger">Confirm Delete</button>
+    <a
+      class="w-20 btn btn-sm btn-primary"
+      href="/account/{{user._id}}"
+    >Cancel</a>
+  </form>
+</main>

@@ -1,1 +1,78 @@
-<h1>Add restaurants here</h1>
+<main>
+  <div class="container">
+    <h1>Add restaurants here</h1>
+    <form
+      method="POST"
+      action="/admin/restaurant/add"
+      id="restaurant-form"
+      enctype="multipart/form-data"
+    >
+      <label for="name">Name:</label><br />
+      <input type="text" id="name" name="name" /><br />
+
+      <label for="contactInfo">Contact Info:</label><br />
+      <input type="text" id="contactInfo" name="contactInfo" /><br />
+
+      <label for="description">Description:</label><br />
+      <textarea id="description" name="description"></textarea><br />
+
+      <label for="image">Main Image:</label><br />
+      <input type="file" id="image" name="image" /><br />
+
+      <label for="priceRange">Price Range:</label><br />
+      <input type="text" id="priceRange" name="priceRange" /><br />
+
+      <label for="category">Category:</label><br />
+      <input type="text" id="category" name="category" /><br />
+
+      <label for="address">Address:</label><br />
+      <input type="text" id="address" name="address" /><br />
+
+      <label for="city">City:</label><br />
+      <input type="text" id="city" name="city" /><br />
+
+      <label for="state">State:</label><br />
+      <input type="text" id="state" name="state" /><br />
+
+      <label for="zip">Zip:</label><br />
+      <input type="text" id="zip" name="zip" /><br />
+
+      <label for="latitude">Latitude:</label><br />
+      <input type="text" id="latitude" name="latitude" /><br />
+
+      <label for="longitude">Longitude:</label><br />
+      <input type="text" id="longitude" name="longitude" /><br />
+
+      <label for="openingTime">Opening Time:</label><br />
+      <input type="time" id="openingTime" name="openingTime" /><br />
+
+      <label for="closingTime">Closing Time:</label><br />
+      <input type="time" id="closingTime" name="closingTime" /><br />
+
+      <label for="TableFor2">Table for 2:</label><br />
+      <input type="number" id="TableFor2" name="TableFor2" /><br />
+
+      <label for="TableFor4">Table for 4:</label><br />
+      <input type="number" id="TableFor4" name="TableFor4" /><br />
+
+      <label for="TableFor6">Table for 6:</label><br />
+      <input type="number" id="TableFor6" name="TableFor6" /><br />
+
+      <label for="TableFor8">Table for 8:</label><br />
+      <input type="number" id="TableFor8" name="TableFor8" /><br />
+
+      <label for="TableFor10">Table for 10:</label><br />
+      <input type="number" id="TableFor10" name="TableFor10" /><br />
+
+      <input type="submit" value="Submit" />
+    </form>
+    <br />
+    <div class="form-group hidden" id="error-container">
+      <div class="text-goes-here">
+      </div>
+    </div>
+    {{#if hasErrors}}
+      <p class="alert alert-danger Error">{{error}}</p>
+    {{/if}}
+  </div>
+</main>

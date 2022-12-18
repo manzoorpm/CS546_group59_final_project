@@ -111,7 +111,7 @@ async function main() {
   }
 
   try {
-    res1 = await restaurantData.createRestaurant(
+    await restaurantData.createRestaurant(
       "Papa Johns",
       "5538741204",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -126,10 +126,9 @@ async function main() {
       "-85.531390",
       "08:00",
       "20:00",
-      { 2: 4, 6: 2 }
+      { 2: 4, 4: 6 }
     );
-    // console.log(res1);
-    res2 = await restaurantData.createRestaurant(
+    await restaurantData.createRestaurant(
       "Club A Steakhouse",
       "5538741236",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -146,7 +145,8 @@ async function main() {
       "22:00",
       { 2: 6, 4: 3 }
     );
-    res3 = await restaurantData.createRestaurant(
+    
+    await restaurantData.createRestaurant(
       "Renatos",
       "8538741356",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -163,7 +163,7 @@ async function main() {
       "21:00",
       { 2: 8, 4: 4, 6: 2 }
     );
-    res4 = await restaurantData.createRestaurant(
+    await restaurantData.createRestaurant(
       "Club B Steakhouse",
       "5538748233",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -180,7 +180,7 @@ async function main() {
       "23:00",
       { 2: 4, 4: 3, 8: 1 }
     );
-    res5 = await restaurantData.createRestaurant(
+    await restaurantData.createRestaurant(
       "Artichokes",
       "7538741208",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -197,7 +197,14 @@ async function main() {
       "00:00",
       { 4: 4, 6: 2 }
     );
-    // console.log(await restaurantData.getAllRestaurants());
+
+    const restaurantList = await restaurantData.getAllRestaurants();
+
+    res1 = restaurantList[0];
+    res2 = restaurantList[1];
+    res3 = restaurantList[2];
+    res4 = restaurantList[3];
+    res5 = restaurantList[4];
 
     // console.log(await restaurantData.getRestaurantById((res2._id).toString()));
 

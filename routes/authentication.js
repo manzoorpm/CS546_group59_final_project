@@ -97,17 +97,17 @@ router
         req.session.userId = userId;
         req.session.name = firstName;
         req.session.tag = "user";
-        res.redirect("/");
+        return res.redirect("/");
       }
       if (authenticatedAdmin) {
-        req.session.admin = username.toLowerCase();
+        req.session.user = username.toLowerCase();
         let user = await userData.getUserByUsername(username);
         let adminId = user._id;
         let firstName = user.firstName;
         req.session.userId = adminId;
         req.session.name = firstName;
         req.session.tag = "admin";
-        res.redirect("/");
+        return res.redirect("/");
       }
     } catch (e) {
       return res
