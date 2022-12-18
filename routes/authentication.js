@@ -149,13 +149,11 @@ router
       username = helper.checkIsProperString(username, "Username");
       password = helper.checkIsProperString(password, "Password");
     } catch (e) {
-      return res
-        .status(e[0])
-        .render("userLogin", {
-          title: "Login",
-          hasErrors: true,
-          error: `${e[1]}`,
-        });
+      return res.status(e[0]).render("userLogin", {
+        title: "Login",
+        hasErrors: true,
+        error: `${e[1]}`,
+      });
     }
     try {
       let { authenticatedUser } = await userData.checkUser(username, password);
@@ -168,7 +166,7 @@ router
         let firstName = user.firstName;
         req.session.userId = userId;
         req.session.name = firstName;
-        req.session.tag = "user";
+        req.session.userTag = "user";
         return res.redirect("/");
       }
       if (authenticatedAdmin) {
@@ -178,7 +176,7 @@ router
         let firstName = user.firstName;
         req.session.userId = adminId;
         req.session.name = firstName;
-        req.session.tag = "admin";
+        req.session.userTag = "admin";
         return res.redirect("/");
       }
     } catch (e) {
