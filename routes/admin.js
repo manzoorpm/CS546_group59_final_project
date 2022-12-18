@@ -150,7 +150,6 @@ router
       req.params.restaurantId
     );
     return res.render("adminUpdateRemoveRestaurant", {
-    return res.render("adminUpdateRemoveRestaurant", {
       title: "Edit Restaurant",
       user: user,
       restaurant: restaurant,
