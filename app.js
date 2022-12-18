@@ -99,13 +99,13 @@ app.use("/account/remove/:userId", async (req, res, next) => {
     return res.redirect("/exceptions/forbidden");
   }
 });
-app.use("/restaurant/:restauarantId/addreservation", async (req, res, next) => {
-  if (req.session.userTag == "admin") {
-    return res.redirect("/exceptions/forbidden");
-  } else if (req.session.userTag == "user") {
-    next();
-  } else return res.redirect("/auth/login");
-});
+// app.use("/restaurant/:restauarantId/addreservation", async (req, res, next) => {
+//   if (req.session.userTag == "admin") {
+//     return res.redirect("/exceptions/forbidden");
+//   } else if (req.session.userTag == "user") {
+//     next();
+//   } else return res.redirect("/auth/login");
+// });
 app.use("/reservation/:reservationId/", async (req, res, next) => {
   try {
     let reservation = await reservationData.getReservationById();

@@ -76,7 +76,13 @@ async function createRestaurant(
   // restaurantTableCapacities = helper.checkIsProperString(restaurantTableCapacities,"Table Capacities");
   // restaurantTableCapacities = JSON.parse(restaurantTableCapacities);
 
-  let availibility = [];
+  //   let availibility = [
+  //     { "12/17/2022": { "08:30": { 2: 4, 4: 2 } } },
+  //     { "12/17/2022": { "09:00": { 2: 3, 4: 2 } } },
+  //     { "12/17/2022": { "10:00": { 2: 3, 4: 2 } } },
+  //     { "12/17/2022": { "10:30": { 2: 4, 4: 1 } } },
+  //   ];
+  let availibility = {};
   let overallRating = 0;
   let reviews = [];
   let reservations = [];
@@ -348,7 +354,7 @@ async function updateRestaurant(
   );
   restaurantTableCapacities = JSON.parse(restaurantTableCapacities);
 
-  availibility = [];
+  availibility = {};
 
   const restaurant = await getRestaurantById(restaurantId);
   const updatedRestaurant = {
@@ -449,7 +455,17 @@ async function createRestaurant(
   // restaurantTableCapacities = helper.checkIsProperString(restaurantTableCapacities,"Table Capacities");
   // restaurantTableCapacities = JSON.parse(restaurantTableCapacities);
 
-  let availibility = [];
+  //   let availibility = [
+  //     {
+  //       "12/17/2022": {
+  //         "08:30": { 2: 4, 4: 2 },
+  //         "09:00": { 2: 3, 4: 2 },
+  //         "09:30": { 2: 2, 4: 2 },
+  //         "10:00": { 2: 4, 4: 1 },
+  //       },
+  //     },
+  //   ];
+  let availibility = {};
   let overallRating = 0;
   let reviews = [];
   let reservations = [];
@@ -499,16 +515,39 @@ const getAvailability = async (time) => {
   return availabiliyByTime;
 };
 
-const updateAvailability = async (restaurantId, object, time, date) => {
+// const updateAvailability = async (restaurantId, object, date) => {
+//   //validations
+//   path = "availibility." + date;
+//   const restaurantCollection = await restaurants();
+//   const updateInfo = await restaurantCollection.update(
+//     { _id: ObjectId(restaurantId) },
+//     { $set:  path: { [date]: object } }
+//   );
+//   if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
+//     throw "Error: Update failed";
+// };
+
+const addAvailability = async (restaurantId, object, date, time) => {
   //validations
+  console.log(object);
+  path = "availibility." + date + "." + time;
+  console.log(path);
+
   const restaurantCollection = await restaurants();
   const updateInfo = await restaurantCollection.updateOne(
     { _id: ObjectId(restaurantId) },
-    { $set: { availibility: { [date]: { [time]: object } } } }
+    { $set: { [path]: object } }
   );
   if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
     throw "Error: Update failed";
 };
+
+// addAvailability(
+//   "639e8d79d03c1eeb84422982",
+//   { 2: 1, 4: 5 },
+//   "12/03/2022",
+//   "08:00"
+// );
 
 module.exports = {
   createRestaurant,
@@ -519,6 +558,7 @@ module.exports = {
   getRestaurantsByCity,
   removeRestaurant,
   updateRestaurant,
-  updateAvailability,
+  //updateAvailability,
   getAvailability,
+  addAvailability,
 };

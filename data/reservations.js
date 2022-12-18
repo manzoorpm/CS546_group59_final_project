@@ -15,7 +15,8 @@ async function createReservation(
   restaurantId,
   reservationTime,
   reservationDate,
-  people
+  people,
+  bookedTable
 ) {
   userId = helper.checkIsProperString(userId, "User ID");
   userId = helper.checkIsProperId(userId);
@@ -64,6 +65,7 @@ async function createReservation(
     timeWhenBooked: timeWhenBooked,
     dateWhenBooked: dateWhenBooked,
     status: status,
+    bookedTable: bookedTable,
   };
 
   const reservationCollection = await reservations();

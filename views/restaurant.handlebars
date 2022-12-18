@@ -75,7 +75,7 @@
                                     id="registration-form">
                                     <p>Choose Table arrangements for {{date}} at {{time}}:</p>
                                     {{#each tableCombinationSlots}}
-                                    <div>
+                                    <div class="form-group">
 
                                         <input type="radio" id="{{this}}" name="chosenCombination" value="{{this}}" />
                                         <label for="chosenCombination">Choose table of {{this}}</label>
@@ -88,13 +88,13 @@
                                     </div>
                                     <input type="hidden" id="date" name="date" value="{{date}}">
                                     <input type="hidden" id="time" name="time" value="{{time}}">
+                                    <input type="hidden" id="guests" name="guests" value="{{guests}}">
 
                                 </form>
                                 {{else}}
                                 <form method="POST" action="/restaurant/{{restaurantId}}" id="registration-form">
                                     <div class="row">
                                         <div class="col-sm-6">
-
                                             <div class="form-group">
                                                 <span class="form-label">Check In</span>
                                                 <input class="form-control" type="date" name="date" required>
@@ -106,7 +106,6 @@
                                             <div class="form-group">
                                                 <span class="form-label">No of Guests</span>
                                                 <input class="form-control" name="guests" type="number" required>
-                                                <span class="select-arrow"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -121,68 +120,82 @@
                                     </div>
 
                                 </form>
-                                {{/if}}
+                                {{/if }}
 
                             </div>
                             <div class="col-md-6">
                                 {{!-- map goes here --}}
                             </div>
                         </div>
+                        {{#unless tableCombinationSlots}}
+                        {{!-- post reviews go here --}}
+                        <div class="row align-items-md-stretch">
+                            <div class="col-md-6">
 
-    {{!-- post reviews go here --}}
-    <h4>Post a New Review:</h4>
+                                <h4>Post a New Review:</h4>
 
-    {{#if message}}
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>Error!</strong>  {{message}}
-        </div>
-        <div id="here"></div>
-    {{/if}}
+                                {{#if message}}
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Error!</strong> {{message}}
+                                </div>
+                                <div id="here"></div>
+                                {{/if}}
 
 
-    <form action="/restaurant/{{restaurantValues._id}}/post-review" method="POST" id="review-form">
-        <label for="reviewTitleInput">Review Title:</label><input id="reviewTitleInput"
-                                                                  name="reviewTitleInput">
-        <br>
-        <br>
-        <label for="reviewRatingInput">Rating: </label><input id="reviewRatingInput"
-                                                              name="reviewRatingInput">
-        <br>
-        <br>
-        <label for="reviewInput">Review: </label><textarea name="reviewInput" id="reviewInput" rows="3"
-                                                           cols="70"></textarea>
-        <br>
-        <button id="button" type="submit">Post</button>
-    </form>
-    <br>
-    {{!-- reviews go here --}}
+                                <form action="/restaurant/{{restaurant._id}}/post-review" method="POST"
+                                    id="review-form">
+                                    <div class="form-group">
 
-    {{#if review}}
-        <h4>Reviews</h4>
-        {{#each review}}
-            <div class="list-group w-auto">
-                <div class="row align-items-md-stretch">
-                    <div class="col-md-6">
-                        <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
-                            <div class="d-flex gap-2 w-100 justify-content-between">
-                                <div>
-                                    <h6 class="mb-0">{{this.reviewerName}} posted on {{this.reviewDate}}</h6>
-                                    <h6 class="mb-0">{{this.rating}}/5.0</h6>
-                                    <p class="mb-0 opacity-75">{{this.review}}</p>
+                                        <label for="reviewTitleInput">Review Title:</label>
+                                        <input class="form-control" id="reviewTitleInput" name="reviewTitleInput">
+                                    </div>
+                                    <div class="form-group">
 
-                                    <button class="deleteReview btn btn-icon btn-danger" type="button"
-                                            data-id="{{this._id}}">
-                                        Delete
-                                    </button>
+                                        <label for="reviewRatingInput">Rating: </label>
+                                        <input class="form-control" id="reviewRatingInput" name="reviewRatingInput">
+                                    </div>
+                                    <div class="form-group">
 
+                                        <label for="reviewInput">Review: </label>
+                                        <textarea class="form-control" name="reviewInput" id="reviewInput" rows="3"
+                                            cols="70"></textarea>
+                                    </div>
+                                    <button id="button" type="submit">Post</button>
+                                </form>
+                                <br>
+                            </div>
+                        </div>
+                        {{!-- reviews go here --}}
+
+                        {{#if review}}
+                        <h4>Reviews</h4>
+                        {{#each review}}
+                        <div class="list-group w-auto">
+                            <div class="row align-items-md-stretch">
+                                <div class="col-md-6">
+                                    <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
+                                        <div class="d-flex gap-2 w-100 justify-content-between">
+                                            <div>
+                                                <h6 class="mb-0">{{this.reviewerName}} posted on
+                                                    {{this.reviewDate}}
+                                                </h6>
+                                                <h6 class="mb-0">{{this.rating}}/5.0</h6>
+                                                <p class="mb-0 opacity-75">{{this.review}}</p>
+
+                                                <button class="deleteReview btn btn-icon btn-danger" type="button"
+                                                    data-id="{{this._id}}">
+                                                    Delete
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        {{/each}}
+                        {{/each}}
 
-    {{/if}}
-    <br>
+                        {{/if}}
+                        {{/unless}}
+                        <br>
 </main>

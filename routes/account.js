@@ -4,7 +4,7 @@ const data = require("../data");
 const helper = require("../helpers");
 
 router.route("/:userId").get(async (req, res) => {
-  return res.render("userProfile", {
+  return res.render("account", {
     title: "User Profile",
     user: req.session.user,
     userId: req.session.userId,
