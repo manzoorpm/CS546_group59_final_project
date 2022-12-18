@@ -413,6 +413,72 @@ function checkForSpaces(string) {
   }
 }
 
+function isValidDate(dateString) {
+  // First check for the pattern
+  if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)) return false;
+
+  // Parse the date parts to integers
+  var parts = dateString.split("/");
+  var day = parseInt(parts[1], 10);
+  var month = parseInt(parts[0], 10);
+  var year = parseInt(parts[2], 10);
+
+  // Check the ranges of month and year
+  if (year < 1000 || year > 3000 || month == 0 || month > 12) return false;
+
+  var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+  // Adjust for leap years
+  if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+    monthLength[1] = 29;
+
+  // Check the range of the day
+  return day > 0 && day <= monthLength[month - 1];
+}
+
+function checkBookingDate(date) {
+  date = dateFormat(date);
+  const futureDate = new Date();
+  futureDate.setMonth(futureDate.getMonth() + 12);
+
+  if (!isValidDate(date)) {
+    throw "Input is not in valid date format (mm/dd/yyy)";
+  }
+  let varDate = new Date(date);
+  let today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  if (varDate < today) {
+    throw "Input date had passed, unable to book";
+  }
+  if (varDate > futureDate) {
+    throw "Sorry, Unable to book more than a year advance";
+  }
+  return date;
+}
+
+function isInDesiredForm(str) {
+  str = checkIsProperString(str);
+  var n = Math.floor(Number(str));
+  return n !== Infinity && String(n) === str && n >= 0;
+}
+
+function checkGuests(str) {
+  str = checkIsProperString(str, "Guests");
+  if (!isInDesiredForm(str)) {
+    throw "Number of guests should be a postive number";
+  }
+  if (parseInt(str) == 1) {
+    throw "Number of Guests should be atleast two, for single guests, bar seating is available, contact restaurant directly";
+  }
+  return str;
+}
+
+function checkInputTime(str) {
+  str = checkIsProperString(str, Guests);
+  return str;
+}
+
 module.exports = {
   checkIsProperString,
   checkIsProperArray,
@@ -435,4 +501,7 @@ module.exports = {
   getTableCombinationSlots,
   validateCategory,
   checkForSpaces,
+  checkBookingDate,
+  checkGuests,
+  checkInputTime,
 };

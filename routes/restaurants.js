@@ -58,7 +58,21 @@ router
     }
   })
   .post(async (req, res) => {
-    let restaurant;
+    try {
+      let restaurant;
+      req.body.date = helper.checkBookingDate(req.body.date);
+      req.body.guests = helper.checkGuests(req.body.guests);
+      req.body.time = helper.checkInputTime(
+        req.body.time,
+        helper.checkBookingDate(req.body.date)
+      );
+    } catch (e) {
+      return res.render("error", {
+        error: e,
+        capacityError: true,
+        restaurantId: req.params.restaurantId,
+      });
+    }
     try {
       restaurant = await restaurantData.getRestaurantById(
         req.params.restaurantId
@@ -87,8 +101,8 @@ router
       if (!helper.isEmptyObject(restaurant.availibility)) {
         var multipleAvailabilityArray = [];
         let temp;
-        if (restaurant.availibility[helper.dateFormat(req.body.date)]) {
-          temp = restaurant.availibility[helper.dateFormat(req.body.date)];
+        if (restaurant.availibility[req.body.date]) {
+          temp = restaurant.availibility[req.body.date];
           for (let j = 0; j < allTime.length; j++) {
             if (temp[allTime[j]]) {
               multipleAvailabilityArray.push(temp[allTime[j]]);
@@ -188,8 +202,8 @@ router
         }
         console.log(currentCapacity);
 
-        if (restaurant.availibility[helper.dateFormat(req.body.date)]) {
-          temp = restaurant.availibility[helper.dateFormat(req.body.date)];
+        if (restaurant.availibility[req.body.date]) {
+          temp = restaurant.availibility[req.body.date];
           for (let j = 0; j < allTime.length; j++) {
             if (temp[allTime[j]]) {
               for (let k = 0; k < chosenCombinationArray.length; k++) {
@@ -211,7 +225,7 @@ router
             req.session.userId,
             req.params.restaurantId,
             req.body.time,
-            helper.dateFormat(req.body.date),
+            req.body.date,
             req.body.guests,
             chosenCombinationArray
           );
@@ -221,7 +235,7 @@ router
             await restaurantData.addAvailability(
               req.params.restaurantId,
               currentCapacity[i],
-              helper.dateFormat(req.body.date),
+              req.body.date,
               allTime[i]
             );
           }
@@ -232,7 +246,7 @@ router
             req.session.userId,
             req.params.restaurantId,
             req.body.time,
-            helper.dateFormat(req.body.date),
+            req.body.date,
             req.body.guests,
             chosenCombinationArray
           );
@@ -251,7 +265,7 @@ router
             await restaurantData.addAvailability(
               req.params.restaurantId,
               currentCapacity[0],
-              helper.dateFormat(req.body.date),
+              req.body.date,
               allTime[i]
             );
           }
@@ -262,7 +276,7 @@ router
           req.session.userId,
           req.params.restaurantId,
           req.body.time,
-          helper.dateFormat(req.body.date),
+          req.body.date,
           req.body.guests,
           chosenCombinationArray
         );
@@ -280,7 +294,7 @@ router
           await restaurantData.addAvailability(
             req.params.restaurantId,
             currentCapacity[0],
-            helper.dateFormat(req.body.date),
+            req.body.date,
             allTime[i]
           );
         }
