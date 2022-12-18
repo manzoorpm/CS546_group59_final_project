@@ -377,6 +377,8 @@ function getTableCombinationSlots(availabilityObject, guests) {
     tableCombinationSlots.push(tableCombinations[i].join(" and "));
   }
   return tableCombinationSlots;
+}
+
 function validateCategory(string, variableName) {
   let category = string.trim();
   if (
