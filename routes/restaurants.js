@@ -23,7 +23,7 @@ function getRestaurantCapacity(restaurant) {
   let p = restaurant.restaurantTableCapacities;
   for (var key in p) {
     if (p.hasOwnProperty(key)) {
-      restaurantCapacity = restaurantCapacity + key * p[key];
+      restaurantCapacity = restaurantCapacity + parseInt(key) * p[key];
     }
   }
   return restaurantCapacity;
@@ -169,7 +169,6 @@ router.route("/").get(async (req, res) => {
     userId: req.session.userId,
     userTag: req.session.tag,
     name: req.session.name,
-    restaurantId: req.params.restaurantId,
     restaurants: restaurants,
     hasErrors: false,
   });
