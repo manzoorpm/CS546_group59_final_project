@@ -42,11 +42,16 @@ async function createUser(
   gender = helper.checkIsProperString(gender, "Gender");
 
   city = helper.checkIsProperString(city, "City");
+  city = helper.validateCity(city, "City");
 
   state = helper.checkIsProperString(state, "State");
+  state = helper.validateState(state, "State");
 
   password = helper.checkIsProperString(password, "Password");
   password = helper.checkPassword(password, "Password");
+  if (helper.checkForSpaces(password)) {
+    throw [400, "Error: Password should not have spaces in it"];
+  }
   if (password.length < 6) {
     throw [400, `Password needs to be longer than 6 characters`];
   }
@@ -325,6 +330,7 @@ async function updateUser(
   city = helper.checkIsProperString(city, "City");
 
   state = helper.checkIsProperString(state, "State");
+  state = helper.validateState(state, "State");
 
   const user = await getUserById(userId);
   const updatedUser = {
