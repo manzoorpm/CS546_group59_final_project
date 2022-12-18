@@ -4,7 +4,66 @@ const router = express.Router();
 const data = require("../data");
 const restaurantData = data.restaurants;
 const reservationsData = data.reservations;
+const userData = data.users;
 const helper = require("../helpers");
+const Mailjet = require("node-mailjet");
+const mailjet = new Mailjet({
+  apiKey: process.env.MJ_APIKEY_PUBLIC || "c75ae785fdda3b293f6568ad74e74928",
+  apiSecret:
+    process.env.MJ_APIKEY_PRIVATE || "08b5bb40b44e5c9308ea2335c2462e74",
+});
+
+function sendMail(user, restaurant, reservation) {
+  const request = mailjet.post("send", { version: "v3.1" }).request({
+    Messages: [
+      {
+        From: {
+          Email: "lim15@miamioh.edu",
+          Name: "BookPal Customer Service",
+        },
+        To: [
+          {
+            Email: user.emailId,
+            Name: user.firstName + " " + user.lastName,
+          },
+        ],
+        Subject: "Your BookPal Reservation Confirmation for " + restaurant.name,
+        TextPart:
+          "Dear " +
+          user.firstName +
+          " " +
+          user.lastName +
+          "! Bon Appétit! \n\n" +
+          "Reservation Confirmation for " +
+          restaurant.name +
+          "\n" +
+          "Reservation Id: " +
+          reservation._id.toString() +
+          "\n" +
+          "Reservation Date: " +
+          reservation.reservationDate +
+          "\n" +
+          "Reservation Time: " +
+          reservation.reservationTime +
+          "\n" +
+          "Guests: " +
+          reservation.people +
+          "\n" +
+          "Address: " +
+          restaurant.address +
+          ", " +
+          restaurant.city +
+          ", " +
+          restaurant.state +
+          ", " +
+          restaurant.zip +
+          "\n\nIf you would like to cancel your reservation. Please call the restaurant at " +
+          restaurant.contactInfo,
+      },
+    ],
+  });
+  request.then((result) => {}).catch((err) => {});
+}
 
 router.route("/").get(async (req, res) => {
   try {
@@ -59,38 +118,19 @@ router
   })
   .post(async (req, res) => {
     try {
-      let restaurant;
-      req.body.date = helper.checkBookingDate(req.body.date);
-      req.body.guests = helper.checkGuests(req.body.guests);
-      req.body.time = helper.checkInputTime(req.body.time, req.body.date);
-    } catch (e) {
-      return res.render("error", {
-        error: e,
-        capacityError: true,
-        restaurantId: req.params.restaurantId,
-      });
-    }
-    try {
-      restaurant = await restaurantData.getRestaurantById(
+      let restaurant = await restaurantData.getRestaurantById(
         req.params.restaurantId
       );
-    } catch (e) {
-      return res.render("error", {
-        error: e,
-      });
-    }
-    try {
-      console.log(restaurant.restaurantTableCapacities);
+      req.body.date = helper.checkBookingDate(req.body.date);
+      req.body.guests = helper.checkGuests(req.body.guests);
+      req.body.time = helper.checkInputTime(
+        req.body.time,
+        req.body.date,
+        restaurant.closingTime
+      );
+
       if (req.body.guests > helper.getRestaurantCapacity(restaurant))
         throw "The restaurant cannot accomodate entered number of guests";
-    } catch (e) {
-      return res.render("error", {
-        error: e,
-        capacityError: true,
-        restaurantId: req.params.restaurantId,
-      });
-    }
-    try {
       let restaurantCapacity = helper.getRestaurantCapacity(restaurant);
       let flag = 0;
       let allTime = helper.getAllTime(req.body.time);
@@ -160,6 +200,8 @@ router
       } else
         return res.render("error", {
           error: e,
+          capacityError: true,
+          restaurantId: req.params.restaurantId,
         });
     }
   });
@@ -177,6 +219,8 @@ router
       let restaurant = await restaurantData.getRestaurantById(
         req.params.restaurantId
       );
+      let user = await userData.getUserById(req.session.userId);
+
       let allTime = helper.getAllTime(req.body.time);
 
       chosenCombinationArray = req.body.chosenCombination.split(" and ");
@@ -236,6 +280,7 @@ router
               allTime[i]
             );
           }
+          sendMail(user, restaurant, reservation);
         }
 
         if (!flag) {
@@ -266,6 +311,7 @@ router
               allTime[i]
             );
           }
+          sendMail(user, restaurant, reservation);
         }
       } else {
         let currentCapacity = [];
@@ -295,6 +341,7 @@ router
             allTime[i]
           );
         }
+        sendMail(user, restaurant, reservation);
       }
 
       return res.redirect(`/reservations/${reservation._id}`);

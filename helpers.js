@@ -478,7 +478,7 @@ function compareTime(bigTime, smallTime) {
     }
   }
   return true;
- }
+}
 function isValidDate(dateString) {
   // First check for the pattern
   if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)) return false;
@@ -540,18 +540,75 @@ function checkGuests(str) {
   return str;
 }
 
-function checkInputTime(str, date) {
+function checkInputTime(str, date, closingTime) {
   str = checkIsProperString(str);
   let varDate = new Date(date);
   let today = new Date();
   let time = new Date();
   timeNow = time.getHours() + ":" + time.getMinutes();
-
   today.setHours(0, 0, 0, 0);
-
+  str = validateTime(str, "time");
+  if (getClosingTime(str) > closingTime) {
+    throw "The time slot is past restaurant closing time";
+  }
   if (varDate.toDateString() === today.toDateString()) {
+    if (timeNow > str) {
+      throw "The time slot has been passed now!";
+    }
   }
   return str;
+}
+
+function sendMail(user, restaurant, reservation) {
+  const request = mailjet.post("send", { version: "v3.1" }).request({
+    Messages: [
+      {
+        From: {
+          Email: "lim15@miamioh.edu",
+          Name: "BookPal Customer Service",
+        },
+        To: [
+          {
+            Email: user.emailId,
+            Name: user.firstName + " " + user.lastName,
+          },
+        ],
+        Subject: "Your BookPal Reservation Confirmation for " + restaurant.name,
+        TextPart:
+          "Dear " +
+          user.firstName +
+          " " +
+          user.lastName +
+          "! Bon Appétit! \n\n" +
+          "Reservation Confirmation for " +
+          restaurant.name +
+          "\n" +
+          "Reservation Id: " +
+          reservationId +
+          "\n" +
+          "Reservation Date: " +
+          reservation.reservationDate +
+          "\n" +
+          "Reservation Time: " +
+          reservation.reservationTime +
+          "\n" +
+          "Guests: " +
+          reservation.people +
+          "\n" +
+          "Address: " +
+          restaurant.address +
+          ", " +
+          restaurant.city +
+          ", " +
+          restaurant.state +
+          ", " +
+          restaurant.zip +
+          "\n\nIf you would like to cancel your reservation. Please call the restaurant at " +
+          restaurant.contactInfo,
+      },
+    ],
+  });
+  request.then((result) => {}).catch((err) => {});
 }
 
 module.exports = {
@@ -581,4 +638,5 @@ module.exports = {
   checkBookingDate,
   checkGuests,
   checkInputTime,
+  sendMail,
 };
