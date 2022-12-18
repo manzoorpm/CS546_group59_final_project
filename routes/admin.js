@@ -45,13 +45,16 @@ router
     let TableFor6 = req.body.TableFor6;
     let TableFor8 = req.body.TableFor8;
     let TableFor10 = req.body.TableFor10;
-    const restaurantTableCapacities = {
-      2: TableFor2,
-      4: TableFor4,
-      6: TableFor6,
-      8: TableFor8,
-      10: TableFor10,
+    let restaurantTableCapacities = {
+      2: parseInt(TableFor2),
+      4: parseInt(TableFor4),
+      6: parseInt(TableFor6),
+      8: parseInt(TableFor8),
+      10: parseInt(TableFor10),
     };
+    // restaurantTableCapacities = JSON.parse(restaurantTableCapacities);
+    // console.log(restaurantTableCapacities);
+
     // try{
     // //   FOR ERROR CHECKING
     // }catch(e){
@@ -73,10 +76,10 @@ router
         longitude,
         openingTime,
         closingTime,
-        TableFor2
+        restaurantTableCapacities
       );
       if (insertedRes) {
-        res.redirect("/");
+        return res.redirect("/");
       }
     } catch (e) {
       return res.status(400).render("addRestaurant", {
@@ -99,7 +102,7 @@ router
     let restaurant = await restaurantData.getRestaurantById(
       req.params.restaurantId
     );
-    return res.render("adminUpdateRemove", {
+    return res.render("adminUpdateRemoveRestaurant", {
       title: "Edit Restaurant",
       user: user,
       restaurant: restaurant,
