@@ -6,7 +6,20 @@ const helper = require("../helpers");
 router.route("/forbidden").get(async (req, res) => {
   return res.status(403).render("forbiddenAccess", {
     error: "no accesss",
+    user: req.session.user,
+    userId: req.session.userId,
+    userTag: req.session.tag,
+    name: req.session.name,
   });
 });
 
+router.route("/notfound").get(async (req, res) => {
+  return res.status(403).render("notFound", {
+    error: "Not found",
+    user: req.session.user,
+    userId: req.session.userId,
+    userTag: req.session.tag,
+    name: req.session.name,
+  });
+});
 module.exports = router;
