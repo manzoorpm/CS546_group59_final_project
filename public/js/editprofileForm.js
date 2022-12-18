@@ -105,7 +105,7 @@
         errors.push("State is not defined");
       }
       try {
-        validateCity(stateValue, "State");
+        validateState(stateValue, "State");
       } catch (e) {
         errorFlag += 1;
         errors.push(e[1]);
@@ -179,6 +179,83 @@ function validateCity(string, variableName) {
   }
   return string;
 }
+
+function validateState(string, variableName) {
+  if (
+    !(
+      states === "Alabama" ||
+      states === "Alaska" ||
+      states === "American Samoa" ||
+      states === "Arizona" ||
+      states === "Arkansas" ||
+      states === "Baker Island" ||
+      states === "California" ||
+      states === "Colorado" ||
+      states === "Connecticut" ||
+      states === "Delaware" ||
+      states === "District of Columbia" ||
+      states === "Florida" ||
+      states === "Georgia" ||
+      states === "Guam" ||
+      states === "Hawaii" ||
+      states === "Howland Island" ||
+      states === "Idaho" ||
+      states === "Illinois" ||
+      states === "Indiana" ||
+      states === "Iowa" ||
+      states === "Jarvis Island" ||
+      states === "Johnston Atoll" ||
+      states === "Kansas" ||
+      states === "Kentucky" ||
+      states === "Kingman Reef" ||
+      states === "Louisiana" ||
+      states === "Maine" ||
+      states === "Maryland" ||
+      states === "Massachusetts" ||
+      states === "Michigan" ||
+      states === "Midway Atoll" ||
+      states === "Minnesota" ||
+      states === "Mississippi" ||
+      states === "Missouri" ||
+      states === "Montana" ||
+      states === "Navassa Island" ||
+      states === "Nebraska" ||
+      states === "Nevada" ||
+      states === "New Hampshire" ||
+      states === "New Jersey" ||
+      states === "New Mexico" ||
+      states === "New York" ||
+      states === "North Carolina" ||
+      states === "North Dakota" ||
+      states === "Northern Mariana Islands" ||
+      states === "Ohio" ||
+      states === "Oklahoma" ||
+      states === "Oregon" ||
+      states === "Palmyra Atoll" ||
+      states === "Pennsylvania" ||
+      states === "Puerto Rico" ||
+      states === "Rhode Island" ||
+      states === "South Carolina" ||
+      states === "South Dakota" ||
+      states === "Tennessee" ||
+      states === "Texas" ||
+      states === "United States Minor Outlying Islands" ||
+      states === "United States Virgin Islands" ||
+      states === "Utah" ||
+      states === "Vermont" ||
+      states === "Virginia" ||
+      states === "Wake Island" ||
+      states === "Washington" ||
+      states === "West Virginia" ||
+      states === "Wisconsin" ||
+      states === "Wyoming"
+    )
+  ) {
+    throw [400, `${variableName} is not from valid values list`];
+  }
+  return string;
+}
+
 function validateNumber(string, variableName) {
   let result = Number(string);
   if (isNaN(result)) {

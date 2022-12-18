@@ -14,12 +14,12 @@
       <summary>All Reservations</summary>
       <ul>
         {{#each reservations}}
-          <li>Reservation for
+          <li><a href="/reservation/{{_id}}"> Reservation for
             {{people}}
             people on the
             {{reservationDate}}
             at
-            {{reservationTime}}</li>
+            {{reservationTime}}</a></li>
         {{/each}}
       </ul>
     </details>

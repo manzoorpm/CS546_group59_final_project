@@ -7,64 +7,127 @@
       id="restaurant-form"
       enctype="multipart/form-data"
     >
-      <label for="name">Name:</label><br />
-      <input type="text" id="name" name="name" /><br />
+      <div class="form">
+        <label for="name">Restaurant Name:</label><br />
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Restaurant Name"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="contactInfo">Contact Info:</label><br />
+        <input
+          type="text"
+          id="contactInfo"
+          name="contactInfo"
+          placeholder="Phone Number"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="description">Description:</label><br />
+        <textarea
+          id="description"
+          name="description"
+          placeholder="Describe your restaurant"
+        ></textarea><br />
+      </div>
+      <div class="form">
+        <label for="image">Main Image:</label><br />
+        <input type="file" id="image" name="image" /><br />
+      </div>
+      <div class="form">
+        <label for="priceRange">Price Range:</label><br />
+        <input
+          type="text"
+          id="priceRange"
+          name="priceRange"
+          placeholder="Approximate Price for 2"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="category">Category:</label><br />
+        <input
+          type="text"
+          id="category"
+          name="category"
+          placeholder="Category"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="address">Address:</label><br />
+        <textarea
+          type="text"
+          id="address"
+          name="address"
+          placeholder="Street Address"
+        ></textarea><br />
+      </div>
+      <div class="form">
+        <label for="city">City:</label><br />
+        <input type="text" id="city" name="city" placeholder="City" /><br />
+      </div>
+      <div class="form">
+        <label for="state">State:</label>
+        <select id="state" name="state" required>
+          <option value="New Jersey">New Jersey</option>
+          <option value="New York">New York</option>
+        </select>
+      </div>
+      <div class="form">
+        <label for="zip">Zip:</label><br />
+        <input type="text" id="zip" name="zip" placeholder="Zip Code" /><br />
+      </div>
+      <div class="form">
+        <label for="latitude">Latitude:</label><br />
+        <input
+          type="text"
+          id="latitude"
+          name="latitude"
+          placeholder="Latitude"
+        /><br />
 
-      <label for="contactInfo">Contact Info:</label><br />
-      <input type="text" id="contactInfo" name="contactInfo" /><br />
-
-      <label for="description">Description:</label><br />
-      <textarea id="description" name="description"></textarea><br />
-
-      <label for="image">Main Image:</label><br />
-      <input type="file" id="image" name="image" /><br />
-
-      <label for="priceRange">Price Range:</label><br />
-      <input type="text" id="priceRange" name="priceRange" /><br />
-
-      <label for="category">Category:</label><br />
-      <input type="text" id="category" name="category" /><br />
-
-      <label for="address">Address:</label><br />
-      <input type="text" id="address" name="address" /><br />
-
-      <label for="city">City:</label><br />
-      <input type="text" id="city" name="city" /><br />
-
-      <label for="state">State:</label><br />
-      <input type="text" id="state" name="state" /><br />
-
-      <label for="zip">Zip:</label><br />
-      <input type="text" id="zip" name="zip" /><br />
-
-      <label for="latitude">Latitude:</label><br />
-      <input type="text" id="latitude" name="latitude" /><br />
-
-      <label for="longitude">Longitude:</label><br />
-      <input type="text" id="longitude" name="longitude" /><br />
-
-      <label for="openingTime">Opening Time:</label><br />
-      <input type="time" id="openingTime" name="openingTime" /><br />
-
-      <label for="closingTime">Closing Time:</label><br />
-      <input type="time" id="closingTime" name="closingTime" /><br />
-
-      <label for="TableFor2">Table for 2:</label><br />
-      <input type="number" id="TableFor2" name="TableFor2" /><br />
-
-      <label for="TableFor4">Table for 4:</label><br />
-      <input type="number" id="TableFor4" name="TableFor4" /><br />
-
-      <label for="TableFor6">Table for 6:</label><br />
-      <input type="number" id="TableFor6" name="TableFor6" /><br />
-
-      <label for="TableFor8">Table for 8:</label><br />
-      <input type="number" id="TableFor8" name="TableFor8" /><br />
-
-      <label for="TableFor10">Table for 10:</label><br />
-      <input type="number" id="TableFor10" name="TableFor10" /><br />
-
-      <input type="submit" value="Submit" />
+        <label for="longitude">Longitude:</label><br />
+        <input
+          type="text"
+          id="longitude"
+          name="longitude"
+          placeholder="Longitude"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="openingTime">Opening Time:</label><br />
+        <input type="time" id="openingTime" name="openingTime" /><br />
+      </div>
+      <div class="form">
+        <label for="closingTime">Closing Time:</label><br />
+        <input type="time" id="closingTime" name="closingTime" /><br />
+      </div>
+      <div class="form">
+        <label for="TableFor2">Number of tables for 2:</label><br />
+        <input type="number" id="TableFor2" name="TableFor2" /><br />
+      </div>
+      <div class="form">
+        <label for="TableFor4">Number of tables for 4:</label><br />
+        <input type="number" id="TableFor4" name="TableFor4" /><br />
+      </div>
+      <div class="form">
+        <label for="TableFor6">Number of tables for 6:</label><br />
+        <input type="number" id="TableFor6" name="TableFor6" /><br />
+      </div>
+      <div class="form">
+        <label for="TableFor8">Number of tables for 8:</label><br />
+        <input type="number" id="TableFor8" name="TableFor8" /><br />
+      </div>
+      <div class="form">
+        <label for="TableFor10">Number of tables for 10:</label><br />
+        <input type="number" id="TableFor10" name="TableFor10" /><br />
+      </div>
+      <button
+        type="submit"
+        class="w-20 btn btn-sm btn-success"
+      >Confirm</button><a class="w-20 btn btn-sm btn-danger" href="/">Cancel</a>
     </form>
     <br />
     <div class="form-group hidden" id="error-container">

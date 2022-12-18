@@ -36,8 +36,19 @@
                         class="btn btn-primary"
                       >Edit</a>
                     </div>
-                    <small class="text-muted"><p>{{_id}}</p>{{overallRating}}%
-                      Reccomended</small>
+                    <div class="btn-group col-3">
+                      <form
+                        method="POST"
+                        action="/admin/restaurant/delete/{{_id}}"
+                        id="deleterestaurant-form"
+                      ><button
+                          type="submit"
+                          class="btn btn-danger"
+                        >Delete</button>
+                      </form>
+
+                    </div>
+                    <small class="text-muted">{{overallRating}}/5 Rating</small>
                   </div>
                 </div>
               </div>
@@ -73,7 +84,7 @@
                       >View</a>
 
                     </div>
-                    <small class="text-muted">{{overallRating}}% Reccomended</small>
+                    <small class="text-muted">{{overallRating}}/5 Rating</small>
                   </div>
                 </div>
               </div>
@@ -83,4 +94,7 @@
       </div>
     </div>
   {{/ifEquals}}
+  {{#if hasErrors}}
+    <p class="alert alert-danger Error">{{error}}</p>
+  {{/if}}
 </main>

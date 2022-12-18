@@ -1,78 +1,169 @@
 <main>
   <div class="container">
     <h1>Edit restaurant</h1>
-    <form method="POST" action="/admin/restaurant/add" id="editrestaurant-form">
+    <form
+      method="POST"
+      action="/admin/restaurant/edit/{{restaurant._id}}"
+      id="editrestaurant-form"
+      enctype="multipart/form-data"
+    >
+      <div class="form">
+        <label for="name">Restaurant Name:</label><br />
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Restaurant Name"
+          value="{{restaurant.name}}"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="contactInfo">Contact Info:</label><br />
+        <input
+          type="text"
+          id="contactInfo"
+          name="contactInfo"
+          placeholder="Phone Number"
+          value="{{restaurant.contactInfo}}"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="description">Description:</label><br />
+        <textarea
+          id="description"
+          name="description"
+          placeholder="Describe your restaurant"
+        >{{restaurant.description}}</textarea><br />
+      </div>
+      <div class="form">
+        <label for="image">Main Image:</label><br />
+        <input type="file" id="image" name="image" /><br />
+      </div>
+      <div class="form">
+        <label for="priceRange">Price Range:</label><br />
+        <input
+          type="text"
+          id="priceRange"
+          name="priceRange"
+          placeholder="Approximate Price for 2"
+          value="{{restaurant.priceRange}}"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="category">Category:</label><br />
+        <input
+          type="text"
+          id="category"
+          name="category"
+          placeholder="Category"
+          value="{{restaurant.category}}"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="address">Address:</label><br />
+        <textarea
+          type="text"
+          id="address"
+          name="address"
+          placeholder="Street Address"
+        >{{restaurant.address}}</textarea><br />
+      </div>
+      <div class="form">
+        <label for="city">City:</label><br />
+        <input
+          type="text"
+          id="city"
+          name="city"
+          placeholder="City"
+          value="{{restaurant.city}}"
+        /><br />
 
-      <label for="name">Name:</label><br />
-      <input type="text" id="name" name="name" value="My Restaurant" /><br />
+      </div>
+      <div class="form">
+        <label for="state">State:</label>
+        <select id="state" name="state" required>
+          <option
+            value="{{restaurant.state}}"
+            default
+            selected
+          >{{restaurant.state}}</option>
+          <option value="New Jersey">New Jersey</option>
+          <option value="New York">New York</option>
+        </select>
+      </div>
+      <div class="form">
+        <label for="zip">Zip:</label><br />
+        <input
+          type="text"
+          id="zip"
+          name="zip"
+          placeholder="Zip Code"
+          value="{{restaurant.zip}}"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="latitude">Latitude:</label><br />
+        <input
+          type="text"
+          id="latitude"
+          name="latitude"
+          placeholder="Latitude"
+          value="{{restaurant.latitude}}"
+        /><br />
 
-      <label for="contactInfo">Contact Info:</label><br />
-      <input
-        type="text"
-        id="contactInfo"
-        name="contactInfo"
-        value="123-456-7890"
-      /><br />
-
-      <label for="description">Description:</label><br />
-      <textarea id="description" name="description">This is my restaurant.</textarea><br
-      />
-
-      <label for="mainImage">Main Image:</label><br />
-      <input type="file" id="mainImage" name="mainImage" /><br />
-
-      <label for="priceRange">Price Range:</label><br />
-      <input type="text" id="priceRange" name="priceRange" value="$" /><br />
-
-      <label for="category">Category:</label><br />
-      <input type="text" id="category" name="category" value="Italian" /><br />
-
-      <label for="address">Address:</label><br />
-      <input type="text" id="address" name="address" value="123 Main St" /><br
-      />
-
-      <label for="city">City:</label><br />
-      <input type="text" id="city" name="city" value="New York" /><br />
-
-      <label for="state">State:</label><br />
-      <input type="text" id="state" name="state" value="NY" /><br />
-
-      <label for="zip">Zip:</label><br />
-      <input type="text" id="zip" name="zip" value="10001" /><br />
-
-      <label for="latitude">Latitude:</label><br />
-      <input type="text" id="latitude" name="latitude" value="40.7127753" /><br
-      />
-
-      <label for="longitude">Longitude:</label><br />
-      <input
-        type="text"
-        id="longitude"
-        name="longitude"
-        value="-74.0059728"
-      /><br />
-
-      <label for="openingTime">Opening Time:</label><br />
-      <input type="time" id="openingTime" name="openingTime" value="12:00" /><br
-      />
-
-      <label for="closingTime">Closing Time:</label><br />
-      <input type="time" id="closingTime" name="closingTime" value="23:00" /><br
-      />
-
-      <label for="restaurantTableCapacities">Restaurant Table Capacities:</label><br
-      />
-      <input
-        type="text"
-        id="restaurantTableCapacities"
-        name="restaurantTableCapacities"
-        value="4,6,8"
-      /><br />
-
-      <input type="submit" value="Submit" />
+        <label for="longitude">Longitude:</label><br />
+        <input
+          type="text"
+          id="longitude"
+          name="longitude"
+          placeholder="Longitude"
+          value="{{restaurant.longitude}}"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="openingTime">Opening Time:</label><br />
+        <input
+          type="time"
+          id="openingTime"
+          name="openingTime"
+          value="{{restaurant.openingTime}}"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="closingTime">Closing Time:</label><br />
+        <input
+          type="time"
+          id="closingTime"
+          name="closingTime"
+          value="{{restaurant.closingTime}}"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="TableFor2">Number of tables for 2:</label><br />
+        <input type="number" id="TableFor2" name="TableFor2" /><br />
+      </div>
+      <div class="form">
+        <label for="TableFor4">Number of tables for 4:</label><br />
+        <input type="number" id="TableFor4" name="TableFor4" /><br />
+      </div>
+      <div class="form">
+        <label for="TableFor6">Number of tables for 6:</label><br />
+        <input type="number" id="TableFor6" name="TableFor6" /><br />
+      </div>
+      <div class="form">
+        <label for="TableFor8">Number of tables for 8:</label><br />
+        <input type="number" id="TableFor8" name="TableFor8" /><br />
+      </div>
+      <div class="form">
+        <label for="TableFor10">Number of tables for 10:</label><br />
+        <input type="number" id="TableFor10" name="TableFor10" /><br />
+      </div>
+      <button
+        type="submit"
+        class="w-20 btn btn-sm btn-success"
+      >Confirm</button><a class="w-20 btn btn-sm btn-danger" href="/">Cancel</a>
 
     </form>
-
     <br />
     <div class="form-group hidden" id="error-container">
       <div class="text-goes-here">

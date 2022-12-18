@@ -28,11 +28,19 @@ async function createRestaurant(
   if (arguments.length !== 15) {
     throw [400, `Improper Number of Inputs`];
   }
-  console.log("9");
   name = helper.checkIsProperString(name, "Restaurant Name");
+  name = helper.validateCity(name, "Restaurant Name");
 
   contactInfo = helper.checkIsProperString(contactInfo, "Phone Number");
   contactInfo = helper.validatePhoneNumber(contactInfo, "Phone Number");
+
+  description = helper.checkIsProperString(description, "Description");
+
+  mainImage = helper.checkIsProperString(mainImage, "Image Link");
+
+  priceRange = helper.checkIsProperString(priceRange, "Price Range");
+  priceRange = helper.validateNumber(priceRange, "Price Range");
+  priceRange = parseInt(priceRange);
 
   category = helper.checkIsProperString(category, "Category");
   if (
@@ -43,7 +51,13 @@ async function createRestaurant(
       category === "Indian" ||
       category === "Asian" ||
       category === "English" ||
-      category === "Thai"
+      category === "Thai" ||
+      category === "Chinese" ||
+      category === "Japanese" ||
+      category === "American" ||
+      category === "English" ||
+      category === "Mexican" ||
+      category === "Mediterenean"
     )
   ) {
     throw [400, `Category is not from valid values list`];
@@ -52,6 +66,7 @@ async function createRestaurant(
   address = helper.checkIsProperString(address, "Address");
 
   city = helper.checkIsProperString(city, "City");
+  city = helper.validateCity(city, "City");
 
   state = helper.checkIsProperString(state, "State");
   if (!(state !== "New Jersey" || state !== "New York")) {
@@ -59,6 +74,9 @@ async function createRestaurant(
   }
 
   zip = helper.checkIsProperString(zip, "Zip");
+  if (zip.length > 5 || zip.length < 4) {
+    throw [400, `Zip Code Invalid Length`];
+  }
   zip = helper.validateNumber(zip, "Zip");
   zip = parseInt(zip);
 
@@ -115,12 +133,13 @@ async function createRestaurant(
   if (!insertInfo.insertedId || !insertInfo.acknowledged) {
     throw [500, "Internal Server Error"];
   }
-  const newId = insertInfo.insertedId.toString();
+  // const newId = insertInfo.insertedId.toString();
 
-  const restaurant = await restaurantCollection.findOne({
-    _id: ObjectId(newId),
-  });
-  restaurant._id = newId;
+  // const restaurant = await restaurantCollection.findOne({
+  //   _id: ObjectId(newId),
+  // });
+  // restaurant._id = newId;
+  // return restaurant;
   return { insertedRes: true };
 }
 
@@ -211,19 +230,8 @@ async function getRestaurantsByCategory(category) {
     throw [400, `More Parameters Passed`];
   }
   category = helper.checkIsProperString(category, "Category");
-  if (
-    !(
-      category !== "Pizza" ||
-      category !== "Bakery" ||
-      category !== "Steakhouse" ||
-      category !== "Indian" ||
-      category !== "Asian" ||
-      category !== "English" ||
-      category !== "Thai"
-    )
-  ) {
-    throw [400, `Category is not from valid values list`];
-  }
+  category = helper.validateCategory(category, "Category");
+
   let restaurantList = [];
   const restaurantCollection = await restaurants();
   let restaurantMatched = await restaurantCollection
@@ -292,6 +300,9 @@ async function updateRestaurant(
   restaurantId,
   name,
   contactInfo,
+  description,
+  mainImage,
+  priceRange,
   category,
   address,
   city,
@@ -303,32 +314,30 @@ async function updateRestaurant(
   closingTime,
   restaurantTableCapacities
 ) {
-  if (arguments.length !== 13) {
+  if (arguments.length !== 16) {
     throw [400, `Improper Number of Inputs`];
   }
   name = helper.checkIsProperString(name, "Restaurant Name");
+  name = helper.validateCity(name, "Restaurant Name");
 
   contactInfo = helper.checkIsProperString(contactInfo, "Phone Number");
   contactInfo = helper.validatePhoneNumber(contactInfo, "Phone Number");
 
-  category = helper.checkIsProperString(category, "Category");
-  if (
-    !(
-      category !== "Pizza" ||
-      category !== "Bakery" ||
-      category !== "Steakhouse" ||
-      category !== "Indian" ||
-      category !== "Asian" ||
-      category !== "English" ||
-      category !== "Thai"
-    )
-  ) {
-    throw [400, `Category is not from valid values list`];
-  }
+  description = helper.checkIsProperString(description, "Description");
 
-  address = helper.checkIsProperString(address, "Age");
+  mainImage = helper.checkIsProperString(mainImage, "Image Link");
+
+  priceRange = helper.checkIsProperString(priceRange, "Price Range");
+  priceRange = helper.validateNumber(priceRange, "Price Range");
+  priceRange = parseInt(priceRange);
+
+  category = helper.checkIsProperString(category, "Category");
+  category = helper.validateCategory(category, "Category");
+
+  address = helper.checkIsProperString(address, "Address");
 
   city = helper.checkIsProperString(city, "City");
+  city = helper.validateCity(city, "City");
 
   state = helper.checkIsProperString(state, "State");
   if (!(state !== "New Jersey" || state !== "New York")) {
@@ -336,6 +345,9 @@ async function updateRestaurant(
   }
 
   zip = helper.checkIsProperString(zip, "Zip");
+  if (zip.length > 5 || zip.length < 4) {
+    throw [400, `Zip Code Invalid Length`];
+  }
   zip = helper.validateNumber(zip, "Zip");
   zip = parseInt(zip);
 
@@ -349,11 +361,11 @@ async function updateRestaurant(
 
   closingTime = helper.checkIsProperString(closingTime, "Closing Time");
 
-  restaurantTableCapacities = helper.checkIsProperString(
-    restaurantTableCapacities,
-    "Table Capacities"
-  );
-  restaurantTableCapacities = JSON.parse(restaurantTableCapacities);
+  // restaurantTableCapacities = helper.checkIsProperString(
+  //   restaurantTableCapacities,
+  //   "Table Capacities"
+  // );
+  // restaurantTableCapacities = JSON.parse(restaurantTableCapacities);
 
   availibility = {};
 
@@ -383,133 +395,134 @@ async function updateRestaurant(
     { $set: updatedRestaurant }
   );
   if (updatedInfo.modifiedCount === 0) {
-    throw "All new details exactly match the old details";
+    throw [400, "All new details exactly match the old details"];
   }
-  return await this.getRestaurantById(restaurantId);
+  // return await this.getRestaurantById(restaurantId);
+  return { updatedRes: true };
 }
 
-async function createRestaurant(
-  name,
-  contactInfo,
-  description,
-  mainImage,
-  priceRange,
-  category,
-  address,
-  city,
-  state,
-  zip,
-  latitude,
-  longitude,
-  openingTime,
-  closingTime,
-  restaurantTableCapacities
-) {
-  if (arguments.length !== 15) {
-    throw [400, `Improper Number of Inputs`];
-  }
-  name = helper.checkIsProperString(name, "Restaurant Name");
+// async function createRestaurant(
+//   name,
+//   contactInfo,
+//   description,
+//   mainImage,
+//   priceRange,
+//   category,
+//   address,
+//   city,
+//   state,
+//   zip,
+//   latitude,
+//   longitude,
+//   openingTime,
+//   closingTime,
+//   restaurantTableCapacities
+// ) {
+//   if (arguments.length !== 15) {
+//     throw [400, `Improper Number of Inputs`];
+//   }
+//   name = helper.checkIsProperString(name, "Restaurant Name");
 
-  contactInfo = helper.checkIsProperString(contactInfo, "Phone Number");
-  contactInfo = helper.validatePhoneNumber(contactInfo, "Phone Number");
+//   contactInfo = helper.checkIsProperString(contactInfo, "Phone Number");
+//   contactInfo = helper.validatePhoneNumber(contactInfo, "Phone Number");
 
-  category = helper.checkIsProperString(category, "Category");
-  if (
-    !(
-      category === "Pizza" ||
-      category === "Bakery" ||
-      category === "Steakhouse" ||
-      category === "Indian" ||
-      category === "Asian" ||
-      category === "English" ||
-      category === "Thai"
-    )
-  ) {
-    throw [400, `Category is not from valid values list`];
-  }
+//   category = helper.checkIsProperString(category, "Category");
+//   if (
+//     !(
+//       category === "Pizza" ||
+//       category === "Bakery" ||
+//       category === "Steakhouse" ||
+//       category === "Indian" ||
+//       category === "Asian" ||
+//       category === "English" ||
+//       category === "Thai"
+//     )
+//   ) {
+//     throw [400, `Category is not from valid values list`];
+//   }
 
-  address = helper.checkIsProperString(address, "Address");
+//   address = helper.checkIsProperString(address, "Address");
 
-  city = helper.checkIsProperString(city, "City");
+//   city = helper.checkIsProperString(city, "City");
 
-  state = helper.checkIsProperString(state, "State");
-  if (!(state !== "New Jersey" || state !== "New York")) {
-    throw [400, `Currently servicing only in New York and New Jersey`];
-  }
+//   state = helper.checkIsProperString(state, "State");
+//   if (!(state !== "New Jersey" || state !== "New York")) {
+//     throw [400, `Currently servicing only in New York and New Jersey`];
+//   }
 
-  zip = helper.checkIsProperString(zip, "Zip");
-  zip = helper.validateNumber(zip, "Zip");
-  zip = parseInt(zip);
+//   zip = helper.checkIsProperString(zip, "Zip");
+//   zip = helper.validateNumber(zip, "Zip");
+//   zip = parseInt(zip);
 
-  latitude = helper.checkIsProperString(latitude, "Latitude");
-  latitude = helper.validateLatitudeLongitude(latitude, "Latitude");
+//   latitude = helper.checkIsProperString(latitude, "Latitude");
+//   latitude = helper.validateLatitudeLongitude(latitude, "Latitude");
 
-  longitude = helper.checkIsProperString(longitude, "Longitude");
-  longitude = helper.validateLatitudeLongitude(longitude, "Longitude");
+//   longitude = helper.checkIsProperString(longitude, "Longitude");
+//   longitude = helper.validateLatitudeLongitude(longitude, "Longitude");
 
-  openingTime = helper.checkIsProperString(openingTime, "Opening Time");
+//   openingTime = helper.checkIsProperString(openingTime, "Opening Time");
 
-  closingTime = helper.checkIsProperString(closingTime, "Closing Time");
+//   closingTime = helper.checkIsProperString(closingTime, "Closing Time");
 
-  // Time Validation, Timelogic, restaurantTableCapacities Validation, availibility Calculation using timelogic and restaurant table capacities UNFINISHED
+//   // Time Validation, Timelogic, restaurantTableCapacities Validation, availibility Calculation using timelogic and restaurant table capacities UNFINISHED
 
-  // restaurantTableCapacities = helper.checkIsProperString(restaurantTableCapacities,"Table Capacities");
-  // restaurantTableCapacities = JSON.parse(restaurantTableCapacities);
+//   // restaurantTableCapacities = helper.checkIsProperString(restaurantTableCapacities,"Table Capacities");
+//   // restaurantTableCapacities = JSON.parse(restaurantTableCapacities);
 
-  //   let availibility = [
-  //     {
-  //       "12/17/2022": {
-  //         "08:30": { 2: 4, 4: 2 },
-  //         "09:00": { 2: 3, 4: 2 },
-  //         "09:30": { 2: 2, 4: 2 },
-  //         "10:00": { 2: 4, 4: 1 },
-  //       },
-  //     },
-  //   ];
-  let availibility = {};
-  let overallRating = 0;
-  let reviews = [];
-  let reservations = [];
+//   //   let availibility = [
+//   //     {
+//   //       "12/17/2022": {
+//   //         "08:30": { 2: 4, 4: 2 },
+//   //         "09:00": { 2: 3, 4: 2 },
+//   //         "09:30": { 2: 2, 4: 2 },
+//   //         "10:00": { 2: 4, 4: 1 },
+//   //       },
+//   //     },
+//   //   ];
+//   let availibility = {};
+//   let overallRating = 0;
+//   let reviews = [];
+//   let reservations = [];
 
-  const newRestaurant = {
-    name: name,
-    contactInfo: contactInfo,
-    description: description,
-    mainImage: mainImage,
-    priceRange: priceRange,
-    category: category,
-    address: address,
-    city: city,
-    state: state,
-    zip: zip,
-    latitude: latitude,
-    longitude: longitude,
-    openingTime: openingTime,
-    closingTime: closingTime,
-    restaurantTableCapacities: restaurantTableCapacities,
-    availibility: availibility,
-    overallRating: overallRating,
-    reviews: reviews,
-    reservations: reservations,
-  };
+//   const newRestaurant = {
+//     name: name,
+//     contactInfo: contactInfo,
+//     description: description,
+//     mainImage: mainImage,
+//     priceRange: priceRange,
+//     category: category,
+//     address: address,
+//     city: city,
+//     state: state,
+//     zip: zip,
+//     latitude: latitude,
+//     longitude: longitude,
+//     openingTime: openingTime,
+//     closingTime: closingTime,
+//     restaurantTableCapacities: restaurantTableCapacities,
+//     availibility: availibility,
+//     overallRating: overallRating,
+//     reviews: reviews,
+//     reservations: reservations,
+//   };
 
-  const restaurantCollection = await restaurants();
-  const insertInfo = await restaurantCollection.insertOne(newRestaurant);
-  if (!insertInfo.insertedId || !insertInfo.acknowledged) {
-    throw [500, "Internal Server Error"];
-  }
-  const newId = insertInfo.insertedId.toString();
+//   const restaurantCollection = await restaurants();
+//   const insertInfo = await restaurantCollection.insertOne(newRestaurant);
+//   if (!insertInfo.insertedId || !insertInfo.acknowledged) {
+//     throw [500, "Internal Server Error"];
+//   }
+//   const newId = insertInfo.insertedId.toString();
 
-  const restaurant = await restaurantCollection.findOne({
-    _id: ObjectId(newId),
-  });
-  restaurant._id = newId;
-  return restaurant;
-}
+//   const restaurant = await restaurantCollection.findOne({
+//     _id: ObjectId(newId),
+//   });
+//   restaurant._id = newId;
+//   return restaurant;
+// }
 const getAvailability = async (time) => {
   //validation
   const restaurantCollection = await restaurants();
-  let availabiliyByTime = await movieCollection.findOne({
+  let availabiliyByTime = await restaurantCollection.findOne({
     availibility: { $elemMatch: { time } },
   });
   if (!availabiliyByTime) throw "No Review in system!";
