@@ -1,7 +1,58 @@
-<h1>Reservation</h1>
+<main class="container">
+    <h1>Reservation</h1>
+    <h3>{{restaurant.name}}</h3>
+    <div class="list-group w-auto">
+        <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
 
-{{#if reservation}}
-<h6>{{reservation._id}}</h6>
-<h6>{{reservation.reservationTime}}</h6>
+            <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                    <h6 class="mb-0">Reservation Id:</h6>
+                    <p class="mb-0 opacity-75">{{reservation._id}}</p>
+                </div>
+            </div>
+        </div>
 
-{{/if}}
+        <div class="list-group w-auto">
+            <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
+
+                <div class="d-flex gap-2 w-100 justify-content-between">
+                    <div>
+                        <h6 class="mb-0">Reservation Date:</h6>
+                        <p class="mb-0 opacity-75">{{reservation.reservationDate}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-group w-auto">
+                <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
+                    <div class="d-flex gap-2 w-100 justify-content-between">
+                        <div>
+                            <h6 class="mb-0">Reservation Time</h6>
+                            <p class="mb-0 opacity-75">{{reservation.reservationTime}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="list-group w-auto">
+                    <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
+                        <div class="d-flex gap-2 w-100 justify-content-between">
+                            <div>
+                                <h6 class="mb-0">Guests</h6>
+                                <p class="mb-0 opacity-75">{{reservation.people}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list-group w-auto">
+                        <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
+                            <div class="d-flex gap-2 w-100 justify-content-between">
+                                <div>
+                                    <h6 class="mb-0">Address:</Address>
+                                    </h6>
+                                    <p class="mb-0 opacity-75">{{restaurant.address}}, {{restaurant.city}},
+                                        {{restaurant.state}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+</main>

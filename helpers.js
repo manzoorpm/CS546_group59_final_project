@@ -135,6 +135,163 @@ function validateLatitudeLongitude(string, variableName) {
   return string;
 }
 
+function isEmptyObject(obj) {
+  return Object.keys(obj).length === 0;
+}
+
+function dateFormat(input) {
+  var pattern = /(\d{4})\-(\d{2})\-(\d{2})/;
+  if (!input || !input.match(pattern)) {
+    return null;
+  }
+  return input.replace(pattern, "$2/$3/$1");
+}
+
+function getRestaurantCapacity(restaurant) {
+  let restaurantCapacity = 0;
+  let p = restaurant.restaurantTableCapacities;
+  for (var key in p) {
+    if (p.hasOwnProperty(key)) {
+      restaurantCapacity = restaurantCapacity + key * p[key];
+    }
+  }
+  return restaurantCapacity;
+}
+
+var getTableCombinations = function (candidates, target) {
+  candidates.sort((a, b) => a - b);
+  return backtrack(candidates, target);
+};
+
+var backtrack = function (candidates, target) {
+  let res = [];
+
+  for (const [ind, candidate] of candidates.entries()) {
+    if (candidates[ind - 1] == candidate) continue;
+    if (candidate < target) {
+      let subResult = backtrack(candidates.slice(ind + 1), target - candidate);
+      subResult.map((sub) => sub.unshift(candidate));
+      if (subResult.length > 0) res.push(...subResult);
+    } else {
+      if (candidate == target) res.push([candidate]);
+      break;
+    }
+  }
+
+  return res;
+};
+
+//Restaurant route helpers
+
+function getClosingTime(time) {
+  let openingTimeHour = parseInt(time.split(":")[0]);
+  let openingTimeMin = parseInt(time.split(":")[1]);
+
+  openingTimeHour = openingTimeHour - 2;
+  if (openingTimeHour.toString().length == 1) {
+    openingTimeHour = "0" + openingTimeHour;
+  }
+  if (openingTimeMin.toString().length == 1) {
+    openingTimeMin = "0" + openingTimeMin;
+  }
+  return openingTimeHour + ":" + openingTimeMin;
+}
+function getAllTime(time) {
+  let getAllTimeArray = [];
+  getAllTimeArray.push(time);
+  let openingTimeHour = parseInt(time.split(":")[0]);
+  let openingTimeMin = parseInt(time.split(":")[1]);
+
+  for (let i = 0; i < 3; i++) {
+    ///fix 24 +
+    if (openingTimeMin == 0) openingTimeMin = 30;
+    else {
+      openingTimeHour = openingTimeHour + 1;
+      openingTimeMin = 0;
+    }
+    if (openingTimeHour.toString().length == 1) {
+      currentTimeHour = "0" + openingTimeHour;
+    } else {
+      currentTimeHour = openingTimeHour;
+    }
+    if (openingTimeMin.toString().length == 1) {
+      currentTimeMin = "0" + openingTimeMin;
+    } else {
+      currentTimeMin = openingTimeMin;
+    }
+    currentTime = currentTimeHour + ":" + currentTimeMin;
+    getAllTimeArray.push(currentTime);
+  }
+  return getAllTimeArray;
+}
+
+function getTimeSlots(openingTime, closingTime) {
+  let availabilityArray = [];
+  let currentTime = "";
+  let currentTimeHour = "";
+  let currentTimeMin = "";
+  let openingTimeHour = parseInt(openingTime.split(":")[0]);
+  let openingTimeMin = parseInt(openingTime.split(":")[1]);
+  closingTime = getClosingTime(closingTime);
+  availabilityArray.push(openingTime);
+
+  while (currentTime != closingTime) {
+    if (openingTimeMin == 0) openingTimeMin = 30;
+    else {
+      openingTimeHour = openingTimeHour + 1;
+      openingTimeMin = 0;
+    }
+    if (openingTimeHour.toString().length == 1) {
+      currentTimeHour = "0" + openingTimeHour;
+    } else {
+      currentTimeHour = openingTimeHour;
+    }
+    if (openingTimeMin.toString().length == 1) {
+      currentTimeMin = "0" + openingTimeMin;
+    } else {
+      currentTimeMin = openingTimeMin;
+    }
+    currentTime = currentTimeHour + ":" + currentTimeMin;
+    availabilityArray.push(currentTime);
+  }
+  return availabilityArray;
+}
+
+function objectToArrayOfAvailability(object) {
+  let availabilityObject = object;
+  let availabilityArray = [];
+  for (var key in availabilityObject) {
+    if (availabilityObject.hasOwnProperty(key)) {
+      for (let i = 0; i < availabilityObject[key]; i++) {
+        availabilityArray.push(key);
+      }
+    }
+  }
+  return availabilityArray;
+}
+function getTableCombinationSlots(availabilityObject, guests) {
+  availabilityArray = objectToArrayOfAvailability(availabilityObject);
+
+  if (guests % 2 == 0) {
+    guests = parseInt(guests);
+  } else {
+    guests = parseInt(guests) + 1;
+  }
+
+  if (getTableCombinations(availabilityArray, guests).length == 0)
+    throw {
+      name: "noSeats",
+      message: "There are no available seats for chosen requirements!",
+    };
+
+  var tableCombinations = getTableCombinations(availabilityArray, guests);
+  var tableCombinationSlots = [];
+  for (let i = 0; i < tableCombinations.length; i++) {
+    tableCombinationSlots.push(tableCombinations[i].join(" and "));
+  }
+  return tableCombinationSlots;
+}
+
 module.exports = {
   checkIsProperString,
   checkIsProperArray,
@@ -145,4 +302,12 @@ module.exports = {
   checkPassword,
   checkIsProperId,
   validateLatitudeLongitude,
+  isEmptyObject,
+  dateFormat,
+  getRestaurantCapacity,
+  getTableCombinations,
+  getAllTime,
+  getTimeSlots,
+  objectToArrayOfAvailability,
+  getTableCombinationSlots,
 };
