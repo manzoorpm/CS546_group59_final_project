@@ -1,14 +1,13 @@
 <main>
-  <div class="container">
+  <div class="add-res">
     <h1>Edit restaurant</h1>
     <form
       method="POST"
       action="/admin/restaurant/edit/{{restaurant._id}}"
       id="editrestaurant-form"
-      enctype="multipart/form-data"
     >
       <div class="form">
-        <label for="name">Restaurant Name:</label><br />
+        <label for="name">Restaurant Name:</label>
         <input
           type="text"
           id="name"
@@ -18,7 +17,17 @@
         /><br />
       </div>
       <div class="form">
-        <label for="contactInfo">Contact Info:</label><br />
+        <label for="emailId">Email ID:</label>
+        <input
+          type="text"
+          id="emailId"
+          name="emailId"
+          placeholder="Email ID"
+          value="{{restaurant.emailId}}"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="contactInfo">Contact Info:</label>
         <input
           type="text"
           id="contactInfo"
@@ -36,11 +45,7 @@
         >{{restaurant.description}}</textarea><br />
       </div>
       <div class="form">
-        <label for="image">Main Image:</label><br />
-        <input type="file" id="image" name="image" /><br />
-      </div>
-      <div class="form">
-        <label for="priceRange">Price Range:</label><br />
+        <label for="priceRange">Price Range:</label>
         <input
           type="text"
           id="priceRange"
@@ -50,7 +55,7 @@
         /><br />
       </div>
       <div class="form">
-        <label for="category">Category:</label><br />
+        <label for="category">Category:</label>
         <input
           type="text"
           id="category"
@@ -69,7 +74,7 @@
         >{{restaurant.address}}</textarea><br />
       </div>
       <div class="form">
-        <label for="city">City:</label><br />
+        <label for="city">City:</label>
         <input
           type="text"
           id="city"
@@ -92,7 +97,7 @@
         </select>
       </div>
       <div class="form">
-        <label for="zip">Zip:</label><br />
+        <label for="zip">Zip:</label>
         <input
           type="text"
           id="zip"
@@ -102,7 +107,7 @@
         /><br />
       </div>
       <div class="form">
-        <label for="latitude">Latitude:</label><br />
+        <label for="latitude">Latitude:</label>
         <input
           type="text"
           id="latitude"
@@ -111,7 +116,7 @@
           value="{{restaurant.latitude}}"
         /><br />
 
-        <label for="longitude">Longitude:</label><br />
+        <label for="longitude">Longitude:</label>
         <input
           type="text"
           id="longitude"
@@ -121,7 +126,7 @@
         /><br />
       </div>
       <div class="form">
-        <label for="openingTime">Opening Time:</label><br />
+        <label for="openingTime">Opening Time:</label>
         <input
           type="time"
           id="openingTime"
@@ -130,32 +135,32 @@
         /><br />
       </div>
       <div class="form">
-        <label for="closingTime">Closing Time:</label><br />
+        <label for="closingTime">Closing Time:</label>
         <input
           type="time"
           id="closingTime"
           name="closingTime"
           value="{{restaurant.closingTime}}"
-        /><br />
+        /><br /><br />
       </div>
       <div class="form">
-        <label for="TableFor2">Number of tables for 2:</label><br />
+        <label for="TableFor2">Number of tables for 2:</label>
         <input type="number" id="TableFor2" name="TableFor2" /><br />
       </div>
       <div class="form">
-        <label for="TableFor4">Number of tables for 4:</label><br />
+        <label for="TableFor4">Number of tables for 4:</label>
         <input type="number" id="TableFor4" name="TableFor4" /><br />
       </div>
       <div class="form">
-        <label for="TableFor6">Number of tables for 6:</label><br />
+        <label for="TableFor6">Number of tables for 6:</label>
         <input type="number" id="TableFor6" name="TableFor6" /><br />
       </div>
       <div class="form">
-        <label for="TableFor8">Number of tables for 8:</label><br />
+        <label for="TableFor8">Number of tables for 8:</label>
         <input type="number" id="TableFor8" name="TableFor8" /><br />
       </div>
       <div class="form">
-        <label for="TableFor10">Number of tables for 10:</label><br />
+        <label for="TableFor10">Number of tables for 10:</label>
         <input type="number" id="TableFor10" name="TableFor10" /><br />
       </div>
       <button
@@ -174,3 +179,5 @@
     {{/if}}
   </div>
 </main>
+
+<script src="../public/js/editrestaurantForm.js"></script>

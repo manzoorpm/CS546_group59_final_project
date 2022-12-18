@@ -113,8 +113,9 @@ async function main() {
   try {
     await restaurantData.createRestaurant(
       "Papa Johns",
+      "fDabcde@gmail.com",
       "5538741204",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "In 1984, Papa Johns opened with one goal in mind: to offer the best pizza. We knew that with better ingredients, we would get there.",
       "/public/images/imageOne.jpg",
       "40",
       "Pizza",
@@ -130,9 +131,10 @@ async function main() {
     );
     await restaurantData.createRestaurant(
       "Club A Steakhouse",
+      "qDabcde@gmail.com",
       "5538741236",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "/public/images/imageOne.jpg",
+      "Club A Steakhouse: Best restaurant in Manhattan",
+      "/public/images/imageTwo.jpg",
       "20",
       "Steakhouse",
       "28th Street",
@@ -148,9 +150,10 @@ async function main() {
 
     await restaurantData.createRestaurant(
       "Renatos",
+      "pDabcde@gmail.com",
       "8538741356",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "/public/images/imageOne.jpg",
+      "Long time eatery for classic itallian fare in an unassuming storefront with tucked away dining spaces.",
+      "/public/images/imageThree.png",
       "25",
       "Pizza",
       "338 Central Avenue",
@@ -165,9 +168,10 @@ async function main() {
     );
     await restaurantData.createRestaurant(
       "Club B Steakhouse",
+      "Dabcde@gmail.com",
       "5538748233",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "/public/images/imageOne.jpg",
+      "Not the best Steakhouse hence its Club B.",
+      "/public/images/imageFour.jpg",
       "30",
       "Steakhouse",
       "34th Street",
@@ -182,9 +186,10 @@ async function main() {
     );
     await restaurantData.createRestaurant(
       "Artichokes",
+      "abcde@gmail.com",
       "7538741208",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "/public/images/imageOne.jpg",
+      "Our restaurant has a warm and welcoming atmosphere, with friendly and attentive staff who are passionate about serving great food. So come on in and enjoy a slice (or two) of heaven at our pizza place!",
+      "/public/images/imageFive.jpg",
       "30",
       "Pizza",
       "100 Washington Street",

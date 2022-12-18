@@ -126,7 +126,7 @@
 
       if (errorFlag !== 0) {
         event.preventDefault();
-        errorTextElement.textContent = `${errors}`;
+        errorTextElement.textContent = `${errors[0]}`;
         errorContainer.classList.remove("hidden");
       }
     });

@@ -2,6 +2,7 @@
 const helper = require("../helpers");
 const { ObjectId } = require("mongodb");
 const mongoCollections = require("../config/mongoCollections");
+const { compare } = require("bcryptjs");
 const restaurants = mongoCollections.restaurants;
 
 // RestaurantId will get initialized in the function
@@ -10,6 +11,7 @@ const restaurants = mongoCollections.restaurants;
 // reservations array and reviews array will be initialized empty
 async function createRestaurant(
   name,
+  emailId,
   contactInfo,
   description,
   mainImage,
@@ -25,11 +27,14 @@ async function createRestaurant(
   closingTime,
   restaurantTableCapacities
 ) {
-  if (arguments.length !== 15) {
+  if (arguments.length !== 16) {
     throw [400, `Improper Number of Inputs`];
   }
   name = helper.checkIsProperString(name, "Restaurant Name");
   name = helper.validateCity(name, "Restaurant Name");
+
+  emailId = helper.checkIsProperString(emailId, "Email ID");
+  emailId = helper.validateEmail(emailId, "Email ID");
 
   contactInfo = helper.checkIsProperString(contactInfo, "Phone Number");
   contactInfo = helper.validatePhoneNumber(contactInfo, "Phone Number");
@@ -43,25 +48,7 @@ async function createRestaurant(
   priceRange = parseInt(priceRange);
 
   category = helper.checkIsProperString(category, "Category");
-  if (
-    !(
-      category === "Pizza" ||
-      category === "Bakery" ||
-      category === "Steakhouse" ||
-      category === "Indian" ||
-      category === "Asian" ||
-      category === "English" ||
-      category === "Thai" ||
-      category === "Chinese" ||
-      category === "Japanese" ||
-      category === "American" ||
-      category === "English" ||
-      category === "Mexican" ||
-      category === "Mediterenean"
-    )
-  ) {
-    throw [400, `Category is not from valid values list`];
-  }
+  category = helper.validateCategory(category, "Category");
 
   address = helper.checkIsProperString(address, "Address");
 
@@ -74,11 +61,10 @@ async function createRestaurant(
   }
 
   zip = helper.checkIsProperString(zip, "Zip");
-  if (zip.length > 5 || zip.length < 4) {
+  zip = helper.validateNumber(zip, "Zip");
+  if (zip.length != 5) {
     throw [400, `Zip Code Invalid Length`];
   }
-  zip = helper.validateNumber(zip, "Zip");
-  zip = parseInt(zip);
 
   latitude = helper.checkIsProperString(latitude, "Latitude");
   latitude = helper.validateLatitudeLongitude(latitude, "Latitude");
@@ -87,8 +73,12 @@ async function createRestaurant(
   longitude = helper.validateLatitudeLongitude(longitude, "Longitude");
 
   openingTime = helper.checkIsProperString(openingTime, "Opening Time");
+  openingTime = helper.validateTime(openingTime, "Opening Time");
 
   closingTime = helper.checkIsProperString(closingTime, "Closing Time");
+  closingTime = helper.validateTime(closingTime, "Closing Time");
+
+  helper.compareTime(closingTime, openingTime);
 
   // Time Validation, Timelogic, restaurantTableCapacities Validation, availibility Calculation using timelogic and restaurant table capacities UNFINISHED
 
@@ -108,6 +98,7 @@ async function createRestaurant(
 
   const newRestaurant = {
     name: name,
+    emailId: emailId,
     contactInfo: contactInfo,
     description: description,
     mainImage: mainImage,
@@ -299,9 +290,9 @@ async function removeRestaurant(restaurantId) {
 async function updateRestaurant(
   restaurantId,
   name,
+  emailId,
   contactInfo,
   description,
-  mainImage,
   priceRange,
   category,
   address,
@@ -320,12 +311,13 @@ async function updateRestaurant(
   name = helper.checkIsProperString(name, "Restaurant Name");
   name = helper.validateCity(name, "Restaurant Name");
 
+  emailId = helper.checkIsProperString(emailId, "Email ID");
+  emailId = helper.validateEmail(emailId, "Email ID");
+
   contactInfo = helper.checkIsProperString(contactInfo, "Phone Number");
   contactInfo = helper.validatePhoneNumber(contactInfo, "Phone Number");
 
   description = helper.checkIsProperString(description, "Description");
-
-  mainImage = helper.checkIsProperString(mainImage, "Image Link");
 
   priceRange = helper.checkIsProperString(priceRange, "Price Range");
   priceRange = helper.validateNumber(priceRange, "Price Range");
@@ -345,11 +337,10 @@ async function updateRestaurant(
   }
 
   zip = helper.checkIsProperString(zip, "Zip");
-  if (zip.length > 5 || zip.length < 4) {
+  zip = helper.validateNumber(zip, "Zip");
+  if (zip.length != 5) {
     throw [400, `Zip Code Invalid Length`];
   }
-  zip = helper.validateNumber(zip, "Zip");
-  zip = parseInt(zip);
 
   latitude = helper.checkIsProperString(latitude, "Latitude");
   latitude = helper.validateLatitudeLongitude(latitude, "Latitude");
@@ -358,8 +349,12 @@ async function updateRestaurant(
   longitude = helper.validateLatitudeLongitude(longitude, "Longitude");
 
   openingTime = helper.checkIsProperString(openingTime, "Opening Time");
+  openingTime = helper.validateTime(openingTime, "Opening Time");
 
   closingTime = helper.checkIsProperString(closingTime, "Closing Time");
+  closingTime = helper.validateTime(closingTime, "Closing Time");
+
+  helper.compareTime(closingTime, openingTime);
 
   // restaurantTableCapacities = helper.checkIsProperString(
   //   restaurantTableCapacities,
@@ -372,7 +367,10 @@ async function updateRestaurant(
   const restaurant = await getRestaurantById(restaurantId);
   const updatedRestaurant = {
     name: name,
+    emailId: emailId,
     contactInfo: contactInfo,
+    description: description,
+    priceRange: priceRange,
     category: category,
     address: address,
     city: city,

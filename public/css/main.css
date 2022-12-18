@@ -52,3 +52,37 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+.add-res {
+  width: 100%;
+  max-width: 500px;
+  padding: 15px;
+  margin: auto;
+}
+
+.add-res .form-floating:focus-within {
+  z-index: 0.5;
+}
+
+.add-res input {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.add-res input {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.add-res textarea {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+#fixate {
+  width: 420px;
+  height: 300px;
+}
