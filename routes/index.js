@@ -12,7 +12,7 @@ const constructorMethod = (app) => {
   app.use("/account", accountRoutes);
   app.use("/admin", adminRoutes);
   app.use("/exceptions", exceptionRoutes);
-  app.use("/reservations", reservationRoutes);
+  app.use("/reservation", reservationRoutes);
 
   app.use("*", (req, res) => {
     res.status(404).render("notFound");

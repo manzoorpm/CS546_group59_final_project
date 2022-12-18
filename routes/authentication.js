@@ -13,11 +13,42 @@ router
     });
   })
   .post(async (req, res) => {
-    // try{
-    // //   FOR INPUT PRESENT USER CHECKING
-    // }catch(e){
-    //   return res.status(e[0]).render('userRegister',{title:"Registration Form", hasErrors:true, error:`${e[1]}`})
-    // }
+    try {
+      //   FOR INPUT PRESENT USER CHECKING
+      if (!req.body.firstnameInput) {
+        throw [400, "Error: Username is not provided"];
+      }
+      if (!req.body.lastnameInput) {
+        throw [400, "Error: Username is not provided"];
+      }
+      if (!req.body.emailId) {
+        throw [400, "Error: Username is not provided"];
+      }
+      if (!req.body.contactInfo) {
+        throw [400, "Error: Username is not provided"];
+      }
+      if (!req.body.age) {
+        throw [400, "Error: Username is not provided"];
+      }
+      if (!req.body.gender) {
+        throw [400, "Error: Username is not provided"];
+      }
+      if (!req.body.city) {
+        throw [400, "Error: Username is not provided"];
+      }
+      if (!req.body.state) {
+        throw [400, "Error: Username is not provided"];
+      }
+      if (!req.body.passwordInput) {
+        throw [400, "Error: Username is not provided"];
+      }
+    } catch (e) {
+      return res.status(e[0]).render("userRegister", {
+        title: "Registration Form",
+        hasErrors: true,
+        error: `${e[1]}`,
+      });
+    }
     let firstName = req.body.firstnameInput;
     let lastName = req.body.lastnameInput;
     let emailId = req.body.emailId;
@@ -27,11 +58,45 @@ router
     let city = req.body.city;
     let state = req.body.state;
     let password = req.body.passwordInput;
-    // try{
-    // //   FOR ERROR CHECKING
-    // }catch(e){
-    //   return res.status(e[0]).render('userRegister',{title:"Registration Form", hasErrors:true, error:`${e[1]}`})
-    // }
+    try {
+      //   FOR ERROR CHECKING
+      firstName = helper.checkIsProperString(firstName, "First Name");
+      firstName = helper.validateName(firstName, "First Name");
+
+      lastName = helper.checkIsProperString(lastName, "Last Name");
+      lastName = helper.validateName(lastName, "Last Name");
+
+      emailId = helper.checkIsProperString(emailId, "Email ID");
+      emailId = helper.validateEmail(emailId, "Email ID");
+
+      contactInfo = helper.checkIsProperString(contactInfo, "Phone Number");
+      contactInfo = helper.validatePhoneNumber(contactInfo, "Phone Number");
+
+      age = helper.checkIsProperString(age, "Age");
+      age = helper.validateNumber(age, "Age");
+
+      gender = helper.checkIsProperString(gender, "Gender");
+
+      city = helper.checkIsProperString(city, "City");
+      city = helper.validateCity(city, "City");
+
+      state = helper.checkIsProperString(state, "State");
+
+      password = helper.checkIsProperString(password, "Password");
+      password = helper.checkPassword(password, "Password");
+      if (helper.checkForSpaces(password)) {
+        throw [400, "Error: Password should not have spaces in it"];
+      }
+      if (password.length < 6) {
+        throw [400, `Password needs to be longer than 6 characters`];
+      }
+    } catch (e) {
+      return res.status(e[0]).render("userRegister", {
+        title: "Registration Form",
+        hasErrors: true,
+        error: `${e[1]}`,
+      });
+    }
     try {
       let { insertedUser } = await userData.createUser(
         emailId,
@@ -60,16 +125,15 @@ router
   .route("/login")
   .get(async (req, res) => {
     //code here for GET
-
     return res.render("login", { title: "Login Page", hasErrors: false });
   })
   .post(async (req, res) => {
     try {
       if (!req.body.usernameInput) {
-        [400, "Error: Username is not provided"];
+        throw [400, "Error: Username is not provided"];
       }
       if (!req.body.passwordInput) {
-        [400, "Error: Password is not provided"];
+        throw [400, "Error: Password is not provided"];
       }
     } catch (e) {
       return res.status(e[0]).render("userLogin", {
@@ -80,11 +144,19 @@ router
     }
     let username = req.body.usernameInput;
     let password = req.body.passwordInput;
-    // try{
-    // //   FOR CHECKING INPUT VALIDATION
-    // }catch(e){
-    //   return res.status(e[0]).render('userLogin',{title:"Login", hasErrors:true, error:`${e[1]}`})
-    // }
+    try {
+      //   FOR CHECKING INPUT VALIDATION
+      username = helper.checkIsProperString(username, "Username");
+      password = helper.checkIsProperString(password, "Password");
+    } catch (e) {
+      return res
+        .status(e[0])
+        .render("userLogin", {
+          title: "Login",
+          hasErrors: true,
+          error: `${e[1]}`,
+        });
+    }
     try {
       let { authenticatedUser } = await userData.checkUser(username, password);
       let { authenticatedAdmin } = await userData.checkUser(username, password);

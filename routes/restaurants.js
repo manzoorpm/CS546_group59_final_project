@@ -4,6 +4,7 @@ const router = express.Router();
 const data = require("../data");
 const restaurantData = data.restaurants;
 const reservationsData = data.reservations;
+const reviewData = data.reviews;
 const helper = require("../helpers");
 
 function isEmptyObject(obj) {
@@ -178,6 +179,9 @@ router
   .route("/restaurant/:restaurantId")
   .get(async (req, res) => {
     //code here for GET
+    let reviewList = await reviewData.getAllRestaurantReviews(
+      req.params.restaurantId
+    );
     try {
       let restaurant = await restaurantData.getRestaurantById(
         req.params.restaurantId
@@ -200,6 +204,7 @@ router
         userTag: req.session.tag,
         name: req.session.name,
         restaurant: restaurant,
+        review: reviewList,
         restaurantId: req.params.restaurantId,
         availabilityAll: availabilityAll,
         restaurantCapacity: restaurantCapacity,

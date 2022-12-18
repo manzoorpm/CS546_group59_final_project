@@ -67,6 +67,13 @@ app.use("/auth/register", async (req, res, next) => {
 app.post("/admin/restaurant/add", upload.single("image"), (req, res, next) => {
   next();
 });
+app.post(
+  "/admin/restaurant/edit/:restaurantId",
+  upload.single("image"),
+  (req, res, next) => {
+    next();
+  }
+);
 // app.use("/account/:userId", async (req, res, next) => {
 //   if (req.session.userId.toString() == req.params.userId.toString()) {
 //     next();
@@ -99,13 +106,13 @@ app.post("/admin/restaurant/add", upload.single("image"), (req, res, next) => {
 //   }
 // });
 
-app.use("/account/edit/:userId", async (req, res, next) => {
-  if (req.session.userId.toString() == req.params.userId.toString()) {
-    next();
-  } else {
-    return res.redirect("/exceptions/forbidden");
-  }
-});
+// app.use("/account/edit/:userId", async (req, res, next) => {
+//   if (req.session.userId.toString() == req.params.userId.toString()) {
+//     next();
+//   } else {
+//     return res.redirect("/exceptions/forbidden");
+//   }
+// });
 
 app.use("/account/remove/:userId", async (req, res, next) => {
   if (req.session.userId == req.params.userId) {
@@ -121,29 +128,29 @@ app.use("/account/remove/:userId", async (req, res, next) => {
 //     next();
 //   } else return res.redirect("/auth/login");
 // });
-app.use("/reservation/:reservationId/", async (req, res, next) => {
-  try {
-    let reservation = await reservationData.getReservationById();
-    if (reservation.userId.toString() == req.params.reservationId) {
-      next();
-    } else return res.redirect("/exceptions/forbidden");
-  } catch (e) {
-    return res.redirect("/exceptions/forbidden"); //not found
-  }
-});
-app.use("/reservation/delete/:reservationId/", async (req, res, next) => {
-  try {
-    let reservation = await reservationData.getReservationById();
+// app.use("/reservation/:reservationId", async (req, res, next) => {
+//   try {
+//     let reservation = await reservationData.getReservationById();
+//     if (reservation.userId.toString() == req.params.reservationId) {
+//       next();
+//     } else return res.redirect("/exceptions/forbidden");
+//   } catch (e) {
+//     return res.redirect("/exceptions/forbidden"); //not found
+//   }
+// });
+// app.use("/reservation/delete/:reservationId", async (req, res, next) => {
+//   try {
+//     let reservation = await reservationData.getReservationById();
 
-    if (reservation.userId.toString() == req.params.reservationId) {
-      next();
-    } else {
-      return res.redirect("/exceptions/forbidden");
-    }
-  } catch (e) {
-    return res.redirect("/exceptions/forbidden"); //not found
-  }
-});
+//     if (reservation.userId.toString() == req.params.reservationId) {
+//       next();
+//     } else {
+//       return res.redirect("/exceptions/forbidden");
+//     }
+//   } catch (e) {
+//     return res.redirect("/exceptions/forbidden"); //not found
+//   }
+// });
 
 //update permission for routes
 configRoutes(app);

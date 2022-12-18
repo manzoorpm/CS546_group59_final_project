@@ -1,7 +1,8 @@
 <h1>Reservation</h1>
 
 {{#if reservation}}
-<h6>{{reservation._id}}</h6>
-<h6>{{reservation.reservationTime}}</h6>
+  <p>Reservation ID:{{reservation._id}}</p>
+  <p>Reservation Time:{{reservation.reservationTime}}</p>
+  <p>Reservation Date: {{reservation.reservationDate}}</p>
 
 {{/if}}
