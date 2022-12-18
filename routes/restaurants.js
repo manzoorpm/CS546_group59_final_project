@@ -62,10 +62,7 @@ router
       let restaurant;
       req.body.date = helper.checkBookingDate(req.body.date);
       req.body.guests = helper.checkGuests(req.body.guests);
-      req.body.time = helper.checkInputTime(
-        req.body.time,
-        helper.checkBookingDate(req.body.date)
-      );
+      req.body.time = helper.checkInputTime(req.body.time, req.body.date);
     } catch (e) {
       return res.render("error", {
         error: e,

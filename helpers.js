@@ -540,8 +540,17 @@ function checkGuests(str) {
   return str;
 }
 
-function checkInputTime(str) {
-  str = checkIsProperString(str, Guests);
+function checkInputTime(str, date) {
+  str = checkIsProperString(str);
+  let varDate = new Date(date);
+  let today = new Date();
+  let time = new Date();
+  timeNow = time.getHours() + ":" + time.getMinutes();
+
+  today.setHours(0, 0, 0, 0);
+
+  if (varDate.toDateString() === today.toDateString()) {
+  }
   return str;
 }
 
