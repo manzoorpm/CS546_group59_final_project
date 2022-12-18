@@ -5,10 +5,7 @@ const data = require("../data");
 const reservationData = data.reservations;
 const userData = data.users;
 const restaurantData = data.restaurants;
-
 const helper = require("../helpers");
-const userData = data.users;
-const reservationData = data.reservations;
 
 router.route("/:reservationId").get(async (req, res) => {
   //code here for GET
