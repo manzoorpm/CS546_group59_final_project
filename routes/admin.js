@@ -126,7 +126,7 @@ router
         restaurantTableCapacities
       );
       if (insertedRes) {
-        res.redirect("/");
+        return res.redirect("/");
       }
     } catch (e) {
       return res.status(400).render("addRestaurant", {
@@ -149,6 +149,7 @@ router
     let restaurant = await restaurantData.getRestaurantById(
       req.params.restaurantId
     );
+    return res.render("adminUpdateRemoveRestaurant", {
     return res.render("adminUpdateRemoveRestaurant", {
       title: "Edit Restaurant",
       user: user,
