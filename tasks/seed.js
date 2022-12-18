@@ -145,6 +145,7 @@ async function main() {
       "22:00",
       { 2: 6, 4: 3 }
     );
+    
     await restaurantData.createRestaurant(
       "Renatos",
       "8538741356",
@@ -196,6 +197,7 @@ async function main() {
       "00:00",
       { 4: 4, 6: 2 }
     );
+
     const restaurantList = await restaurantData.getAllRestaurants();
 
     res1 = restaurantList[0];

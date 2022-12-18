@@ -6,6 +6,10 @@ const restaurantData = data.restaurants;
 const reservationsData = data.reservations;
 const helper = require("../helpers");
 
+function isEmptyObject(obj) {
+  return Object.keys(obj).length === 0;
+}
+
 function format(input) {
   var pattern = /(\d{4})\-(\d{2})\-(\d{2})/;
   if (!input || !input.match(pattern)) {
@@ -48,6 +52,35 @@ var backtrack = function (candidates, target) {
   return res;
 };
 
+function getAllTime(time) {
+  let getAllTimeArray = [];
+  getAllTimeArray.push(time);
+  let openingTimeHour = parseInt(time.split(":")[0]);
+  let openingTimeMin = parseInt(time.split(":")[1]);
+
+  for (let i = 0; i < 3; i++) {
+    ///fix 24 +
+    if (openingTimeMin == 0) openingTimeMin = 30;
+    else {
+      openingTimeHour = openingTimeHour + 1;
+      openingTimeMin = 0;
+    }
+    if (openingTimeHour.toString().length == 1) {
+      currentTimeHour = "0" + openingTimeHour;
+    } else {
+      currentTimeHour = openingTimeHour;
+    }
+    if (openingTimeMin.toString().length == 1) {
+      currentTimeMin = "0" + openingTimeMin;
+    } else {
+      currentTimeMin = openingTimeMin;
+    }
+    currentTime = currentTimeHour + ":" + currentTimeMin;
+    getAllTimeArray.push(currentTime);
+  }
+  return getAllTimeArray;
+}
+
 function getTimeSlots(openingTime, closingTime) {
   let availabilityArray = [];
   let currentTime = "";
@@ -80,26 +113,52 @@ function getTimeSlots(openingTime, closingTime) {
   return availabilityArray;
 }
 
-function getAvailabilityObject(capacity, time, date) {
-  let newValue = {};
-  let timeValue = {};
-  timeValue[time] = capacity;
-  newValue[date] = timeValue;
-  return newValue;
-}
+// function getAvailabilityObject(capacity, time, date) {
+//   let newValue = {};
+//   let timeValue = {};
+//   timeValue[time] = capacity;
+//   newValue[date] = timeValue;
+//   return newValue;
+// }
 
-function objectToArrayOfAvailability(object, date, time) {
-  let availabilityObjectDate = object[date];
-  let availabilityObject = availabilityObjectDate[time];
+function objectToArrayOfAvailability(object) {
+  let availabilityObject = object;
   let availabilityArray = [];
   for (var key in availabilityObject) {
     if (availabilityObject.hasOwnProperty(key)) {
-      for (i = 0; i < availabilityObject[key]; i++) {
+      for (let i = 0; i < availabilityObject[key]; i++) {
         availabilityArray.push(key);
       }
     }
   }
   return availabilityArray;
+}
+
+function intialObjectMaker(date, allTime, capacity) {
+  objInner = {};
+  for (i = 0; i < allTime.length; i++) {
+    objInner[allTime[i]] = capacity[0];
+  }
+  return objInner;
+}
+
+function getTableCombinationSlots(availabilityObject, guests) {
+  availabilityArray = objectToArrayOfAvailability(availabilityObject);
+
+  if (guests % 2 == 0) {
+    guests = parseInt(guests);
+  } else {
+    guests = parseInt(guests) + 1;
+  }
+
+  if (getTableCombinations(availabilityArray, guests).length == 0)
+    throw "no available sets";
+  var tableCombinations = getTableCombinations(availabilityArray, guests);
+  var tableCombinationSlots = [];
+  for (let i = 0; i < tableCombinations.length; i++) {
+    tableCombinationSlots.push(tableCombinations[i].join(" and "));
+  }
+  return tableCombinationSlots;
 }
 
 router.route("/").get(async (req, res) => {
@@ -120,31 +179,36 @@ router
   .route("/restaurant/:restaurantId")
   .get(async (req, res) => {
     //code here for GET
-    let restaurant = await restaurantData.getRestaurantById(
-      req.params.restaurantId
-    );
-    let restaurantCapacity = getRestaurantCapacity(restaurant);
+    try {
+      let restaurant = await restaurantData.getRestaurantById(
+        req.params.restaurantId
+      );
 
-    if (req.body.guests > restaurantCapacity)
-      throw "The restaurant cannot accomodate entered number of guests";
+      let restaurantCapacity = getRestaurantCapacity(restaurant);
 
-    availabilityAll = getTimeSlots(
-      restaurant.openingTime,
-      restaurant.closingTime
-    );
+      if (req.body.guests > restaurantCapacity)
+        throw "The restaurant cannot accomodate entered number of guests";
 
-    return res.render("restaurant", {
-      title: restaurant.name,
-      user: req.session.user,
-      userId: req.session.userId,
-      userTag: req.session.tag,
-      name: req.session.name,
-      restaurant: restaurant,
-      restaurantId: req.params.restaurantId,
-      availabilityAll: availabilityAll,
-      restaurantCapacity: restaurantCapacity,
-      hasErrors: false,
-    });
+      availabilityAll = getTimeSlots(
+        restaurant.openingTime,
+        restaurant.closingTime
+      );
+
+      return res.render("restaurant", {
+        title: restaurant.name,
+        user: req.session.user,
+        userId: req.session.userId,
+        userTag: req.session.tag,
+        name: req.session.name,
+        restaurant: restaurant,
+        restaurantId: req.params.restaurantId,
+        availabilityAll: availabilityAll,
+        restaurantCapacity: restaurantCapacity,
+        hasErrors: false,
+      });
+    } catch (e) {
+      return res.redirect("/exceptions/error");
+    }
   })
   .post(async (req, res) => {
     let restaurant = await restaurantData.getRestaurantById(
@@ -153,48 +217,50 @@ router
     let restaurantCapacity = getRestaurantCapacity(restaurant);
     let flag = 0;
     let availabilityObject;
-    if (restaurant.availibility.length > 0) {
-      for (i = 0; i < restaurant.availibility.length; i++) {
-        if (restaurant.availibility[i][format(req.body.date)]) {
-          availabilityObject = restaurant.availibility[i];
-          flag = 1;
-          break;
+
+    let allTime = getAllTime(req.body.time);
+
+    if (!isEmptyObject(restaurant.availibility)) {
+      var multipleAvailabilityArray = [];
+      let temp;
+      if (restaurant.availibility[format(req.body.date)]) {
+        temp = restaurant.availibility[format(req.body.date)];
+        for (let j = 0; j < allTime.length; j++) {
+          if (temp[allTime[j]]) {
+            multipleAvailabilityArray.push(temp[allTime[j]]);
+            flag = 1;
+          }
         }
       }
+      if (flag) {
+        let temp;
+        tableCombinationSlotsArray = [];
+        for (let i = 0; i < multipleAvailabilityArray.length; i++) {
+          temp = getTableCombinationSlots(
+            multipleAvailabilityArray[i],
+            req.body.guests
+          );
+          tableCombinationSlotsArray.push(temp);
+        }
+
+        tableCombinationSlots = tableCombinationSlotsArray.reduce((a, b) =>
+          a.filter((c) => b.includes(c))
+        );
+      }
       if (!flag) {
-        availabilityObject = getAvailabilityObject(
+        console.log("fff");
+
+        tableCombinationSlots = getTableCombinationSlots(
           restaurant.restaurantTableCapacities,
-          req.body.time,
-          format(req.body.date)
+          req.body.guests
         );
       }
     } else {
-      availabilityObject = getAvailabilityObject(
+      console.log("yay!");
+      tableCombinationSlots = getTableCombinationSlots(
         restaurant.restaurantTableCapacities,
-        req.body.time,
-        format(req.body.date)
+        req.body.guests
       );
-    }
-
-    availabilityArray = objectToArrayOfAvailability(
-      availabilityObject,
-      format(req.body.date),
-      req.body.time
-    );
-
-    let guests;
-    if (req.body.guests % 2 == 0) {
-      guests = parseInt(req.body.guests);
-    } else {
-      guests = parseInt(req.body.guests) + 1;
-    }
-
-    if (getTableCombinations(availabilityArray, guests).length == 0)
-      throw "no available sets";
-    let tableCombinations = getTableCombinations(availabilityArray, guests);
-    let tableCombinationSlots = [];
-    for (let i = 0; i < tableCombinations.length; i++) {
-      tableCombinationSlots.push(tableCombinations[i].join(" and "));
     }
 
     return res.render("restaurant", {
@@ -206,6 +272,7 @@ router
       tableCombinationSlots: tableCombinationSlots,
       time: req.body.time,
       date: req.body.date,
+      guests: req.body.guests,
       restaurant: restaurant,
       restaurantId: req.params.restaurantId,
       restaurantCapacity: restaurantCapacity,
@@ -216,64 +283,131 @@ router
 router
   .route("/restaurant/:restaurantId/addreservation")
   .post(async (req, res) => {
+    var temp;
     let flag = 0;
     let restaurant = await restaurantData.getRestaurantById(
       req.params.restaurantId
     );
+    let allTime = getAllTime(req.body.time);
 
     chosenCombinationArray = req.body.chosenCombination.split(" and ");
 
-    if (restaurant.availibility.length > 0) {
-      for (i = 0; i < restaurant.availibility.length; i++) {
-        if (restaurant.availibility[i][format(req.body.date)]) {
-          currentCapacity =
-            restaurant.availibility[i][format(req.body.date)][req.body.time];
-          flag = 1;
-          break;
+    if (!isEmptyObject(restaurant.availibility)) {
+      let currentCapacity = [];
+      for (let i = 0; i < 4; i++) {
+        currentCapacity.push(
+          JSON.parse(JSON.stringify(restaurant.restaurantTableCapacities))
+        );
+      }
+
+      for (let j = 0; j < currentCapacity.length; j++) {
+        for (let i = 0; i < chosenCombinationArray.length; i++) {
+          if (currentCapacity[j][parseInt(chosenCombinationArray[i])] != 0) {
+            currentCapacity[j][parseInt(chosenCombinationArray[i])] =
+              currentCapacity[j][parseInt(chosenCombinationArray[i])] - 1;
+          }
         }
       }
+      console.log(currentCapacity);
+
+      if (restaurant.availibility[format(req.body.date)]) {
+        temp = restaurant.availibility[format(req.body.date)];
+        for (let j = 0; j < allTime.length; j++) {
+          if (temp[allTime[j]]) {
+            for (let k = 0; k < chosenCombinationArray.length; k++) {
+              if (temp[allTime[j]][parseInt(chosenCombinationArray[k])] != 0) {
+                temp[allTime[j]][parseInt(chosenCombinationArray[k])] =
+                  temp[allTime[j]][parseInt(chosenCombinationArray[k])] - 1;
+              }
+            }
+            currentCapacity[j] = temp[allTime[j]];
+            flag = 1;
+          }
+        }
+      }
+
+      if (flag) {
+        console.log(currentCapacity);
+
+        for (let i = 0; i < allTime.length; i++) {
+          await restaurantData.addAvailability(
+            req.params.restaurantId,
+            currentCapacity[i],
+            format(req.body.date),
+            allTime[i]
+          );
+        }
+      }
+
       if (!flag) {
-        currentCapacity = restaurant.restaurantTableCapacities;
+        let currentCapacity = [];
+        currentCapacity.push(
+          JSON.parse(JSON.stringify(restaurant.restaurantTableCapacities))
+        );
+        //update currentCapacity
+        for (i = 0; i < chosenCombinationArray.length; i++) {
+          if (currentCapacity[0][parseInt(chosenCombinationArray[i])] != 0) {
+            currentCapacity[0][parseInt(chosenCombinationArray[i])] =
+              currentCapacity[0][parseInt(chosenCombinationArray[i])] - 1;
+          }
+        }
+        for (let i = 0; i < allTime.length; i++) {
+          await restaurantData.addAvailability(
+            req.params.restaurantId,
+            currentCapacity[0],
+            format(req.body.date),
+            allTime[i]
+          );
+        }
       }
     } else {
-      currentCapacity = restaurant.restaurantTableCapacities;
-    }
+      let currentCapacity = [];
+      currentCapacity.push(
+        JSON.parse(JSON.stringify(restaurant.restaurantTableCapacities))
+      );
+      //update currentCapacity
+      for (let i = 0; i < chosenCombinationArray.length; i++) {
+        if (currentCapacity[0][parseInt(chosenCombinationArray[i])] != 0) {
+          currentCapacity[0][parseInt(chosenCombinationArray[i])] =
+            currentCapacity[0][parseInt(chosenCombinationArray[i])] - 1;
+        }
+      }
 
-    for (i = 0; i < chosenCombinationArray.length; i++) {
-      if (currentCapacity[parseInt(chosenCombinationArray[i])] != 0) {
-        currentCapacity[parseInt(chosenCombinationArray[i])] =
-          currentCapacity[parseInt(chosenCombinationArray[i])] - 1;
+      // obj = intialObjectMaker(format(req.body.date), allTime, currentCapacity);
+      // console.log(obj);
+      for (let i = 0; i < allTime.length; i++) {
+        await restaurantData.addAvailability(
+          req.params.restaurantId,
+          currentCapacity[0],
+          format(req.body.date),
+          allTime[i]
+        );
       }
     }
 
-    let availabilityObject = getAvailabilityObject(
-      currentCapacity,
-      req.body.time,
-      format(req.body.date)
-    );
-    await restaurantData.updateAvailability(
-      restaurantId,
-      availabilityObject,
-      time,
-      date
-    );
-    // await reservationsData.createReservation{
-    //   userId,
-    //   restaurantId,
-    //   reservationTime,
-    //   reservationDate,
-    //   people
-    // }''
+    try {
+      let reservation = await reservationsData.createReservation(
+        req.session.userId,
+        req.params.restaurantId,
+        req.body.time,
+        req.body.time,
+        req.body.guests,
+        chosenCombinationArray
+      );
 
-    return res.render("reservation", {
-      title: restaurant.name,
-      user: req.session.user,
-      userId: req.session.userId,
-      userTag: req.session.tag,
-      name: req.session.name,
-      restaurantId: req.params.restaurantId,
-      hasErrors: false,
-    });
+      return res.render("reservation", {
+        title: restaurant.name,
+        user: req.session.user,
+        userId: req.session.userId,
+        userTag: req.session.tag,
+        name: req.session.name,
+        restaurantId: req.params.restaurantId,
+        reservation: reservation,
+        hasErrors: false,
+      });
+    } catch (e) {
+      console.log(e);
+    }
   });
 router
   .route("/restaurant/:restaurantId/post-review")
