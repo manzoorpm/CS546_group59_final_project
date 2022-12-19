@@ -27,7 +27,23 @@ router
       if (!req.file) {
         throw [400, "Image not suppliied"];
       }
+      if (!req.body.TableFor2) {
+        throw [400, "Table for 2 not defined"];
+      }
+      if (!req.body.TableFor4) {
+        throw [400, "Table for 4 not defined"];
+      }
+      if (!req.body.TableFor6) {
+        throw [400, "Table for 6 not defined"];
+      }
+      if (!req.body.TableFor8) {
+        throw [400, "Table for 8 not defined"];
+      }
+      if (!req.body.TableFor10) {
+        throw [400, "Table for 10 not defined"];
+      }
     } catch (e) {
+      console.log(e);
       return res.status(e[0]).render("addRestaurant", {
         title: "Add Restaurant",
         user: user,
@@ -183,30 +199,55 @@ router
     let restaurant = await restaurantData.getRestaurantById(
       req.params.restaurantId
     );
-    // try{
-    // //   FOR INPUT PRESENT USER CHECKING
-    // }catch(e){
-    //   return res.status(e[0]).render('userRegister',{title:"Registration Form", hasErrors:true, error:`${e[1]}`})
-    // }
-    let name = req.body.name;
-    let emailId = req.body.emailId;
-    let contactInfo = req.body.contactInfo;
-    let description = req.body.description;
-    let priceRange = req.body.priceRange;
-    let category = req.body.category;
-    let address = req.body.address;
-    let city = req.body.city;
-    let state = req.body.state;
-    let zip = req.body.zip;
-    let latitude = req.body.latitude;
-    let longitude = req.body.longitude;
-    let openingTime = req.body.openingTime;
-    let closingTime = req.body.closingTime;
-    let TableFor2 = req.body.TableFor2;
-    let TableFor4 = req.body.TableFor4;
-    let TableFor6 = req.body.TableFor6;
-    let TableFor8 = req.body.TableFor8;
-    let TableFor10 = req.body.TableFor10;
+    try {
+      //   FOR INPUT PRESENT USER CHECKING
+      if (!req.body.TableFor2) {
+        throw [400, "Table for 2 not defined"];
+      }
+      if (!req.body.TableFor4) {
+        throw [400, "Table for 4 not defined"];
+      }
+      if (!req.body.TableFor6) {
+        throw [400, "Table for 6 not defined"];
+      }
+      if (!req.body.TableFor8) {
+        throw [400, "Table for 8 not defined"];
+      }
+      if (!req.body.TableFor10) {
+        throw [400, "Table for 10 not defined"];
+      }
+    } catch (e) {
+      return res.status(400).render("adminUpdateRemoveRestaurant", {
+        title: "Edit Restaurant",
+        user: user,
+        restaurant: restaurant,
+        userId: req.session.userId,
+        userTag: req.session.userTag,
+        name: req.session.name,
+        loggedIn: true,
+        hasErrors: true,
+        error: `${e[1]}`,
+      });
+    }
+    let name = xss(req.body.name);
+    let emailId = xss(req.body.emailId);
+    let contactInfo = xss(req.body.contactInfo);
+    let description = xss(req.body.description);
+    let priceRange = xss(req.body.priceRange);
+    let category = xss(req.body.category);
+    let address = xss(req.body.address);
+    let city = xss(req.body.city);
+    let state = xss(req.body.state);
+    let zip = xss(req.body.zip);
+    let latitude = xss(req.body.latitude);
+    let longitude = xss(req.body.longitude);
+    let openingTime = xss(req.body.openingTime);
+    let closingTime = xss(req.body.closingTime);
+    let TableFor2 = xss(req.body.TableFor2);
+    let TableFor4 = xss(req.body.TableFor4);
+    let TableFor6 = xss(req.body.TableFor6);
+    let TableFor8 = xss(req.body.TableFor8);
+    let TableFor10 = xss(req.body.TableFor10);
     let restaurantTableCapacities = {
       2: parseInt(TableFor2),
       4: parseInt(TableFor4),

@@ -211,7 +211,7 @@ async function getRestaurantByName(restaurantName) {
   }
 
   if (restaurantMatched.length == 0) {
-    throw [404, "Error: Could not find any people with that term"];
+    throw [404, "Error: Could not find any restaurants with that term"];
   }
   return restaurantMatched;
 }
@@ -238,7 +238,7 @@ async function getRestaurantsByCategory(category) {
   if (restaurantMatched.length == 0) {
     throw [404, "Error: Could not find any people with that term"];
   }
-  return restaurantList;
+  return restaurantMatched;
 }
 
 async function getRestaurantsByCity(city) {

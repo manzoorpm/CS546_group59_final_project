@@ -1,168 +1,165 @@
 <main>
-    <div class="form-signup">
-        <h1>Registration Form</h1>
-        <form method="POST" action="/auth/register" id="registration-form">
-            <div class="form">
-                <label for="firstnameInput">First Name:</label>
-                <input
-                        id="firstnameInput"
-                        type="text"
-                        name="firstnameInput"
-                        placeholder="First Name"
-                />
-            </div>
-            <div class="form">
-                <label for="lastnameInput">Last Name:</label>
-                <input
-                        id="lastnameInput"
-                        type="text"
-                        name="lastnameInput"
-                        placeholder="Last Name"
-                /><br/>
-            </div>
-            <div class="form">
-                <label for="emailId">Email ID:</label>
-                <input
-                        id="emailId"
-                        type="email"
-                        name="emailId"
-                        placeholder="Email ID"
-                /><br/>
-            </div>
-            <div class="form">
-                <label for="contactInfo">Phone Number:</label>
-                <input
-                        id="contactInfo"
-                        type="text"
-                        name="contactInfo"
-                        placeholder="Phone Number"
-                /><br/>
-            </div>
-            <div class="form">
-                <label for="age">Age:</label>
-                <input id="age" type="number" name="age" placeholder="Age"/><br/>
-            </div>
-            <div class="form">
-                <p>Gender:</p>
-                <input id="male" type="radio" name="gender" value="Male"/>
-                <label for="male">Male</label><br/>
-                <input id="female" type="radio" name="gender" value="Female"/>
-                <label for="female">Female</label><br/>
-                <input
-                        id="doNotWishToIdentify"
-                        type="radio"
-                        name="gender"
-                        value="Do Not Wish To Identify"
-                />
-                <label for="doNotWishToIdentify">Do Not Wish To Identify</label><br/>
-            </div>
-            <div class="form">
-                <label for="city">City:</label>
-                <input id="city" type="text" name="city" placeholder="City"/><br/>
-            </div>
-            <div class="form">
-                <label for="state">State:</label>
-                <select id="state" name="state" required>
-                    <option value="" selected disabled>Select State</option>
-                    <option value="Alabama">Alabama</option>
-                    <option value="Alaska">Alaska</option>
-                    <option value="American Samoa">American Samoa</option>
-                    <option value="Arizona">Arizona</option>
-                    <option value="Arkansas">Arkansas</option>
-                    <option value="Baker Island">Baker Island</option>
-                    <option value="California">California</option>
-                    <option value="Colorado">Colorado</option>
-                    <option value="Connecticut">Connecticut</option>
-                    <option value="Delaware">Delaware</option>
-                    <option value="District of Columbia">District of Columbia</option>
-                    <option value="Florida">Florida</option>
-                    <option value="Georgia">Georgia</option>
-                    <option value="Guam">Guam</option>
-                    <option value="Hawaii">Hawaii</option>
-                    <option value="Howland Island">Howland Island</option>
-                    <option value="Idaho">Idaho</option>
-                    <option value="Illinois">Illinois</option>
-                    <option value="Indiana">Indiana</option>
-                    <option value="Iowa">Iowa</option>
-                    <option value="Jarvis Island">Jarvis Island</option>
-                    <option value="Johnston Atoll">Johnston Atoll</option>
-                    <option value="Kansas">Kansas</option>
-                    <option value="Kentucky">Kentucky</option>
-                    <option value="Kingman Reef">Kingman Reef</option>
-                    <option value="Louisiana">Louisiana</option>
-                    <option value="Maine">Maine</option>
-                    <option value="Maryland">Maryland</option>
-                    <option value="Massachusetts">Massachusetts</option>
-                    <option value="Michigan">Michigan</option>
-                    <option value="Midway Atoll">Midway Atoll</option>
-                    <option value="Minnesota">Minnesota</option>
-                    <option value="Mississippi">Mississippi</option>
-                    <option value="Missouri">Missouri</option>
-                    <option value="Montana">Montana</option>
-                    <option value="Navassa Island">Navassa Island</option>
-                    <option value="Nebraska">Nebraska</option>
-                    <option value="Nevada">Nevada</option>
-                    <option value="New Hampshire">New Hampshire</option>
-                    <option value="New Jersey">New Jersey</option>
-                    <option value="New Mexico">New Mexico</option>
-                    <option value="New York">New York</option>
-                    <option value="North Carolina">North Carolina</option>
-                    <option value="North Dakota">North Dakota</option>
-                    <option value="Northern Mariana Islands">Northern Mariana Islands</option>
-                    <option value="Ohio">Ohio</option>
-                    <option value="Oklahoma">Oklahoma</option>
-                    <option value="Oregon">Oregon</option>
-                    <option value="Palmyra Atoll">Palmyra Atoll</option>
-                    <option value="Pennsylvania">Pennsylvania</option>
-                    <option value="Puerto Rico">Puerto Rico</option>
-                    <option value="Rhode Island<">Rhode Island</option>
-                    <option value="South Carolina">South Carolina</option>
-                    <option value="South Dakota">South Dakota</option>
-                    <option value="Tennessee">Tennessee</option>
-                    <option value="Texas">Texas</option>
-                    <option value="United States Minor Outlying Islands">United States
-                        Minor Outlying Islands
-                    </option>
-                    <option value="United States Virgin Islands">United States Virgin
-                        Islands
-                    </option>
-                    <option value="Utah">Utah</option>
-                    <option value="Vermont">Vermont</option>
-                    <option value="Virginia">Virginia</option>
-                    <option value="Wake Island">Wake Island</option>
-                    <option value="Washington">Washington</option>
-                    <option value="West Virginia">West Virginia</option>
-                    <option value="Wisconsin">Wisconsin</option>
-                    <option value="Wyoming">Wyoming</option>
-                </select>
-            </div>
-            <div class="form">
-                <label for="passwordInput">Password:</label>
-                <input
-                        id="passwordInput"
-                        type="password"
-                        name="passwordInput"
-                        placeholder="passwordInput"
-                />
-            </div>
+  <div class="form-signup">
+    <h1>Registration Form</h1>
+    <form method="POST" action="/auth/register" id="registration-form">
+      <div class="form">
+        <label for="firstnameInput">First Name:</label>
+        <input
+          id="firstnameInput"
+          type="text"
+          name="firstnameInput"
+          placeholder="First Name"
+        />
+      </div>
+      <div class="form">
+        <label for="lastnameInput">Last Name:</label>
+        <input
+          id="lastnameInput"
+          type="text"
+          name="lastnameInput"
+          placeholder="Last Name"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="emailId">Email ID:</label>
+        <input
+          id="emailId"
+          type="email"
+          name="emailId"
+          placeholder="Email ID"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="contactInfo">Phone Number:</label>
+        <input
+          id="contactInfo"
+          type="text"
+          name="contactInfo"
+          placeholder="Phone Number"
+        /><br />
+      </div>
+      <div class="form">
+        <label for="age">Age:</label>
+        <input id="age" type="number" name="age" placeholder="Age" /><br />
+      </div>
+      <div class="form">
+        <p>Gender:</p>
+        <input id="male" type="radio" name="gender" value="Male" />
+        <label for="male">Male</label><br />
+        <input id="female" type="radio" name="gender" value="Female" />
+        <label for="female">Female</label><br />
+        <input
+          id="doNotWishToIdentify"
+          type="radio"
+          name="gender"
+          value="Do Not Wish To Identify"
+        />
+        <label for="doNotWishToIdentify">Do Not Wish To Identify</label><br />
+      </div>
+      <div class="form">
+        <label for="city">City:</label>
+        <input id="city" type="text" name="city" placeholder="City" /><br />
+      </div>
+      <div class="form">
+        <label for="state">State:</label>
+        <select id="state" name="state" required>
+          <option value="" selected disabled>Select State</option>
+          <option value="Alabama">Alabama</option>
+          <option value="Alaska">Alaska</option>
+          <option value="American Samoa">American Samoa</option>
+          <option value="Arizona">Arizona</option>
+          <option value="Arkansas">Arkansas</option>
+          <option value="Baker Island">Baker Island</option>
+          <option value="California">California</option>
+          <option value="Colorado">Colorado</option>
+          <option value="Connecticut">Connecticut</option>
+          <option value="Delaware">Delaware</option>
+          <option value="District of Columbia">District of Columbia</option>
+          <option value="Florida">Florida</option>
+          <option value="Georgia">Georgia</option>
+          <option value="Guam">Guam</option>
+          <option value="Hawaii">Hawaii</option>
+          <option value="Howland Island">Howland Island</option>
+          <option value="Idaho">Idaho</option>
+          <option value="Illinois">Illinois</option>
+          <option value="Indiana">Indiana</option>
+          <option value="Iowa">Iowa</option>
+          <option value="Jarvis Island">Jarvis Island</option>
+          <option value="Johnston Atoll">Johnston Atoll</option>
+          <option value="Kansas">Kansas</option>
+          <option value="Kentucky">Kentucky</option>
+          <option value="Kingman Reef">Kingman Reef</option>
+          <option value="Louisiana">Louisiana</option>
+          <option value="Maine">Maine</option>
+          <option value="Maryland">Maryland</option>
+          <option value="Massachusetts">Massachusetts</option>
+          <option value="Michigan">Michigan</option>
+          <option value="Midway Atoll">Midway Atoll</option>
+          <option value="Minnesota">Minnesota</option>
+          <option value="Mississippi">Mississippi</option>
+          <option value="Missouri">Missouri</option>
+          <option value="Montana">Montana</option>
+          <option value="Navassa Island">Navassa Island</option>
+          <option value="Nebraska">Nebraska</option>
+          <option value="Nevada">Nevada</option>
+          <option value="New Hampshire">New Hampshire</option>
+          <option value="New Jersey">New Jersey</option>
+          <option value="New Mexico">New Mexico</option>
+          <option value="New York">New York</option>
+          <option value="North Carolina">North Carolina</option>
+          <option value="North Dakota">North Dakota</option>
+          <option value="Northern Mariana Islands">Northern Mariana Islands</option>
+          <option value="Ohio">Ohio</option>
+          <option value="Oklahoma">Oklahoma</option>
+          <option value="Oregon">Oregon</option>
+          <option value="Palmyra Atoll">Palmyra Atoll</option>
+          <option value="Pennsylvania">Pennsylvania</option>
+          <option value="Puerto Rico">Puerto Rico</option>
+          <option value="Rhode Island<">Rhode Island</option>
+          <option value="South Carolina">South Carolina</option>
+          <option value="South Dakota">South Dakota</option>
+          <option value="Tennessee">Tennessee</option>
+          <option value="Texas">Texas</option>
+          <option value="United States Minor Outlying Islands">United States
+            Minor Outlying Islands
+          </option>
+          <option value="United States Virgin Islands">United States Virgin
+            Islands
+          </option>
+          <option value="Utah">Utah</option>
+          <option value="Vermont">Vermont</option>
+          <option value="Virginia">Virginia</option>
+          <option value="Wake Island">Wake Island</option>
+          <option value="Washington">Washington</option>
+          <option value="West Virginia">West Virginia</option>
+          <option value="Wisconsin">Wisconsin</option>
+          <option value="Wyoming">Wyoming</option>
+        </select>
+      </div>
+      <div class="form">
+        <label for="passwordInput">Password:</label>
+        <input
+          id="passwordInput"
+          type="password"
+          name="passwordInput"
+          placeholder="passwordInput"
+        />
+      </div>
 
-            <button
-                    type="submit"
-                    class="w-100 btn btn-lg btn-primary"
-            >Sign-up
-            </button>
-        </form>
-        <br/>
+      <button type="submit" class="w-100 btn btn-lg btn-primary">Sign-up
+      </button>
+    </form>
+    <br />
 
-        <div class="form-group hidden" id="error-container">
-            <div class="text-goes-here">
-            </div>
-        </div>
-        {{#if hasErrors}}
-            <p class="alert alert-danger Error">{{error}}</p>
-        {{/if}}
-        <br/>
-        <a href="/auth/login">Already have an account? Click here to log-in</a>
+    <div class="form-group hidden" id="error-container">
+      <div class="text-goes-here">
+      </div>
     </div>
+    {{#if hasErrors}}
+      <p class="alert alert-danger Error">{{error}}</p>
+    {{/if}}
+    <br />
+    <a href="/auth/login">Already have an account? Click here to log-in</a>
+  </div>
 </main>
-<script src="../public/js/registrationForm.js"></script>
+<script src="/public/js/registrationForm.js"></script>
