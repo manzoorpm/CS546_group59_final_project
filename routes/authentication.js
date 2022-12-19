@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require("../data");
 const userData = data.users;
 const helper = require("../helpers");
+const xss = require("xss");
 
 router
   .route("/register")
@@ -15,32 +16,32 @@ router
   .post(async (req, res) => {
     try {
       //   FOR INPUT PRESENT USER CHECKING
-      if (!req.body.firstnameInput) {
-        throw [400, "Error: Username is not provided"];
+      if (!xss(req.body.firstnameInput)) {
+        throw [400, "Error: First Name is not provided"];
       }
-      if (!req.body.lastnameInput) {
-        throw [400, "Error: Username is not provided"];
+      if (!xss(req.body.lastnameInput)) {
+        throw [400, "Error: Last Name is not provided"];
       }
-      if (!req.body.emailId) {
-        throw [400, "Error: Username is not provided"];
+      if (!xss(req.body.emailId)) {
+        throw [400, "Error: Email ID is not provided"];
       }
-      if (!req.body.contactInfo) {
-        throw [400, "Error: Username is not provided"];
+      if (!xss(req.body.contactInfo)) {
+        throw [400, "Error: Phone Number is not provided"];
       }
-      if (!req.body.age) {
-        throw [400, "Error: Username is not provided"];
+      if (!xss(req.body.age)) {
+        throw [400, "Error: Age is not provided"];
       }
-      if (!req.body.gender) {
-        throw [400, "Error: Username is not provided"];
+      if (!xss(req.body.gender)) {
+        throw [400, "Error: Gender is not provided"];
       }
-      if (!req.body.city) {
-        throw [400, "Error: Username is not provided"];
+      if (!xss(req.body.city)) {
+        throw [400, "Error: City is not provided"];
       }
-      if (!req.body.state) {
-        throw [400, "Error: Username is not provided"];
+      if (!xss(req.body.state)) {
+        throw [400, "Error: State is not provided"];
       }
-      if (!req.body.passwordInput) {
-        throw [400, "Error: Username is not provided"];
+      if (!xss(req.body.passwordInput)) {
+        throw [400, "Error: Password is not provided"];
       }
     } catch (e) {
       return res.status(e[0]).render("userRegister", {
@@ -49,15 +50,15 @@ router
         error: `${e[1]}`,
       });
     }
-    let firstName = req.body.firstnameInput;
-    let lastName = req.body.lastnameInput;
-    let emailId = req.body.emailId;
-    let contactInfo = req.body.contactInfo;
-    let age = req.body.age;
-    let gender = req.body.gender;
-    let city = req.body.city;
-    let state = req.body.state;
-    let password = req.body.passwordInput;
+    let firstName = xss(req.body.firstnameInput);
+    let lastName = xss(req.body.lastnameInput);
+    let emailId = xss(req.body.emailId);
+    let contactInfo = xss(req.body.contactInfo);
+    let age = xss(req.body.age);
+    let gender = xss(req.body.gender);
+    let city = xss(req.body.city);
+    let state = xss(req.body.state);
+    let password = xss(req.body.passwordInput);
     try {
       //   FOR ERROR CHECKING
       firstName = helper.checkIsProperString(firstName, "First Name");
@@ -129,10 +130,10 @@ router
   })
   .post(async (req, res) => {
     try {
-      if (!req.body.usernameInput) {
+      if (!xss(req.body.usernameInput)) {
         throw [400, "Error: Username is not provided"];
       }
-      if (!req.body.passwordInput) {
+      if (!xss(req.body.passwordInput)) {
         throw [400, "Error: Password is not provided"];
       }
     } catch (e) {
@@ -142,8 +143,8 @@ router
         error: `${e[1]}`,
       });
     }
-    let username = req.body.usernameInput;
-    let password = req.body.passwordInput;
+    let username = xss(req.body.usernameInput);
+    let password = xss(req.body.passwordInput);
     try {
       //   FOR CHECKING INPUT VALIDATION
       username = helper.checkIsProperString(username, "Username");

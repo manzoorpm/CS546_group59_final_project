@@ -9,7 +9,6 @@
         <div class="btn-group">
           <a
             href="/admin/restaurant/add"
-            type="button"
             class="w-20 btn btn-sm btn-primary"
           >Add Restaurant</a>
         </div>
@@ -20,8 +19,7 @@
               <div class="card shadow-sm">
                 <img
                   src="{{mainImage}}"
-                  class="card-img-top"
-                  id="fixate"
+                  class="fixate"
                   alt="Restaurant Image"
                 />
                 <div class="card-body">
@@ -37,7 +35,6 @@
                     <div class="btn-group col-3">
                       <a
                         href="/admin/restaurant/edit/{{_id}}"
-                        type="button"
                         class="btn btn-primary"
                       >Edit</a>
                     </div>
@@ -45,7 +42,6 @@
                       <form
                         method="POST"
                         action="/admin/restaurant/delete/{{_id}}"
-                        id="deleterestaurant-form"
                       ><button
                           type="submit"
                           class="btn btn-danger"
@@ -72,8 +68,7 @@
               <div class="card shadow-sm">
                 <img
                   src="{{mainImage}}"
-                  class="card-img-top"
-                  id="fixate"
+                  class="fixate"
                   alt="Restaurant Image"
                 />
                 <div class="card-body">

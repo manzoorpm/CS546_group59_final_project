@@ -82,7 +82,7 @@ body {
   border-top-right-radius: 0;
 }
 
-#fixate {
-  width: 420px;
+.fixate {
+  width: 100%;
   height: 300px;
 }

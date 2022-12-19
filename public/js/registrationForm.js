@@ -1,8 +1,8 @@
 (function () {
   let registrationForm = document.getElementById("registration-form");
 
-  const errorContainer = document.getElementById("error-container");
-  const errorTextElement =
+  let errorContainer = document.getElementById("error-container");
+  let errorTextElement =
     errorContainer.getElementsByClassName("text-goes-here")[0];
 
   if (registrationForm) {
@@ -16,6 +16,7 @@
     let password = document.getElementById("password");
 
     registrationForm.addEventListener("submit", (event) => {
+      errorContainer.classList.add("hidden");
       let errorFlag = 0;
       let errors = [];
 
@@ -126,8 +127,8 @@
 
       if (errorFlag !== 0) {
         event.preventDefault();
-        errorTextElement.textContent = `${errors[0]}`;
         errorContainer.classList.remove("hidden");
+        errorTextElement.textContent = `${errors[0]}`;
       }
     });
   }

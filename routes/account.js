@@ -4,6 +4,7 @@ const data = require("../data");
 const userData = data.users;
 const reservationData = data.reservations;
 const helper = require("../helpers");
+const xss = require("xss");
 
 router.route("/:userId").get(async (req, res) => {
   let user = await userData.getUserById(req.session.userId);
@@ -42,14 +43,14 @@ router
     // }catch(e){
     //   return res.status(e[0]).render('userRegister',{title:"Registration Form", hasErrors:true, error:`${e[1]}`})
     // }
-    let firstName = req.body.firstnameInput;
-    let lastName = req.body.lastnameInput;
-    let emailId = req.body.emailId;
-    let contactInfo = req.body.contactInfo;
-    let age = req.body.age;
-    let gender = req.body.gender;
-    let city = req.body.city;
-    let state = req.body.state;
+    let firstName = xss(req.body.firstnameInput);
+    let lastName = xss(req.body.lastnameInput);
+    let emailId = xss(req.body.emailId);
+    let contactInfo = xss(req.body.contactInfo);
+    let age = xss(req.body.age);
+    let gender = xss(req.body.gender);
+    let city = xss(req.body.city);
+    let state = xss(req.body.state);
     // try{
     // //   FOR ERROR CHECKING
     // }catch(e){

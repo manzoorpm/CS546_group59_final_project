@@ -6,27 +6,26 @@
     errorContainer.getElementsByClassName("text-goes-here")[0];
 
   if (restaurantForm) {
-    let name = document.getElementById("firstnameInput");
-    let emailId = document.getElementById("emailId");
-    let contactInfo = document.getElementById("contactInfo");
-    let description = document.getElementById("description");
-    let priceRange = document.getElementById("priceRange");
-    let category = document.getElementById("category");
-    let address = document.getElementById("address");
-    let city = document.getElementById("city");
-    let state = document.getElementById("state");
-    let zip = document.getElementById("zip");
-    let latitude = document.getElementById("latitude");
-    let longitude = document.getElementById("longitude");
-    let openingTime = document.getElementById("openingTime");
-    let closingTime = document.getElementById("closingTime");
-    let TableFor2 = document.getElementById("TableFor2");
-    let TableFor4 = document.getElementById("TableFor4");
-    let TableFor6 = document.getElementById("TableFor6");
-    let TableFor8 = document.getElementById("TableFor8");
-    let TableFor10 = document.getElementById("TableFor10");
-
     restaurantForm.addEventListener("submit", (event) => {
+      let name = document.getElementById("firstnameInput");
+      let emailId = document.getElementById("emailId");
+      let contactInfo = document.getElementById("contactInfo");
+      let description = document.getElementById("description");
+      let priceRange = document.getElementById("priceRange");
+      let category = document.getElementById("category");
+      let address = document.getElementById("address");
+      let city = document.getElementById("city");
+      let state = document.getElementById("state");
+      let zip = document.getElementById("zip");
+      let latitude = document.getElementById("latitude");
+      let longitude = document.getElementById("longitude");
+      let openingTime = document.getElementById("openingTime");
+      let closingTime = document.getElementById("closingTime");
+      let TableFor2 = document.getElementById("TableFor2");
+      let TableFor4 = document.getElementById("TableFor4");
+      let TableFor6 = document.getElementById("TableFor6");
+      let TableFor8 = document.getElementById("TableFor8");
+      let TableFor10 = document.getElementById("TableFor10");
       let errorFlag = 0;
       let errors = [];
 
@@ -51,59 +50,59 @@
       let TableFor10Value = TableFor10.value;
       if (!nameValue) {
         errorFlag += 1;
-        errors.push("First Name is not defined");
+        errors.push("Name is not defined");
       }
       if (!emailIdValue) {
         errorFlag += 1;
-        errors.push("First Name is not defined");
+        errors.push("Email Id is not defined");
       }
       if (!contactInfoValue) {
         errorFlag += 1;
-        errors.push("First Name is not defined");
+        errors.push("Phone NUmber is not defined");
       }
       if (!descriptionValue) {
         errorFlag += 1;
-        errors.push("First Name is not defined");
+        errors.push("Description is not defined");
       }
       if (!priceRangeValue) {
         errorFlag += 1;
-        errors.push("First Name is not defined");
+        errors.push("Price Range is not defined");
       }
       if (!categoryValue) {
         errorFlag += 1;
-        errors.push("First Name is not defined");
+        errors.push("Category is not defined");
       }
       if (!addressValue) {
         errorFlag += 1;
-        errors.push("First Name is not defined");
+        errors.push("Address is not defined");
       }
       if (!cityValue) {
         errorFlag += 1;
-        errors.push("First Name is not defined");
+        errors.push("City is not defined");
       }
       if (!stateValue) {
         errorFlag += 1;
-        errors.push("First Name is not defined");
+        errors.push("State is not defined");
       }
       if (!zipValue) {
         errorFlag += 1;
-        errors.push("First Name is not defined");
+        errors.push("zip is not defined");
       }
       if (!latitudeValue) {
         errorFlag += 1;
-        errors.push("First Name is not defined");
+        errors.push("Latitude is not defined");
       }
       if (!longitudeValue) {
         errorFlag += 1;
-        errors.push("First Name is not defined");
+        errors.push("Longitude is not defined");
       }
       if (!openingTimeValue) {
         errorFlag += 1;
-        errors.push("First Name is not defined");
+        errors.push("Opening Time is not defined");
       }
       if (!closingTimeValue) {
         errorFlag += 1;
-        errors.push("First Name is not defined");
+        errors.push("Closing Time is not defined");
       }
       if (!TableFor2Value) {
         errorFlag += 1;

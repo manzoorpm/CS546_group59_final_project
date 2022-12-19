@@ -7,6 +7,7 @@ const reservationsData = data.reservations;
 const userData = data.users;
 const reviewsData = data.reviews;
 const helper = require("../helpers");
+const xss = require("xss");
 const Mailjet = require("node-mailjet");
 const mailjet = new Mailjet({
     apiKey: process.env.MJ_APIKEY_PUBLIC || "c75ae785fdda3b293f6568ad74e74928",

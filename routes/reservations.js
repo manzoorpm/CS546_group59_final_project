@@ -4,6 +4,7 @@ const data = require("../data");
 const reservationData = data.reservations;
 const userData = data.users;
 const restaurantData = data.restaurants;
+const xss = require("xss");
 
 router.route("/:reservationId").get(async (req, res) => {
   try {
