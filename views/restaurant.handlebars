@@ -3,7 +3,7 @@
     <h1>{{restaurant.name}}</h1>
 
 
-    <div class="list-group w-auto">
+    <div class="list-group w-auto addSpaceRest">
         <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
 
             <div class="d-flex gap-2 w-100 justify-content-between">
@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div class="list-group w-auto">
+        <div class="list-group w-auto addSpaceRest">
             <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
 
                 <div class="d-flex gap-2 w-100 justify-content-between">
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="list-group w-auto">
+            <div class="list-group w-auto addSpaceRest">
                 <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
                     <div class="d-flex gap-2 w-100 justify-content-between">
                         <div>
@@ -36,17 +36,17 @@
                     </div>
                 </div>
 
-                <div class="list-group w-auto">
+                <div class="list-group w-auto addSpaceRest">
                     <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
                         <div class="d-flex gap-2 w-100 justify-content-between">
                             <div>
-                                <h6 class="mb-0">Reccomended by</h6>
-                                <p class="mb-0 opacity-75">{{restaurant.overallRating}}/5 people</p>
+                                <h6 class="mb-0">Rating</h6>
+                                <p class="mb-0 opacity-75">{{restaurant.overallRating}}/5 points</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="list-group w-auto">
+                    <div class="list-group w-auto addSpaceRest">
                         <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
                             <div class="d-flex gap-2 w-100 justify-content-between">
                                 <div>
@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="list-group w-auto">
+                        <div class="list-group w-auto addSpaceRest">
                             <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
                                 <div class="d-flex gap-2 w-100 justify-content-between">
                                     <div>
@@ -67,7 +67,7 @@
 
                         </div>
 
-                        <div class="row align-items-md-stretch">
+                        <div class="row align-items-md-stretch addSpaceReserve">
                             <div class="col-md-6">
                                 <h4>Reserve a table now</h4>
                                 {{#if tableCombinationSlots}}
@@ -201,6 +201,6 @@
                         <br>
 </main>
 
-<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="/public/js/main.js"></script>

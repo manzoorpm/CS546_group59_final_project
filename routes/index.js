@@ -19,7 +19,7 @@ const constructorMethod = (app) => {
       error: "Not found",
       user: req.session.user,
       userId: req.session.userId,
-      userTag: req.session.tag,
+      userTag: req.session.userTag,
       name: req.session.name,
     });
   });

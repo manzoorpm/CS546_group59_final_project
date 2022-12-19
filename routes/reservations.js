@@ -21,7 +21,7 @@ router.route("/:reservationId").get(async (req, res) => {
       restaurant: restaurant,
       user: req.session.user,
       userId: req.session.userId,
-      userTag: req.session.tag,
+      userTag: req.session.userTag,
       name: req.session.name,
     });
   } catch (e) {

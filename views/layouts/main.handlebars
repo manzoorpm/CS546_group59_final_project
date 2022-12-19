@@ -23,7 +23,9 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
+              {{#if user}}
               <a class="nav-link active" aria-current="page" href="/account/{{userId}}">My Account</a>
+              {{/if}}
             </li>
           </ul>
           {{#if user}}
