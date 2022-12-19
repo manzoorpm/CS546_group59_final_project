@@ -174,19 +174,19 @@ router
       let restaurant = await restaurantData.getRestaurantById(
         req.params.restaurantId
       );
-      req.body.date = helper.checkBookingDate(req.body.date);
-      req.body.guests = helper.checkGuests(req.body.guests);
+      req.body.date = helper.checkBookingDate(xss(req.body.date));
+      req.body.guests = helper.checkGuests(xss(req.body.guests));
       req.body.time = helper.checkInputTime(
-        req.body.time,
-        req.body.date,
+        xss(req.body.time),
+        xss(req.body.date),
         restaurant.closingTime
       );
 
-      if (req.body.guests > helper.getRestaurantCapacity(restaurant))
+      if (xss(req.body.guests) > helper.getRestaurantCapacity(restaurant))
         throw "The restaurant cannot accomodate entered number of guests";
       let restaurantCapacity = helper.getRestaurantCapacity(restaurant);
       let flag = 0;
-      let allTime = helper.getAllTime(req.body.time);
+      let allTime = helper.getAllTime(xss(req.body.time));
 
       if (!helper.isEmptyObject(restaurant.availibility)) {
         var multipleAvailabilityArray = [];
@@ -235,9 +235,9 @@ router
         userTag: req.session.userTag,
         name: req.session.name,
         tableCombinationSlots: tableCombinationSlots,
-        time: req.body.time,
-        date: req.body.date,
-        guests: req.body.guests,
+        time: xss(req.body.time),
+        date: xss(req.body.date),
+        guests: xss(req.body.guests),
         restaurant: restaurant,
         restaurantId: req.params.restaurantId,
         restaurantCapacity: restaurantCapacity,
@@ -276,9 +276,9 @@ router
       );
       let user = await userData.getUserById(req.session.userId);
 
-      let allTime = helper.getAllTime(req.body.time);
+      let allTime = helper.getAllTime(xss(req.body.time));
 
-      chosenCombinationArray = req.body.chosenCombination.split(" and ");
+      chosenCombinationArray = xss(req.body.chosenCombination).split(" and ");
 
       if (!helper.isEmptyObject(restaurant.availibility)) {
         let currentCapacity = [];
@@ -297,7 +297,7 @@ router
           }
         }
 
-        if (restaurant.availibility[req.body.date]) {
+        if (restaurant.availibility[xss(req.body.date)]) {
           temp = restaurant.availibility[req.body.date];
           for (let j = 0; j < allTime.length; j++) {
             if (temp[allTime[j]]) {
@@ -319,9 +319,9 @@ router
           reservation = await reservationsData.createReservation(
             req.session.userId,
             req.params.restaurantId,
-            req.body.time,
-            req.body.date,
-            req.body.guests,
+            xss(req.body.time),
+            xss(req.body.date),
+            xss(req.body.guests),
             chosenCombinationArray
           );
 
@@ -329,7 +329,7 @@ router
             await restaurantData.addAvailability(
               req.params.restaurantId,
               currentCapacity[i],
-              req.body.date,
+              xss(req.body.date),
               allTime[i]
             );
           }
@@ -413,9 +413,9 @@ router
   .post(async (req, res) => {
     try {
       if (req.session.user) {
-        let reviewTitleInput = req.body.reviewTitleInput;
-        let reviewRatingInput = req.body.reviewRatingInput;
-        let reviewInput = req.body.reviewInput;
+        let reviewTitleInput = xss(req.body.reviewTitleInput);
+        let reviewRatingInput = xss(req.body.reviewRatingInput);
+        let reviewInput = xss(req.body.reviewInput);
         //validation
         const goodInsertedReview = await reviewsData.createReview(
           req.session.userId,
