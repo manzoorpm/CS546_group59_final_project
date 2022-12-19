@@ -77,183 +77,148 @@
     <div class="col-md-6">
       <p>Reserve a table now</p>
       {{#if tableCombinationSlots}}
-        <form
-          method="POST"
-          action="/restaurant/{{restaurantId}}/addreservation"
-          id="registration-form"
-        >
-          <p>Choose Table arrangements for {{date}} at {{time}}:</p>
-          {{#each tableCombinationSlots}}
-            <div class="form-group">
+      <form method="POST" action="/restaurant/{{restaurantId}}/addreservation" id="registration-form">
+        <p>Choose Table arrangements for {{date}} at {{time}}:</p>
+        {{#each tableCombinationSlots}}
+        <div class="form-group">
 
-              <input
-                type="radio"
-                id="{{this}}"
-                name="chosenCombination"
-                value="{{this}}"
-                required
-              />
-              <label for="{{this}}">Choose table of {{this}}</label>
-            </div>
-          {{/each}}
-          <a href="/restaurant/{{restaurantId}}" class="submit-btn">Check
-            another date</a>
-          <div class="form-btn">
-            <button class="submit-btn">Book</button>
-          </div>
-          <input type="hidden" id="date" name="date" value="{{date}}" />
-          <input type="hidden" id="time" name="time" value="{{time}}" />
-          <input type="hidden" id="guests" name="guests" value="{{guests}}" />
+          <input type="radio" id="{{this}}" name="chosenCombination" value="{{this}}" required />
+          <label for="{{this}}">Choose table of {{this}}</label>
+        </div>
+        {{/each}}
+        <a href="/restaurant/{{restaurantId}}" class="submit-btn">Check
+          another date</a>
+        <div class="form-btn">
+          <button class="submit-btn">Book</button>
+        </div>
+        <input type="hidden" id="date" name="date" value="{{date}}" />
+        <input type="hidden" id="time" name="time" value="{{time}}" />
+        <input type="hidden" id="guests" name="guests" value="{{guests}}" />
 
-        </form>
+      </form>
       {{else}}
-        <form
-          method="POST"
-          action="/restaurant/{{restaurantId}}"
-          id="registration-form"
-        >
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="date">Date</label>
-                <input class="form-control" id="date" type="date" name="date" />
-              </div>
+      <form method="POST" action="/restaurant/{{restaurantId}}" id="registration-form">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="date">Date</label>
+              <input class="form-control" id="date" type="date" name="date" />
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="form-group">
-                <label for="guests">No of Guests</label>
-                <input
-                  id="guests"
-                  class="form-control"
-                  name="guests"
-                  type="number"
-                  required
-                />
-
-              </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="guests">No of Guests</label>
+              <input id="guests" class="form-control" name="guests" type="number" required />
+              <input type="hidden" id="lat" name="lat" value="{{restaurant.latitude}}">
+              <input type="hidden" id="lon" name="lat" value="{{restaurant.longitude}}">
             </div>
           </div>
-          <div>{{#each availabilityAll}}
-              <input type="radio" id="{{this}}" name="time" value="{{this}}" />
-              <label for="{{this}}">{{this}}</label>
-            {{/each}}
-          </div>
+        </div>
+        <div>{{#each availabilityAll}}
+          <input type="radio" id="{{this}}" name="time" value="{{this}}" />
+          <label for="{{this}}">{{this}}</label>
+          {{/each}}
+        </div>
 
-          <div class="form-btn">
-            <button class="submit-btn">Check availability</button>
-          </div>
+        <div class="form-btn">
+          <button class="submit-btn">Check availability</button>
+        </div>
 
-        </form>
+      </form>
       {{/if}}
 
     </div>
     <div class="col-md-6">
-      {{! map goes here }}
+      <div id="map"></div>
     </div>
   </div>
   {{#unless tableCombinationSlots}}
-    {{! post reviews go here }}
+  {{! post reviews go here }}
+  <div class="row align-items-md-stretch">
+    <div class="col-md-6">
+      <p>Post a New Review:</p>
+
+      {{#if message}}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Error!</strong>
+        {{message}}
+      </div>
+      <div id="here"></div>
+      {{/if}}
+
+      <form action="/restaurant/{{restaurant._id}}/post-review" method="POST" id="review-form">
+        <div class="form-group">
+
+          <label for="reviewTitleInput">Review Title:</label>
+          <input class="form-control" id="reviewTitleInput" name="reviewTitleInput" />
+        </div>
+        <div class="form-group">
+
+          <label for="reviewRatingInput">Rating: </label>
+          <input class="form-control" id="reviewRatingInput" name="reviewRatingInput" />
+        </div>
+        <div class="form-group">
+
+          <label for="reviewInput">Review: </label>
+          <textarea class="form-control" name="reviewInput" id="reviewInput" rows="3" cols="70"></textarea>
+        </div>
+        <button id="button" type="submit">Post</button>
+      </form>
+      <br />
+    </div>
+  </div>
+  {{! reviews go here }}
+
+  {{#if review}}
+  <p>Reviews</p>
+  {{#each review}}
+  <div class="list-group w-auto">
     <div class="row align-items-md-stretch">
       <div class="col-md-6">
-        <p>Post a New Review:</p>
+        <div class="list-group-item d-flex gap-3 py-3" aria-current="true">
+          <div class="d-flex gap-2 w-100 justify-content-between">
+            <div>
+              <p class="mb-0">{{this.reviewerName}}
+                posted on
+                {{this.reviewDate}}
+              </p>
+              <p class="mb-0">{{this.rating}}/5.0</p>
+              <p class="mb-0 opacity-75">{{this.review}}</p>
 
-        {{#if message}}
-          <div
-            class="alert alert-warning alert-dismissible fade show"
-            role="alert"
-          >
-            <strong>Error!</strong>
-            {{message}}
-          </div>
-          <div id="here"></div>
-        {{/if}}
+              <button class="deleteReview btn btn-icon btn-danger" type="button" data-id="{{this._id}}">
+                Delete
+              </button>
 
-        <form
-          action="/restaurant/{{restaurant._id}}/post-review"
-          method="POST"
-          id="review-form"
-        >
-          <div class="form-group">
-
-            <label for="reviewTitleInput">Review Title:</label>
-            <input
-              class="form-control"
-              id="reviewTitleInput"
-              name="reviewTitleInput"
-            />
-          </div>
-          <div class="form-group">
-
-            <label for="reviewRatingInput">Rating: </label>
-            <input
-              class="form-control"
-              id="reviewRatingInput"
-              name="reviewRatingInput"
-            />
-          </div>
-          <div class="form-group">
-
-            <label for="reviewInput">Review: </label>
-            <textarea
-              class="form-control"
-              name="reviewInput"
-              id="reviewInput"
-              rows="3"
-              cols="70"
-            ></textarea>
-          </div>
-          <button id="button" type="submit">Post</button>
-        </form>
-        <br />
-      </div>
-    </div>
-    {{! reviews go here }}
-
-    {{#if review}}
-      <p>Reviews</p>
-      {{#each review}}
-        <div class="list-group w-auto">
-          <div class="row align-items-md-stretch">
-            <div class="col-md-6">
-              <div
-                class="list-group-item d-flex gap-3 py-3"
-                aria-current="true"
-              >
-                <div class="d-flex gap-2 w-100 justify-content-between">
-                  <div>
-                    <p class="mb-0">{{this.reviewerName}}
-                      posted on
-                      {{this.reviewDate}}
-                    </p>
-                    <p class="mb-0">{{this.rating}}/5.0</p>
-                    <p class="mb-0 opacity-75">{{this.review}}</p>
-
-                    <button
-                      class="deleteReview btn btn-icon btn-danger"
-                      type="button"
-                      data-id="{{this._id}}"
-                    >
-                      Delete
-                    </button>
-
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
-      {{/each}}
+      </div>
+    </div>
+  </div>
+  {{/each}}
 
-    {{/if}}
+  {{/if}}
   {{/unless}}
   <br />
 </main>
+<script>let map;
+  lat = document.getElementById("lat").value;
+  lon = document.getElementById("lon").value;
 
-<script
-  src="https://code.jquery.com/jquery-2.2.4.min.js"
-  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-  crossorigin="anonymous"
-></script>
+  function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat: parseInt(lat), lng: parseInt(lon) },
+      zoom: 10,
+    });
+  }
+
+  window.initMap = initMap;
+</script>
+<script async
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYT8ciVSjtRYPF2NbZYfD8_m2FhTvF6Jk&callback=initMap">
+  </script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="/public/js/main.js"></script>
