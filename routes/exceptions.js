@@ -8,7 +8,7 @@ router.route("/forbidden").get(async (req, res) => {
     error: "no accesss",
     user: req.session.user,
     userId: req.session.userId,
-    userTag: req.session.tag,
+    userTag: req.session.userTag,
     name: req.session.name,
   });
 });
@@ -18,7 +18,7 @@ router.route("/notfound").get(async (req, res) => {
     error: "Not found",
     user: req.session.user,
     userId: req.session.userId,
-    userTag: req.session.tag,
+    userTag: req.session.userTag,
     name: req.session.name,
   });
 });
