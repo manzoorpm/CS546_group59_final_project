@@ -312,7 +312,7 @@ router
     }
   });
 
-router.route("/restaurant/delete/:restaurantId").post(async (req, res) => {
+router.route("/restaurant/delete/:restaurantId/").post(async (req, res) => {
   let user = await userData.getUserById(req.session.userId);
   let restaurant = await restaurantData.getRestaurantById(
     req.params.restaurantId

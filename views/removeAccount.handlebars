@@ -6,15 +6,8 @@
   <p>Gender:{{user.gender}}</p>
   <p>City:{{user.city}}</p>
   <p>State:{{user.state}}</p>
-  <form
-    method="POST"
-    action="/account/remove/{{user._id}}"
-    id="deleteprofile-form"
-  >
+  <form method="POST" action="/account/{{user._id}}/remove" id="deleteprofile-form">
     <button type="submit" class="w-20 btn btn-sm btn-danger">Confirm Delete</button>
-    <a
-      class="w-20 btn btn-sm btn-primary"
-      href="/account/{{user._id}}"
-    >Cancel</a>
+    <a class="w-20 btn btn-sm btn-primary" href="/account/{{user._id}}">Cancel</a>
   </form>
 </main>

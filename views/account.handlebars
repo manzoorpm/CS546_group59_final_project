@@ -8,8 +8,8 @@
   <p>Gender:{{user.gender}}</p>
   <p>City:{{user.city}}</p>
   <p>State:{{user.state}}</p>
-  <a class="w-20 btn btn-sm btn-primary" href="/account/edit/{{user._id}}">Edit Profile</a>
-  <a class="w-20 btn btn-sm btn-primary" href="/account/remove/{{user._id}}">Delete Profile</a>
+  <a class="w-20 btn btn-sm btn-primary" href="/account/{{user._id}}/edit">Edit Profile</a>
+  <a class="w-20 btn btn-sm btn-primary" href="/account/{{user._id}}/remove">Delete Profile</a>
   <details>
     <summary>All Reservations</summary>
     <ul>
@@ -35,6 +35,6 @@
   <p>Gender:{{user.gender}}</p>
   <p>City:{{user.city}}</p>
   <p>State:{{user.state}}</p>
-  <a class="w-20 btn btn-sm btn-primary" href="/account/edit/{{user._id}}">Edit Profile</a>
-  <a class="w-20 btn btn-sm btn-primary" href="/account/remove/{{user._id}}">Delete Profile</a>
+  <a class="w-20 btn btn-sm btn-primary" href="/account/{{user._id}}/edit">Edit Profile</a>
+  <a class="w-20 btn btn-sm btn-primary" href="/account/{{user._id}}/remove">Delete Profile</a>
   {{/ifEquals}}
