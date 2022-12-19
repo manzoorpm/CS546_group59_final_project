@@ -518,7 +518,7 @@ async function updateRestaurant(
 //   return restaurant;
 // }
 const getAvailability = async (time) => {
-  //validation
+  req.body.time = helper.checkInputTime(time);
   const restaurantCollection = await restaurants();
   let availabiliyByTime = await restaurantCollection.findOne({
     availibility: { $elemMatch: { time } },
@@ -527,23 +527,12 @@ const getAvailability = async (time) => {
   return availabiliyByTime;
 };
 
-// const updateAvailability = async (restaurantId, object, date) => {
-//   //validations
-//   path = "availibility." + date;
-//   const restaurantCollection = await restaurants();
-//   const updateInfo = await restaurantCollection.update(
-//     { _id: ObjectId(restaurantId) },
-//     { $set:  path: { [date]: object } }
-//   );
-//   if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
-//     throw "Error: Update failed";
-// };
-
 const addAvailability = async (restaurantId, object, date, time) => {
-  //validations
-  console.log(object);
+  date = helper.checkBookingDateData(date);
+  time = helper.checkInputTime(time);
+  restaurantId = helper.checkIsProperString(restaurantId, "ID");
+  restaurantId = helper.checkIsProperId(restaurantId);
   path = "availibility." + date + "." + time;
-  console.log(path);
 
   const restaurantCollection = await restaurants();
   const updateInfo = await restaurantCollection.updateOne(

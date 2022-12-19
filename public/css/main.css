@@ -94,3 +94,7 @@ body {
 .addSpaceReserve {
   margin-top: 20px;
 }
+
+#map {
+  height: 100%;
+}

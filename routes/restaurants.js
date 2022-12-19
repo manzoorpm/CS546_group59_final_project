@@ -100,14 +100,7 @@ router
 
     if (!searchRestaurant || searchRestaurant.trim().length == 0) {
       return res.status(400).render("error", {
-        input: searchRestaurant,
-        user: req.session.user,
-        userId: req.session.userId,
-        userTag: req.session.userTag,
-        name: req.session.name,
-        restaurantId: req.params.restaurantId,
-        hasErrors: true,
-        error: "Input is empty",
+        errorDescription: "400 Error: Empty input/Input with only empty spaces",
         title: "Error",
       });
     }
@@ -272,7 +265,7 @@ router
   .route("/restaurant/:restaurantId/addreservation")
   .post(async (req, res) => {
     try {
-      if (xss(req.body.reservation)) {
+      if (req.body.reservation) {
         res.redirect("/");
       }
       var temp;
@@ -303,7 +296,6 @@ router
             }
           }
         }
-        console.log(currentCapacity);
 
         if (restaurant.availibility[xss(req.body.date)]) {
           temp = restaurant.availibility[req.body.date];
@@ -332,7 +324,6 @@ router
             xss(req.body.guests),
             chosenCombinationArray
           );
-          console.log(currentCapacity);
 
           for (let i = 0; i < allTime.length; i++) {
             await restaurantData.addAvailability(
