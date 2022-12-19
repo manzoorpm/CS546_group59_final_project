@@ -8,7 +8,6 @@ const xss = require("xss");
 
 router.route("/:userId").get(async (req, res) => {
   let user = await userData.getUserById(req.session.userId);
-  console.log(req.session.userTag);
   let reservationList = await reservationData.getAllUserReservations(
     req.session.userId
   );
@@ -23,7 +22,7 @@ router.route("/:userId").get(async (req, res) => {
   });
 });
 router
-  .route("/edit/:userId")
+  .route("/:userId/edit")
   .get(async (req, res) => {
     let user = await userData.getUserById(req.session.userId);
     return res.render("editAccount", {
@@ -95,7 +94,7 @@ router
 //   });
 // });
 router
-  .route("/remove/:userId")
+  .route("/:userId/remove")
   .get(async (req, res) => {
     let user = await userData.getUserById(req.session.userId);
     return res.render("removeAccount", {
