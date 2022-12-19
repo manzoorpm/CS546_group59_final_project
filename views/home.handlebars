@@ -11,106 +11,106 @@
       />
       <button type="submit">Submit</button>
     </form>
-
-  </section>
-
-  {{#ifEquals userTag "admin"}}
-    <div class="album py-5 bg-light">
-      <div class="container">
-        <div class="btn-group">
-          <a
-            href="/admin/restaurant/add"
-            class="w-20 btn btn-sm btn-primary"
-          >Add Restaurant</a>
-        </div>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          {{#each restaurants}}
-
-            <div class="col">
-              <div class="card shadow-sm">
-                <img
-                  src="{{mainImage}}"
-                  class="fixate"
-                  alt="Restaurant Image"
-                />
-                <div class="card-body">
-                  <h5 class="card-title">{{name}}</h5>
-                  <p class="card-subtitle mb-2 text-muted">
-                    {{city}},
-                    {{state}}</p>
-
-                  <p class="card-text">{{description}}</p>
-                  <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
-                    <div class="btn-group col-3">
-                      <a
-                        href="/admin/restaurant/edit/{{_id}}"
-                        class="btn btn-primary"
-                      >Edit</a>
-                    </div>
-                    <div class="btn-group col-3">
-                      <form
-                        method="POST"
-                        action="/admin/restaurant/delete/{{_id}}"
-                      ><button
-                          type="submit"
-                          class="btn btn-danger"
-                        >Delete</button>
-                      </form>
-
-                    </div>
-                    <small class="text-muted">{{overallRating}}/5 Rating</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          {{/each}}
-        </div>
-      </div>
     </div>
-  {{else}}
-    <div class="album py-5 bg-light">
-      <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          {{#each restaurants}}
 
-            <div class="col">
-              <div class="card shadow-sm">
-                <img
-                  src="{{mainImage}}"
-                  class="fixate"
-                  alt="Restaurant Image"
-                />
-                <div class="card-body">
-                  <h5 class="card-title">{{name}}</h5>
-                  <p class="card-subtitle mb-2 text-muted">
-                    {{city}},
-                    {{state}}</p>
-
-                  <p class="card-text">{{description}}</p>
-                  <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
-                    <div class="btn-group col-3">
-                      <a
-                        href="/restaurant/{{_id}}"
-                        type="button"
-                        class="btn btn-primary"
-                      >View</a>
-
-                    </div>
-                    <small class="text-muted">{{overallRating}}/5 Rating</small>
-                  </div>
+    {{#ifEquals userTag "admin"}}
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="btn-group">
+                    <a
+                            href="/admin/restaurant/add"
+                            class="w-20 btn btn-sm btn-primary"
+                    >Add Restaurant</a>
                 </div>
-              </div>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    {{#each restaurants}}
+
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <img
+                                        src="{{mainImage}}"
+                                        class="fixate"
+                                        alt="Restaurant Image"
+                                />
+                                <div class="card-body">
+                                    <h5 class="card-title">{{name}}</h5>
+                                    <p class="card-subtitle mb-2 text-muted">
+                                        {{city}},
+                                        {{state}}</p>
+
+                                    <p class="card-text">{{description}}</p>
+                                    <div
+                                            class="d-flex justify-content-between align-items-center"
+                                    >
+                                        <div class="btn-group col-3">
+                                            <a
+                                                    href="/admin/restaurant/edit/{{_id}}"
+                                                    class="btn btn-primary"
+                                            >Edit</a>
+                                        </div>
+                                        <div class="btn-group col-3">
+                                            <form
+                                                    method="POST"
+                                                    action="/admin/restaurant/delete/{{_id}}"
+                                            >
+                                                <button
+                                                        type="submit"
+                                                        class="btn btn-danger"
+                                                >Delete
+                                                </button>
+                                            </form>
+
+                                        </div>
+                                        <small class="text-muted">{{overallRating}}/5 Rating</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
             </div>
-          {{/each}}
         </div>
-      </div>
-    </div>
-  {{/ifEquals}}
-  {{#if hasErrors}}
-    <p class="alert alert-danger Error">{{error}}</p>
-  {{/if}}
+    {{else}}
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    {{#each restaurants}}
+
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <img
+                                        src="{{mainImage}}"
+                                        class="fixate"
+                                        alt="Restaurant Image"
+                                />
+                                <div class="card-body">
+                                    <h5 class="card-title">{{name}}</h5>
+                                    <p class="card-subtitle mb-2 text-muted">
+                                        {{city}},
+                                        {{state}}</p>
+
+                                    <p class="card-text">{{description}}</p>
+                                    <div
+                                            class="d-flex justify-content-between align-items-center"
+                                    >
+                                        <div class="btn-group col-3">
+                                            <a
+                                                    href="/restaurant/{{_id}}"
+                                                    class="btn btn-primary"
+                                            >View</a>
+
+                                        </div>
+                                        <small class="text-muted">{{overallRating}}/5 Rating</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    {{/ifEquals}}
+    {{#if hasErrors}}
+        <p class="alert alert-danger Error">{{error}}</p>
+    {{/if}}
 </main>

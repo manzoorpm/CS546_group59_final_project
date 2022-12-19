@@ -249,12 +249,14 @@ router
           error: e.message,
           noSlotsError: true,
           restaurantId: req.params.restaurantId,
+          title:"Error!"
         });
       } else
         return res.render("error", {
           error: e,
           capacityError: true,
           restaurantId: req.params.restaurantId,
+          title:"Error!"
         });
     }
   });
@@ -401,6 +403,7 @@ router
     } catch (e) {
       return res.render("error", {
         error: e,
+        title:"Error!"
       });
     }
   });
@@ -431,6 +434,7 @@ router
       return res.render("reviewError", {
         error: e,
         restaurantId: req.params.restaurantId,
+        title:"Error!"
       });
     }
   });
@@ -454,6 +458,7 @@ router.route("/restaurant/delete-review/:id").get(async (req, res) => {
     return res.render("reviewError", {
       error: e,
       restaurantId: review.restaurantId,
+      title:"Error!"
     });
   }
 });
