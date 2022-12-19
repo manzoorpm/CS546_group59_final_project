@@ -167,7 +167,7 @@ router
         let firstName = user.firstName;
         req.session.userId = userId;
         req.session.name = firstName;
-        req.session.tag = "user";
+        req.session.userTag = "user";
         return res.redirect("/");
       }
       if (authenticatedAdmin) {
@@ -177,7 +177,7 @@ router
         let firstName = user.firstName;
         req.session.userId = adminId;
         req.session.name = firstName;
-        req.session.tag = "admin";
+        req.session.userTag = "admin";
         return res.redirect("/");
       }
     } catch (e) {

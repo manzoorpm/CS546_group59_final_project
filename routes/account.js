@@ -8,6 +8,7 @@ const xss = require("xss");
 
 router.route("/:userId").get(async (req, res) => {
   let user = await userData.getUserById(req.session.userId);
+  console.log(req.session.userTag);
   let reservationList = await reservationData.getAllUserReservations(
     req.session.userId
   );
@@ -16,7 +17,7 @@ router.route("/:userId").get(async (req, res) => {
     user: user,
     reservations: reservationList,
     userId: req.session.userId,
-    userTag: req.session.tag,
+    userTag: req.session.userTag,
     name: req.session.name,
     hasErrors: false,
   });
@@ -29,7 +30,7 @@ router
       title: "Edit User Profile",
       user: user,
       userId: req.session.userId,
-      userTag: req.session.tag,
+      userTag: req.session.userTag,
       name: req.session.name,
       loggedIn: true,
       hasErrors: false,
@@ -75,7 +76,7 @@ router
         title: "Edit User Profile",
         user: user,
         userId: req.session.userId,
-        userTag: req.session.tag,
+        userTag: req.session.userTag,
         name: req.session.name,
         loggedIn: true,
         hasErrors: true,
@@ -88,7 +89,7 @@ router
 //     title: "Edit User Profile",
 //     user: req.session.user,
 //     userId: req.session.userId,
-//     userTag: req.session.tag,
+//     userTag: req.session.userTag,
 //     name: req.session.name,
 //     hasErrors: false,
 //   });
@@ -101,7 +102,7 @@ router
       title: "User Profile",
       user: user,
       userId: req.session.userId,
-      userTag: req.session.tag,
+      userTag: req.session.userTag,
       name: req.session.name,
       loggedIn: true,
       hasErrors: false,
@@ -120,7 +121,7 @@ router
         title: "Delete User Profile",
         user: user,
         userId: req.session.userId,
-        userTag: req.session.tag,
+        userTag: req.session.userTag,
         name: req.session.name,
         loggedIn: true,
         hasErrors: true,

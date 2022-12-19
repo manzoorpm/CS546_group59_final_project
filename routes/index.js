@@ -15,7 +15,13 @@ const constructorMethod = (app) => {
   app.use("/reservations", reservationRoutes);
 
   app.use("*", (req, res) => {
-    res.status(404).render("notFound");
+    res.status(404).render("notFound", {
+      error: "Not found",
+      user: req.session.user,
+      userId: req.session.userId,
+      userTag: req.session.tag,
+      name: req.session.name,
+    });
   });
 };
 
