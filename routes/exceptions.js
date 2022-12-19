@@ -14,7 +14,7 @@ router.route("/forbidden").get(async (req, res) => {
 });
 
 router.route("/notfound").get(async (req, res) => {
-  return res.status(403).render("notFound", {
+  return res.status(404).render("notFound", {
     error: "Not found",
     user: req.session.user,
     userId: req.session.userId,
