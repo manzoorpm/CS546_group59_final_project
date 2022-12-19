@@ -206,8 +206,8 @@ async function getRestaurantByName(restaurantName) {
     }
   }
 
-  for (let i = 0; i < restaurantList.length; i++) {
-    restaurantList[i]._id = restaurantList[i]._id.toString();
+  for (let i = 0; i < restaurantMatched.length; i++) {
+    restaurantMatched[i]._id = restaurantMatched[i]._id.toString();
   }
 
   if (restaurantMatched.length == 0) {
