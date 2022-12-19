@@ -100,7 +100,14 @@ router
 
     if (!searchRestaurant || searchRestaurant.trim().length == 0) {
       return res.status(400).render("error", {
-        errorDescription: "400 Error: Empty input/Input with only empty spaces",
+        input: searchRestaurant,
+        user: req.session.user,
+        userId: req.session.userId,
+        userTag: req.session.userTag,
+        name: req.session.name,
+        restaurantId: req.params.restaurantId,
+        hasErrors: true,
+        error: "Input is empty",
         title: "Error",
       });
     }
@@ -265,7 +272,7 @@ router
   .route("/restaurant/:restaurantId/addreservation")
   .post(async (req, res) => {
     try {
-      if (req.body.reservation) {
+      if (xss(req.body.reservation)) {
         res.redirect("/");
       }
       var temp;
