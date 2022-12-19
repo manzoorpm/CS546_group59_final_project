@@ -71,26 +71,69 @@ function sendMail(user, restaurant, reservation) {
   request.then((result) => {}).catch((err) => {});
 }
 
-router.route("/").get(async (req, res) => {
-  try {
-    let restaurants = await restaurantData.getAllRestaurants();
+router
+  .route("/")
+  .get(async (req, res) => {
+    try {
+      let restaurants = await restaurantData.getAllRestaurants();
 
-    return res.render("home", {
-      title: "Explore Restaurants",
-      user: req.session.user,
-      userId: req.session.userId,
-      userTag: req.session.userTag,
-      name: req.session.name,
-      restaurantId: req.params.restaurantId,
-      restaurants: restaurants,
-      hasErrors: false,
-    });
-  } catch (e) {
-    return res.render("error", {
-      error: e,
-    });
-  }
-});
+      return res.render("home", {
+        title: "Explore Restaurants",
+        user: req.session.user,
+        userId: req.session.userId,
+        userTag: req.session.userTag,
+        name: req.session.name,
+        restaurantId: req.params.restaurantId,
+        restaurants: restaurants,
+        hasErrors: false,
+      });
+    } catch (e) {
+      return res.render("error", {
+        error: e,
+      });
+    }
+  })
+  .post(async (req, res) => {
+    let searchRestaurant = xss(req.body.searchRestaurant);
+    searchRestaurant = searchRestaurant.trim();
+    let restaurantList;
+
+    if (!searchRestaurant || searchRestaurant.trim().length == 0) {
+      return res.status(400).render("error", {
+        errorDescription: "400 Error: Empty input/Input with only empty spaces",
+        title: "Error",
+      });
+    }
+    try {
+      restaurantList = await restaurantData.getRestaurantByName(
+        searchRestaurant
+      );
+      if (!restaurantList) {
+        throw "No restaurants found with that term";
+      }
+      return res.render("home", {
+        restaurants: restaurantList,
+        user: req.session.user,
+        userId: req.session.userId,
+        userTag: req.session.userTag,
+        name: req.session.name,
+        restaurantId: req.params.restaurantId,
+        title: "Restaurant Found",
+      });
+    } catch (e) {
+      return res.status(404).render("home", {
+        input: searchRestaurant,
+        user: req.session.user,
+        userId: req.session.userId,
+        userTag: req.session.userTag,
+        name: req.session.name,
+        restaurantId: req.params.restaurantId,
+        hasErrors: true,
+        error: `${e}`,
+        title: "Error",
+      });
+    }
+  });
 
 router
   .route("/restaurant/:restaurantId")
@@ -206,12 +249,14 @@ router
           error: e.message,
           noSlotsError: true,
           restaurantId: req.params.restaurantId,
+          title:"Error!"
         });
       } else
         return res.render("error", {
           error: e,
           capacityError: true,
           restaurantId: req.params.restaurantId,
+          title:"Error!"
         });
     }
   });
@@ -358,6 +403,7 @@ router
     } catch (e) {
       return res.render("error", {
         error: e,
+        title:"Error!"
       });
     }
   });
@@ -388,6 +434,7 @@ router
       return res.render("reviewError", {
         error: e,
         restaurantId: req.params.restaurantId,
+        title:"Error!"
       });
     }
   });
@@ -411,6 +458,7 @@ router.route("/restaurant/delete-review/:id").get(async (req, res) => {
     return res.render("reviewError", {
       error: e,
       restaurantId: review.restaurantId,
+      title:"Error!"
     });
   }
 });

@@ -127,19 +127,6 @@ app.use("/reservations/:reservationId", async (req, res, next) => {
     });
   }
 });
-// app.use("/reservation/delete/:reservationId", async (req, res, next) => {
-//   try {
-//     let reservation = await reservationData.getReservationById();
-
-//     if (reservation.userId.toString() == req.session.userId) {
-//       next();
-//     } else {
-//       return res.redirect("/exceptions/forbidden");
-//     }
-//   } catch (e) {
-//     return res.redirect("/exceptions/forbidden"); //not found
-//   }
-// });
 
 //update permission for routes
 configRoutes(app);
