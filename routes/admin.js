@@ -27,19 +27,62 @@ router
       if (!req.file) {
         throw [400, "Image not suppliied"];
       }
-      if (!req.body.TableFor2) {
-        throw [400, "Table for 2 not defined"];
+      if (!xss(req.body.name)) {
+        throw [400, "Name not defined"];
       }
-      if (!req.body.TableFor4) {
-        throw [400, "Table for 4 not defined"];
+      if (!xss(req.body.emailId)) {
+        throw [400, "email ID not defined"];
       }
-      if (!req.body.TableFor6) {
-        throw [400, "Table for 6 not defined"];
+      if (!xss(req.body.contactInfo)) {
+        throw [400, "Contact Info not defined"];
       }
-      if (!req.body.TableFor8) {
+      if (!xss(req.body.description)) {
         throw [400, "Table for 8 not defined"];
       }
-      if (!req.body.TableFor10) {
+      if (!xss(req.body.priceRange)) {
+        throw [400, "Table for 10 not defined"];
+      }
+      if (!xss(req.body.category)) {
+        throw [400, "Table for 2 not defined"];
+      }
+      if (!xss(req.body.address)) {
+        throw [400, "Table for 4 not defined"];
+      }
+      if (!xss(req.body.city)) {
+        throw [400, "Table for 6 not defined"];
+      }
+      if (!xss(req.body.state)) {
+        throw [400, "Table for 8 not defined"];
+      }
+      if (!xss(req.body.zip)) {
+        throw [400, "Table for 10 not defined"];
+      }
+      if (!xss(req.body.latitude)) {
+        throw [400, "Table for 4 not defined"];
+      }
+      if (!xss(req.body.longitude)) {
+        throw [400, "Table for 6 not defined"];
+      }
+      if (!xss(req.body.openingTime)) {
+        throw [400, "Table for 8 not defined"];
+      }
+      if (!xss(req.body.closingTime)) {
+        throw [400, "Table for 10 not defined"];
+      }
+
+      if (!xss(req.body.TableFor2)) {
+        throw [400, "Table for 2 not defined"];
+      }
+      if (!xss(req.body.TableFor4)) {
+        throw [400, "Table for 4 not defined"];
+      }
+      if (!xss(req.body.TableFor6)) {
+        throw [400, "Table for 6 not defined"];
+      }
+      if (!xss(req.body.TableFor8)) {
+        throw [400, "Table for 8 not defined"];
+      }
+      if (!xss(req.body.TableFor10)) {
         throw [400, "Table for 10 not defined"];
       }
     } catch (e) {
@@ -201,19 +244,62 @@ router
     );
     try {
       //   FOR INPUT PRESENT USER CHECKING
-      if (!req.body.TableFor2) {
-        throw [400, "Table for 2 not defined"];
+      if (!xss(req.body.name)) {
+        throw [400, "Name not defined"];
       }
-      if (!req.body.TableFor4) {
-        throw [400, "Table for 4 not defined"];
+      if (!xss(req.body.emailId)) {
+        throw [400, "email ID not defined"];
       }
-      if (!req.body.TableFor6) {
-        throw [400, "Table for 6 not defined"];
+      if (!xss(req.body.contactInfo)) {
+        throw [400, "Contact Info not defined"];
       }
-      if (!req.body.TableFor8) {
+      if (!xss(req.body.description)) {
         throw [400, "Table for 8 not defined"];
       }
-      if (!req.body.TableFor10) {
+      if (!xss(req.body.priceRange)) {
+        throw [400, "Table for 10 not defined"];
+      }
+      if (!xss(req.body.category)) {
+        throw [400, "Table for 2 not defined"];
+      }
+      if (!xss(req.body.address)) {
+        throw [400, "Table for 4 not defined"];
+      }
+      if (!xss(req.body.city)) {
+        throw [400, "Table for 6 not defined"];
+      }
+      if (!xss(req.body.state)) {
+        throw [400, "Table for 8 not defined"];
+      }
+      if (!xss(req.body.zip)) {
+        throw [400, "Table for 10 not defined"];
+      }
+      if (!xss(req.body.latitude)) {
+        throw [400, "Table for 4 not defined"];
+      }
+      if (!xss(req.body.longitude)) {
+        throw [400, "Table for 6 not defined"];
+      }
+      if (!xss(req.body.openingTime)) {
+        throw [400, "Table for 8 not defined"];
+      }
+      if (!xss(req.body.closingTime)) {
+        throw [400, "Table for 10 not defined"];
+      }
+
+      if (!xss(req.body.TableFor2)) {
+        throw [400, "Table for 2 not defined"];
+      }
+      if (!xss(req.body.TableFor4)) {
+        throw [400, "Table for 4 not defined"];
+      }
+      if (!xss(req.body.TableFor6)) {
+        throw [400, "Table for 6 not defined"];
+      }
+      if (!xss(req.body.TableFor8)) {
+        throw [400, "Table for 8 not defined"];
+      }
+      if (!xss(req.body.TableFor10)) {
         throw [400, "Table for 10 not defined"];
       }
     } catch (e) {

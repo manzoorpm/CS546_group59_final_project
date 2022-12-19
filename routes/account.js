@@ -109,7 +109,6 @@ router
   })
   .post(async (req, res) => {
     let user = await userData.getUserById(req.session.userId);
-    // user params id and session id comparison
     try {
       let { deletedUser } = await userData.removeUser(req.session.userId);
       if (deletedUser) {

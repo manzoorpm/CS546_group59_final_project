@@ -56,13 +56,21 @@
       </div>
       <div class="form">
         <label for="category">Category:</label>
-        <input
-          type="text"
-          id="category"
-          name="category"
-          placeholder="Category"
-          value="{{restaurant.category}}"
-        /><br />
+        <select id="category" name="category" required>
+          <option value="" selected disabled>{{restaurant.category}}</option>
+          <option value="Pizza">Pizza</option>
+          <option value="Bakery">Bakery</option>
+          <option value="Steakhouse">Steakhouse</option>
+          <option value="Indian">Indian</option>
+          <option value="Asian">Asian</option>
+          <option value="English">English</option>
+          <option value="Thai">Thai</option>
+          <option value="Chinese">Chinese</option>
+          <option value="Japanese">Japanese</option>
+          <option value="American">American</option>
+          <option value="Mexican">Mexican</option>
+          <option value="Mediterenean">Mediterenean</option>
+        </select><br />
       </div>
       <div class="form">
         <label for="address">Address:</label><br />
@@ -86,7 +94,7 @@
       <div class="form">
         <label for="state">State:</label>
         <select id="state" name="state" required>
-          <option value="" disabled>{{restaurant.state}}</option>
+          <option value="" selected disabled>{{restaurant.state}}</option>
           <option value="New Jersey">New Jersey</option>
           <option value="New York">New York</option>
         </select>
