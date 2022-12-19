@@ -4,14 +4,14 @@ const data = require("../data");
 const helper = require("../helpers");
 
 router.route("/forbidden").get(async (req, res) => {
-    return res.status(403).render("forbiddenAccess", {
-        error: "no accesss",
-        user: req.session.user,
-        userId: req.session.userId,
-        userTag: req.session.userTag,
-        name: req.session.name,
-        title: "Error!"
-    });
+  return res.status(403).render("forbiddenAccess", {
+    error: "no accesss",
+    user: req.session.user,
+    userId: req.session.userId,
+    userTag: req.session.userTag,
+    name: req.session.name,
+    title: "Error!",
+  });
 });
 
 router.route("/notfound").get(async (req, res) => {
@@ -22,6 +22,5 @@ router.route("/notfound").get(async (req, res) => {
     userTag: req.session.userTag,
     name: req.session.name,
   });
->>>>>>> main
 });
 module.exports = router;

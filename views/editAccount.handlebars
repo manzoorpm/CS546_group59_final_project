@@ -1,30 +1,65 @@
 <main>
   <div class="form-signup">
     <h1>{{title}}</h1>
-    <form method="POST" action="/account/{{user._id}}/edit" id="editprofile-form">
+    <form
+      method="POST"
+      action="/account/{{user._id}}/edit"
+      id="editprofile-form"
+    >
       <div class="form">
         <label for="firstnameInput">First Name:</label>
-        <input id="firstnameInput" type="text" name="firstnameInput" placeholder="First Name" value="{{user.firstName}}"
-          required />
+        <input
+          id="firstnameInput"
+          type="text"
+          name="firstnameInput"
+          placeholder="First Name"
+          value="{{user.firstName}}"
+          required
+        />
       </div>
       <div class="form">
         <label for="lastnameInput">Last Name:</label>
-        <input id="lastnameInput" type="text" name="lastnameInput" placeholder="Last Name" value="{{user.lastName}}"
-          required /><br />
+        <input
+          id="lastnameInput"
+          type="text"
+          name="lastnameInput"
+          placeholder="Last Name"
+          value="{{user.lastName}}"
+          required
+        /><br />
       </div>
       <div class="form">
         <label for="emailId">Email ID:</label>
-        <input id="emailId" type="email" name="emailId" placeholder="Email ID" value="{{user.emailId}}"
-          required /><br />
+        <input
+          id="emailId"
+          type="email"
+          name="emailId"
+          placeholder="Email ID"
+          value="{{user.emailId}}"
+          required
+        /><br />
       </div>
       <div class="form">
         <label for="contactInfo">Phone Number:</label>
-        <input id="contactInfo" type="number" name="contactInfo" placeholder="Phone Number" value="{{user.contactInfo}}"
-          required /><br />
+        <input
+          id="contactInfo"
+          type="number"
+          name="contactInfo"
+          placeholder="Phone Number"
+          value="{{user.contactInfo}}"
+          required
+        /><br />
       </div>
       <div class="form">
         <label for="age">Age:</label>
-        <input id="age" type="number" name="age" placeholder="Age" value="{{user.age}}" required /><br />
+        <input
+          id="age"
+          type="number"
+          name="age"
+          placeholder="Age"
+          value="{{user.age}}"
+          required
+        /><br />
       </div>
       <div class="form">
         <p>Gender:</p>
@@ -32,12 +67,24 @@
         <label for="male">Male</label><br />
         <input id="female" type="radio" name="gender" value="Female" />
         <label for="female">Female</label><br />
-        <input id="doNotWishToIdentify" type="radio" name="gender" value="Do Not Wish To Identify" />
+        <input
+          id="doNotWishToIdentify"
+          type="radio"
+          name="gender"
+          value="Do Not Wish To Identify"
+        />
         <label for="doNotWishToIdentify">Do Not Wish To Identify</label><br />
       </div>
       <div class="form">
         <label for="city">City:</label>
-        <input id="city" type="text" name="city" placeholder="City" value="{{user.city}}" required /><br />
+        <input
+          id="city"
+          type="text"
+          name="city"
+          placeholder="City"
+          value="{{user.city}}"
+          required
+        /><br />
       </div>
       <div class="form">
         <label for="state">State:</label>
@@ -114,8 +161,13 @@
         </select>
       </div>
 
-      <button type="submit" class="w-20 btn btn-sm btn-success">Confirm</button><a class="w-20 btn btn-sm btn-danger"
-        href="/account/{{user._id}}">Cancel</a>
+      <button
+        type="submit"
+        class="w-20 btn btn-sm btn-success"
+      >Confirm</button><a
+        class="w-20 btn btn-sm btn-danger"
+        href="/account/{{user._id}}"
+      >Cancel</a>
 
     </form>
     <br />
@@ -124,8 +176,9 @@
       </div>
     </div>
     {{#if hasErrors}}
-    <p class="alert alert-danger Error">{{error}}</p>
+      <p class="alert alert-danger Error">{{error}}</p>
     {{/if}}
 
   </div>
 </main>
+<script src="/public/js/editprofile.js"></script>

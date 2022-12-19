@@ -6,26 +6,26 @@
     errorContainer.getElementsByClassName("text-goes-here")[0];
 
   if (restaurantForm) {
+    let name = document.getElementById("firstnameInput");
+    let emailId = document.getElementById("emailId");
+    let contactInfo = document.getElementById("contactInfo");
+    let description = document.getElementById("description");
+    let priceRange = document.getElementById("priceRange");
+    let category = document.getElementById("category");
+    let address = document.getElementById("address");
+    let city = document.getElementById("city");
+    let state = document.getElementById("state");
+    let zip = document.getElementById("zip");
+    let latitude = document.getElementById("latitude");
+    let longitude = document.getElementById("longitude");
+    let openingTime = document.getElementById("openingTime");
+    let closingTime = document.getElementById("closingTime");
+    let TableFor2 = document.getElementById("TableFor2");
+    let TableFor4 = document.getElementById("TableFor4");
+    let TableFor6 = document.getElementById("TableFor6");
+    let TableFor8 = document.getElementById("TableFor8");
+    let TableFor10 = document.getElementById("TableFor10");
     restaurantForm.addEventListener("submit", (event) => {
-      let name = document.getElementById("firstnameInput");
-      let emailId = document.getElementById("emailId");
-      let contactInfo = document.getElementById("contactInfo");
-      let description = document.getElementById("description");
-      let priceRange = document.getElementById("priceRange");
-      let category = document.getElementById("category");
-      let address = document.getElementById("address");
-      let city = document.getElementById("city");
-      let state = document.getElementById("state");
-      let zip = document.getElementById("zip");
-      let latitude = document.getElementById("latitude");
-      let longitude = document.getElementById("longitude");
-      let openingTime = document.getElementById("openingTime");
-      let closingTime = document.getElementById("closingTime");
-      let TableFor2 = document.getElementById("TableFor2");
-      let TableFor4 = document.getElementById("TableFor4");
-      let TableFor6 = document.getElementById("TableFor6");
-      let TableFor8 = document.getElementById("TableFor8");
-      let TableFor10 = document.getElementById("TableFor10");
       let errorFlag = 0;
       let errors = [];
 
