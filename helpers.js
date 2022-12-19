@@ -523,6 +523,26 @@ function checkBookingDate(date) {
   return date;
 }
 
+function checkBookingDateData(date) {
+  const futureDate = new Date();
+  futureDate.setMonth(futureDate.getMonth() + 12);
+
+  if (!isValidDate(date)) {
+    throw "Input is not in valid date format (mm/dd/yyy)";
+  }
+  let varDate = new Date(date);
+  let today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  if (varDate < today) {
+    throw "Input date had passed, unable to book";
+  }
+  if (varDate > futureDate) {
+    throw "Sorry, Unable to book more than a year advance";
+  }
+  return date;
+}
+
 function isInDesiredForm(str) {
   str = checkIsProperString(str);
   var n = Math.floor(Number(str));
@@ -636,6 +656,7 @@ module.exports = {
   checkForSpaces,
   compareTime,
   checkBookingDate,
+  checkBookingDateData,
   checkGuests,
   checkInputTime,
   sendMail,
