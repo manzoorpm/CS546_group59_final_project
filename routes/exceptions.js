@@ -22,6 +22,5 @@ router.route("/notfound").get(async (req, res) => {
     userTag: req.session.userTag,
     name: req.session.name,
   });
->>>>>>> main
 });
 module.exports = router;
