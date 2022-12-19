@@ -541,9 +541,7 @@ const getAvailability = async (time) => {
 
 const addAvailability = async (restaurantId, object, date, time) => {
   //validations
-  console.log(object);
   path = "availibility." + date + "." + time;
-  console.log(path);
 
   const restaurantCollection = await restaurants();
   const updateInfo = await restaurantCollection.updateOne(

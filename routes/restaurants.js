@@ -249,14 +249,14 @@ router
           error: e.message,
           noSlotsError: true,
           restaurantId: req.params.restaurantId,
-          title:"Error!"
+          title: "Error!",
         });
       } else
         return res.render("error", {
           error: e,
           capacityError: true,
           restaurantId: req.params.restaurantId,
-          title:"Error!"
+          title: "Error!",
         });
     }
   });
@@ -296,7 +296,6 @@ router
             }
           }
         }
-        console.log(currentCapacity);
 
         if (restaurant.availibility[req.body.date]) {
           temp = restaurant.availibility[req.body.date];
@@ -325,7 +324,6 @@ router
             req.body.guests,
             chosenCombinationArray
           );
-          console.log(currentCapacity);
 
           for (let i = 0; i < allTime.length; i++) {
             await restaurantData.addAvailability(
@@ -403,7 +401,7 @@ router
     } catch (e) {
       return res.render("error", {
         error: e,
-        title:"Error!"
+        title: "Error!",
       });
     }
   });
@@ -434,7 +432,7 @@ router
       return res.render("reviewError", {
         error: e,
         restaurantId: req.params.restaurantId,
-        title:"Error!"
+        title: "Error!",
       });
     }
   });
@@ -458,7 +456,7 @@ router.route("/restaurant/delete-review/:id").get(async (req, res) => {
     return res.render("reviewError", {
       error: e,
       restaurantId: review.restaurantId,
-      title:"Error!"
+      title: "Error!",
     });
   }
 });
