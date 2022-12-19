@@ -5,6 +5,7 @@ const data = require("../data");
 const reservationData = data.reservations;
 const userData = data.users;
 const restaurantData = data.restaurants;
+const xss = require("xss");
 // const helper = require("../helpers");
 // const Mailjet = require('node-mailjet');
 // const mailjet = new Mailjet({

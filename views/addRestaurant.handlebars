@@ -1,3 +1,4 @@
+<script src="../public/js/restaurantForm.js"></script>
 <main>
   <div class="add-res">
     <h1>Add restaurants here</h1>
@@ -44,7 +45,12 @@
       </div>
       <div class="form">
         <label for="image">Main Image:</label>
-        <input type="file" id="image" name="image" /><br />
+        <input
+          type="file"
+          id="image"
+          name="image"
+          accept="image/jpeg, image/png, image/jpg"
+        /><br />
       </div>
       <div class="form">
         <label for="priceRange">Price Range:</label>
@@ -67,7 +73,6 @@
       <div class="form">
         <label for="address">Address:</label><br />
         <textarea
-          type="text"
           id="address"
           name="address"
           placeholder="Street Address"
@@ -80,7 +85,7 @@
       <div class="form">
         <label for="state">State:</label>
         <select id="state" name="state" required>
-          <option value="" default selected disabled>Select State</option>
+          <option value="" selected disabled>Select State</option>
           <option value="New Jersey">New Jersey</option>
           <option value="New York">New York</option>
         </select>
@@ -149,5 +154,3 @@
     {{/if}}
   </div>
 </main>
-
-<script src="../public/js/restaurantForm.js"></script>
